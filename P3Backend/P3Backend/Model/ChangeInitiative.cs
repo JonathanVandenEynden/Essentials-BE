@@ -11,7 +11,6 @@ namespace P3Backend.Model {
 		public DateTime EndDate { get; set; }
 		public ChangeManager changeManager { get; set; }
 		public Employee changeSponsor { get; set; }
-		public List<IAssesment> Assesments { get; set; }
 		public IChangeType changeType { get; set; }
 		public List<RoadMapItem> RoadMap { get; set; }
 	}
