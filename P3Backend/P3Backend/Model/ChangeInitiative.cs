@@ -13,5 +13,6 @@ namespace P3Backend.Model {
 		public Employee changeSponsor { get; set; }
 		public List<IAssesment> Assesments { get; set; }
 		public IChangeType changeType { get; set; }
+		public List<RoadMapItem> RoadMap { get; set; }
 	}
 }
