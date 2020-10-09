@@ -6,7 +6,7 @@ using System.Security.Permissions;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model {
-	public interface IUser {
+	public abstract class IUser {
 		public int Id { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
@@ -17,9 +17,13 @@ namespace P3Backend.Model {
 		public Department Department { get; set; }
 		public Team Team { get; set; }
 
+
 		public List<ChangeInitiative> changeInitiatives { get; set; }
 
 		public List<OrganizationPart> OrganizationPart { get; set; }
+		public IUser() {
+
+		}
 
 	}
 }

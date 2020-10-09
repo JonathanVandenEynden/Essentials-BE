@@ -5,5 +5,9 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class EconomicalChangeType : IChangeType {
+		public EconomicalChangeType() {
+
+		}
+
 	}
 }

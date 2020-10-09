@@ -5,5 +5,8 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class TechnologicalChangeType : IChangeType {
+		public TechnologicalChangeType() {
+
+		}
 	}
 }

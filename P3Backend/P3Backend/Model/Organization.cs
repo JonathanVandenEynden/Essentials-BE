@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class Organization {
+		public int Id { get; set; }
 		public List<OrganizationPart> OrganizationParts { get; set; }
 	}
 }

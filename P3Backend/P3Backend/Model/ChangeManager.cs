@@ -13,6 +13,10 @@ namespace P3Backend.Model {
 		public Team Team { get; set; }
 		public List<ChangeInitiative> changeInitiatives { get; set; }
 		public List<OrganizationPart> OrganizationPart { get; set; }
+
+		public ChangeManager() {
+
+		}
 	}
 
 }
