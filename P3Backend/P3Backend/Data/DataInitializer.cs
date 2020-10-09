@@ -11,7 +11,7 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			_dbContext.Database.EnsureDeleted();
+			//_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
 				_dbContext.SaveChanges();
 				Console.WriteLine("Database created");

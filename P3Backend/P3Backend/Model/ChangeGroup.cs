@@ -10,7 +10,6 @@ namespace P3Backend.Model {
 
 		public ChangeInitiative changeInitiative { get; set; }
 
-		public OrganizationPart MyProperty { get; set; }
 
 	}
 }

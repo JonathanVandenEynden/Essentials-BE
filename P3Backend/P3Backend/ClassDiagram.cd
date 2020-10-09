@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="P3Backend.Model.Admin" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
+      <FileName>Model\Admin.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.3" Collapsed="true" />
+  </Class>
+  <Class Name="P3Backend.Model.ChangeGroup">
+    <Position X="18.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ChangeGroup.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="changeInitiative" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Users" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.ChangeInitiative">
+    <Position X="11.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QFACAAAAAAAgAAAAAAAAAAAhAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ChangeInitiative.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="changeManager" />
+      <Property Name="changeSponsor" />
+      <Property Name="changeType" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="RoadMap" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.ChangeManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
+      <FileName>Model\ChangeManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="P3Backend.Model.ChoiceQuestion">
+    <Position X="6.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ChoiceQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.ClosedQuestion">
+    <Position X="6.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ClosedQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.Country">
+    <Position X="2" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Country.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.Department">
+    <Position X="4.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Department.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.EconomicalChangeType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\EconomicalChangeType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="P3Backend.Model.Employee" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
+      <FileName>Model\Employee.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="P3Backend.Model.Factory">
+    <Position X="11" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Factory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.MultipleChoice">
+    <Position X="4.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\MultipleChoice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.Office">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Office.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.OpenQuestion">
+    <Position X="2" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAgAAAAA=</HashCode>
+      <FileName>Model\OpenQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.Organization">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Organization.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="OrganizationParts" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.OrganizationalChangeType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\OrganizationalChangeType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="P3Backend.Model.OrganizationPart">
+    <Position X="6.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Model\OrganizationPart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.PersonalChangeType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\PersonalChangeType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="P3Backend.Model.Portfolio">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Model\Portfolio.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Projects" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Project">
+    <Position X="17" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Project.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ChangeInitiatives" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Question">
+    <Position X="3.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Question.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.RoadMapItem">
+    <Position X="18.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAg=</HashCode>
+      <FileName>Model\RoadMapItem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Assesment" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Survey" BaseTypeListCollapsed="true">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Survey.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Questions" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="P3Backend.Model.Team">
+    <Position X="6.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Team.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.TechnologicalChangeType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TechnologicalChangeType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="P3Backend.Model.YesNoQuestion">
+    <Position X="8.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\YesNoQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="P3Backend.Model.IAssesment">
+    <Position X="14" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\IAssesment.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="P3Backend.Model.IChangeType">
+    <Position X="14.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\IChangeType.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="P3Backend.Model.IUser">
+    <Position X="16.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
+      <FileName>Model\IUser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Department" />
+      <Property Name="Country" />
+      <Property Name="Factory" />
+      <Property Name="Office" />
+      <Property Name="Team" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="changeInitiatives" />
+      <Property Name="OrganizationPart" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
