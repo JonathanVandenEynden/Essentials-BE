@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace P3Backend.Data {
 	public class DataInitializer {
-		private readonly ApplicationDbContext _dbContext;
 
-		public DataInitializer(ApplicationDbContext dbContext) {
+		private readonly ApplicationDbContext _dbContext;
+		private readonly UserManager<IdentityUser> _usermanager;
+
+		public DataInitializer(ApplicationDbContext dbContext, UserManager<IdentityUser> userManager) {
 			_dbContext = dbContext;
+			_usermanager = userManager;
 		}
 
 		public async Task InitializeData() {

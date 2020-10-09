@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,8 @@ namespace P3Backend {
 			services.AddScoped<DataInitializer>();
 			services.AddControllers();
 
+			services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
 			services.AddSwaggerDocument();
 
 			services.AddOpenApiDocument(c => { c.DocumentName = "apidocs"; c.Title = "RecipeAPI"; c.Version = "v1"; c.Description = "The RecipeAPI documentationdescription."; });
@@ -45,6 +48,8 @@ namespace P3Backend {
 			app.UseRouting();
 
 			app.UseAuthorization();
+
+			app.UseAuthentication();
 
 			app.UseOpenApi();
 			app.UseSwaggerUi3();

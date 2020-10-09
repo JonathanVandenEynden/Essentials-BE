@@ -6,7 +6,6 @@
       <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
       <FileName>Model\Admin.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="1.3" Collapsed="true" />
   </Class>
   <Class Name="P3Backend.Model.ChangeGroup">
     <Position X="18.5" Y="1.25" Width="1.5" />
@@ -17,9 +16,6 @@
     <ShowAsAssociation>
       <Property Name="changeInitiative" />
     </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="Users" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.ChangeInitiative">
     <Position X="11.75" Y="8.75" Width="1.5" />
@@ -42,7 +38,6 @@
       <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
       <FileName>Model\ChangeManager.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="P3Backend.Model.ChoiceQuestion">
     <Position X="6.5" Y="9.75" Width="1.5" />
@@ -86,7 +81,6 @@
       <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
       <FileName>Model\Employee.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="P3Backend.Model.Factory">
     <Position X="11" Y="3.25" Width="1.5" />
@@ -232,24 +226,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\IChangeType.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="P3Backend.Model.IUser">
-    <Position X="16.5" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
-      <FileName>Model\IUser.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Department" />
-      <Property Name="Country" />
-      <Property Name="Factory" />
-      <Property Name="Office" />
-      <Property Name="Team" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="changeInitiatives" />
-      <Property Name="OrganizationPart" />
-    </ShowAsCollectionAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
