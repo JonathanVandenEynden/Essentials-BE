@@ -28,6 +28,10 @@ namespace P3Backend {
 
 			services.AddScoped<DataInitializer>();
 			services.AddControllers();
+
+			services.AddSwaggerDocument();
+
+			services.AddOpenApiDocument(c => { c.DocumentName = "apidocs"; c.Title = "RecipeAPI"; c.Version = "v1"; c.Description = "The RecipeAPI documentationdescription."; });
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +45,10 @@ namespace P3Backend {
 			app.UseRouting();
 
 			app.UseAuthorization();
+
+			app.UseOpenApi();
+			app.UseSwaggerUi3();
+
 
 			app.UseEndpoints(endpoints => {
 				endpoints.MapControllers();

@@ -2,16 +2,13 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace P3Backend.Data
-{
-    public class DataInitializer
-    {
-        private readonly ApplicationDbContext _dbContext;
+namespace P3Backend.Data {
+	public class DataInitializer {
+		private readonly ApplicationDbContext _dbContext;
 
-        public DataInitializer(ApplicationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+		public DataInitializer(ApplicationDbContext dbContext) {
+			_dbContext = dbContext;
+		}
 
         public async Task InitializeData()
         {

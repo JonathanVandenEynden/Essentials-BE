@@ -20,6 +20,10 @@ namespace P3Backend.Controllers {
 			_logger = logger;
 		}
 
+		/// <summary>
+		/// Get the weather
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		public IEnumerable<WeatherForecast> Get() {
 			var rng = new Random();
