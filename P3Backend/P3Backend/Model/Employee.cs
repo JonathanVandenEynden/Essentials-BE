@@ -7,6 +7,7 @@ namespace P3Backend.Model {
 	public class Employee : IUser {
 		public int Id { get; set; }
 		public string FirstName { get; set; }
+		public string Email { get; set; }
 		public string LastName { get; set; }
 		public Country Country { get; set; }
 		public Office Office { get; set; }
