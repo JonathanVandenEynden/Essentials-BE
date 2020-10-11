@@ -9,5 +9,6 @@ namespace P3Backend.Model {
 		protected IAssesment() {
 			Questions = new List<IQuestion>();
 		}
+
 	}
 }

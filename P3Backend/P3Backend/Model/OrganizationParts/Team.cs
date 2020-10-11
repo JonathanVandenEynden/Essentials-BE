@@ -10,5 +10,9 @@ namespace P3Backend.Model {
 
 		public Team(string name) : base(name) {
 		}
+
+		protected Team() {
+			// EF
+		}
 	}
 }

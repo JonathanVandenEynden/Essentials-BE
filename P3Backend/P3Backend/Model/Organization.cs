@@ -19,5 +19,9 @@ namespace P3Backend.Model {
 			OrganizationParts = new List<IOrganizationPart>();
 			Portfolio = new Portfolio();
 		}
+
+		protected Organization() {
+			// EF
+		}
 	}
 }

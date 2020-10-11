@@ -10,6 +10,10 @@
 			AmountChosen = 0;
 		}
 
+		protected Answer() {
+			// EF
+		}
+
 		public void ChooseAnswer() => AmountChosen++;
 	}
 }

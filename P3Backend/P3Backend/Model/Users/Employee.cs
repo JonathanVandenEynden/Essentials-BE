@@ -19,5 +19,9 @@ namespace P3Backend.Model.Users {
 			ChangeGroups = new List<ChangeGroup>();
 
 		}
+
+		protected Employee() {
+			// EF
+		}
 	}
 }

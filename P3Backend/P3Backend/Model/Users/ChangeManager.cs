@@ -23,6 +23,10 @@ namespace P3Backend.Model.Users {
 			CreatedChangeInitiatives = new List<ChangeInitiative>();
 
 		}
+
+		protected ChangeManager() {
+			// EF
+		}
 	}
 
 }

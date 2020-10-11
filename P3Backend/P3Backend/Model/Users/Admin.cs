@@ -12,5 +12,9 @@ namespace P3Backend.Model.Users {
 			LastName = lastName;
 			Email = email;
 		}
+
+		protected Admin() {
+			// EF
+		}
 	}
 }

@@ -9,5 +9,9 @@ namespace P3Backend.Model.OrganizationParts {
 
 		public Factory(string name) : base(name) {
 		}
+
+		protected Factory() {
+			// EF
+		}
 	}
 }

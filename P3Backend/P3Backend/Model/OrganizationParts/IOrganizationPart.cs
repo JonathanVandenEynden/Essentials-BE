@@ -7,5 +7,8 @@
 		protected IOrganizationPart(string name) {
 			Name = name;
 		}
+		protected IOrganizationPart() {
+			// EF
+		}
 	}
 }

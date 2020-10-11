@@ -9,6 +9,10 @@ namespace P3Backend.Model.OrganizationParts {
 
 		public Country(string name) : base(name) {
 		}
+
+		protected Country() {
+			// EF
+		}
 	}
 
 }

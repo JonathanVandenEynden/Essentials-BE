@@ -11,5 +11,9 @@
 			Done = false;
 
 		}
+
+		protected RoadMapItem() {
+			// EF
+		}
 	}
 }

@@ -4,5 +4,9 @@
 
 		public Office(string name) : base(name) {
 		}
+
+		protected Office() {
+			// EF
+		}
 	}
 }

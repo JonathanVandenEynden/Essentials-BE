@@ -4,5 +4,9 @@
 
 		public Department(string name) : base(name) {
 		}
+
+		protected Department() {
+			// EF
+		}
 	}
 }
