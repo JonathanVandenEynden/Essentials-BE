@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model.Questions {
 	public abstract class ClosedQuestion : IQuestion {
-		public abstract int Id { get; set; }
-		public abstract string Question { get; set; }
+		public IList<string> Awnsers { get; set; }
+
+		public ClosedQuestion(string questionString) : base(questionString) {
+			Awnsers = new List<string>();
+		}
 	}
 }

@@ -6,8 +6,8 @@ namespace P3Backend.Model {
 		public int Id { get; set; }
 		public List<IQuestion> Questions { get; set; }
 
-		public IAssesment() {
-
+		protected IAssesment() {
+			Questions = new List<IQuestion>();
 		}
 	}
 }

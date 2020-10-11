@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class Team : IOrganizationPart {
-		public int Id { get; set; }
+		// enum van maken?
+
+		public Team(string name) : base(name) {
+		}
 	}
 }
