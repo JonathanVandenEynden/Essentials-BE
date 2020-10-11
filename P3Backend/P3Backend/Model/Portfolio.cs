@@ -14,8 +14,5 @@ namespace P3Backend.Model {
 			Projects = new List<Project>();
 		}
 
-		protected Portfolio() {
-			// EF
-		}
 	}
 }

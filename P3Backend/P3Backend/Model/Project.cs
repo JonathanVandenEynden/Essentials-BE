@@ -14,8 +14,5 @@ namespace P3Backend.Model {
 			ChangeInitiatives = new List<ChangeInitiative>();
 		}
 
-		protected Project() {
-			// EF
-		}
 	}
 }
