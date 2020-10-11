@@ -43,5 +43,9 @@ namespace P3Backend.Model {
 
 			RoadMap = new List<RoadMapItem>();
 		}
+
+		protected ChangeInitiative() {
+			// EF
+		}
 	}
 }

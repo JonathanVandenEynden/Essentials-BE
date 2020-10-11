@@ -26,9 +26,6 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<PersonalChangeType>();
 			modelBuilder.Entity<OpenQuestion>();
 			modelBuilder.Entity<ClosedQuestion>();
-			modelBuilder.Entity<YesNoQuestion>();
-			modelBuilder.Entity<ChoiceQuestion>();
-			modelBuilder.Entity<MultipleChoice>();
 
 		}
 	}

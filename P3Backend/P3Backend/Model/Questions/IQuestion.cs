@@ -7,5 +7,9 @@
 		protected IQuestion(string questionString) {
 			QuestionString = questionString;
 		}
+
+		protected IQuestion() {
+			// EF
+		}
 	}
 }
