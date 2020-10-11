@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using P3Backend.Model;
 using P3Backend.Model.DTO_s;
 using P3Backend.Model.RepoInterfaces;
+using P3Backend.Model.Users;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

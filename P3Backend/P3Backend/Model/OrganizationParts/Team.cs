@@ -1,16 +1,11 @@
-﻿using System;
+﻿using P3Backend.Model.OrganizationParts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model {
-	public class ChangeGroup {
+	public class Team : IOrganizationPart {
 		public int Id { get; set; }
-
-		public List<IUser> Users { get; set; }
-
-		public ChangeInitiative ChangeInitiative { get; set; }
-
-
 	}
 }

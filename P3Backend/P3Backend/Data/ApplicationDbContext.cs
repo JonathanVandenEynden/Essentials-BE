@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using P3Backend.Model;
+using P3Backend.Model.ChangeTypes;
+using P3Backend.Model.Questions;
+using P3Backend.Model.Users;
 
 namespace P3Backend.Data {
 	public class ApplicationDbContext : IdentityDbContext {

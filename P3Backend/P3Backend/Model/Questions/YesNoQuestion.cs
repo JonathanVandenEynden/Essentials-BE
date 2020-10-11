@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace P3Backend.Model {
+namespace P3Backend.Model.Questions {
 	public class YesNoQuestion : ClosedQuestion {
 		public override int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public override string Question { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
