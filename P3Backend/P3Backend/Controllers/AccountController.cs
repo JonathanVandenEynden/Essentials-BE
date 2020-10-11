@@ -66,8 +66,7 @@ namespace P3Backend.Controllers {
 		public async Task<ActionResult<string>> Register(RegisterDTO dto) {
 
 			IUser checkedUser;
-			// TODO ctor van Employee
-			checkedUser = new Employee();
+			checkedUser = new Employee(dto.FirstName, dto.LastName, dto.Email);
 			IdentityUser user = new IdentityUser { UserName = checkedUser.Email, Email = checkedUser.Email };
 
 			var result = await _userManager.CreateAsync(user, dto.Password);
