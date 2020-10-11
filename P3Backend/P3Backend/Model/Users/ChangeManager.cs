@@ -12,7 +12,8 @@ namespace P3Backend.Model.Users {
 
 		public IList<ChangeInitiative> MyChangeInitiatives { get; set; }
 
-		public IList<ChangeInitiative> CreatedChangeInitiatives { get; set; }
+		// TODO mappping of the classes
+		//public IList<ChangeInitiative> CreatedChangeInitiatives { get; set; }
 
 		public ChangeManager(string firstName, string lastName, string email) {
 			FirstName = firstName;
@@ -20,7 +21,8 @@ namespace P3Backend.Model.Users {
 			Email = email;
 
 			MyChangeInitiatives = new List<ChangeInitiative>();
-			CreatedChangeInitiatives = new List<ChangeInitiative>();
+			// TODO mappping of the classes
+			//CreatedChangeInitiatives = new List<ChangeInitiative>();
 
 		}
 	}
