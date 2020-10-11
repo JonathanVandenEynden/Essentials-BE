@@ -9,10 +9,9 @@ namespace P3Backend.Model.Users {
 		public Department Department { get; set; }
 		public Team Team { get; set; }
 
+		public List<ChangeGroup> ChangeGroups { get; set; }
+		public IList<ChangeInitiative> CreatedChangeInitiatives { get; set; }
 
-		public IList<ChangeInitiative> MyChangeInitiatives { get; set; }
-
-		// TODO mappping of the classes
 		//public IList<ChangeInitiative> CreatedChangeInitiatives { get; set; }
 
 		public ChangeManager(string firstName, string lastName, string email) {
@@ -20,9 +19,8 @@ namespace P3Backend.Model.Users {
 			LastName = lastName;
 			Email = email;
 
-			MyChangeInitiatives = new List<ChangeInitiative>();
-			// TODO mappping of the classes
-			//CreatedChangeInitiatives = new List<ChangeInitiative>();
+			ChangeGroups = new List<ChangeGroup>();
+			CreatedChangeInitiatives = new List<ChangeInitiative>();
 
 		}
 	}
