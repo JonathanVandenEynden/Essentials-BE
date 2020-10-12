@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class Survey : IAssesment {
-		public int Id { get; set; }
-		public List<IQuestion> Questions { get; set; }
 
-		public Survey() {
+		public Survey() : base() {
 
 		}
+
 	}
 }
