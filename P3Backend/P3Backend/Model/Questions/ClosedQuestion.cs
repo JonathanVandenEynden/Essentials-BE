@@ -8,11 +8,12 @@ namespace P3Backend.Model.Questions {
 	public class ClosedQuestion : IQuestion {
 
 		public IList<Answer> PossibleAnswers { get; set; }
-		public bool IsMulti { get; set; }
+		public int MaxAmount { get; set; }
 
-		public ClosedQuestion(string questionString, bool multi) : base(questionString) {
+		public ClosedQuestion(string questionString, int maxAmount) : base(questionString) {
 			PossibleAnswers = new List<Answer>();
-			IsMulti = multi;
+			MaxAmount = maxAmount;
+
 		}
 
 		protected ClosedQuestion() : base() {

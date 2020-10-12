@@ -28,20 +28,19 @@ namespace P3Backend.Model {
 					_ = value;
 			}
 		}
-		public ChangeManager ChangeManager { get; set; }
 		public IUser ChangeSponsor { get; set; } // could also be another CM
 		public IChangeType ChangeType { get; set; }
 		public IList<RoadMapItem> RoadMap { get; set; }
 
-		public ChangeInitiative(string desc, DateTime start, DateTime end, ChangeManager cm, IUser sponsor, IChangeType changeType) {
+		public ChangeInitiative(string desc, DateTime start, DateTime end, IUser sponsor, IChangeType changeType) {
 			Description = desc;
 			StartDate = start;
 			EndDate = end;
-			ChangeManager = cm;
 			ChangeSponsor = sponsor;
 			ChangeType = changeType;
 
 			RoadMap = new List<RoadMapItem>();
+			// TODO standaard voorbereiding item toevoegen aan roadmap
 		}
 
 		protected ChangeInitiative() {

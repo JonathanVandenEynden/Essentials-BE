@@ -9,14 +9,11 @@ namespace P3Backend.Model.Users {
 		public Department Department { get; set; }
 		public Team Team { get; set; }
 
-		public List<ChangeGroup> ChangeGroups { get; set; }
 
 		public Employee(string firstName, string lastName, string email) {
 			FirstName = firstName;
 			LastName = lastName;
 			Email = email;
-
-			ChangeGroups = new List<ChangeGroup>();
 
 		}
 

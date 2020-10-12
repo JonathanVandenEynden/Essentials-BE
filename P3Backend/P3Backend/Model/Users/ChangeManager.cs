@@ -9,7 +9,6 @@ namespace P3Backend.Model.Users {
 		public Department Department { get; set; }
 		public Team Team { get; set; }
 
-		public List<ChangeGroup> ChangeGroups { get; set; }
 		public IList<ChangeInitiative> CreatedChangeInitiatives { get; set; }
 
 		//public IList<ChangeInitiative> CreatedChangeInitiatives { get; set; }
@@ -19,7 +18,6 @@ namespace P3Backend.Model.Users {
 			LastName = lastName;
 			Email = email;
 
-			ChangeGroups = new List<ChangeGroup>();
 			CreatedChangeInitiatives = new List<ChangeInitiative>();
 
 		}

@@ -10,7 +10,6 @@ namespace P3Backend.Model {
 		public string Name { get; set; }
 		public List<IUser> Users { get; set; }
 
-		public ChangeInitiative ChangeInitiative { get; set; }
 
 		public ChangeGroup(string name) {
 			Name = name;
