@@ -27,7 +27,7 @@ namespace P3Backend.Model {
 		}
 
 		// TODO start en end bijzetten
-		public RoadMapItem(string title,) {
+		public RoadMapItem(string title) {
 			Title = title;
 
 			Done = false;
