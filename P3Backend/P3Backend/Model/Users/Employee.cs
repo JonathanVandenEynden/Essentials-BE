@@ -1,5 +1,6 @@
 ﻿using P3Backend.Model.OrganizationParts;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace P3Backend.Model.Users {
 	public class Employee : IUser {
@@ -10,10 +11,7 @@ namespace P3Backend.Model.Users {
 		public Team Team { get; set; }
 
 
-		public Employee(string firstName, string lastName, string email) {
-			FirstName = firstName;
-			LastName = lastName;
-			Email = email;
+		public Employee(string firstName, string lastName, string email) : base(firstName, lastName, email) {
 
 		}
 

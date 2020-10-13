@@ -49,6 +49,8 @@ namespace P3Backend.Data {
 			// Users
 			modelBuilder.ApplyConfiguration(new IUserConfiguration());
 			modelBuilder.ApplyConfiguration(new AdminConfiguration());
+			modelBuilder.ApplyConfiguration(new ChangeManagerConfiguration());
+			modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
 
 			// Assesments
 			modelBuilder.ApplyConfiguration(new IAssesmentConfiguration());

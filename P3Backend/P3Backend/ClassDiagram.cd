@@ -3,7 +3,7 @@
   <Class Name="P3Backend.Model.IAssesment">
     <Position X="5.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAACAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAACAAAAAAAAAEAEAAAAAAAAAAA=</HashCode>
       <FileName>Model\Assesments\IAssesment.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -131,23 +131,16 @@
   <Class Name="P3Backend.Model.Users.Admin">
     <Position X="8.25" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Users\Admin.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="P3Backend.Model.Users.ChangeManager">
     <Position X="5.25" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAIAAAIAAAEAIAAAAAEAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Users\ChangeManager.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Country" />
-      <Property Name="Department" />
-      <Property Name="Factory" />
-      <Property Name="Office" />
-      <Property Name="Team" />
-    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="CreatedChangeInitiatives" />
     </ShowAsCollectionAssociation>
@@ -160,9 +153,9 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Country" />
-      <Property Name="Department" />
-      <Property Name="Factory" />
       <Property Name="Office" />
+      <Property Name="Factory" />
+      <Property Name="Department" />
       <Property Name="Team" />
     </ShowAsAssociation>
   </Class>
@@ -186,7 +179,7 @@
   <Class Name="P3Backend.Model.ChangeInitiative">
     <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAQAAAgAAAAAAEAAAAgAAQAAAAAAAAAAEAAAAA=</HashCode>
+      <HashCode>AAACAAAQAAAgAAAAAAEAAAQgAAQAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Model\ChangeInitiative.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -200,15 +193,12 @@
   <Class Name="P3Backend.Model.Organization">
     <Position X="24" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAACAAAAAAAEAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Model\Organization.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Portfolio" />
     </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="OrganizationParts" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.Portfolio">
     <Position X="21.5" Y="2.25" Width="1.5" />

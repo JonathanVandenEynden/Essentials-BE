@@ -7,10 +7,7 @@ namespace P3Backend.Model.Users {
 		public IList<ChangeInitiative> CreatedChangeInitiatives { get; set; }
 
 
-		public ChangeManager(string firstName, string lastName, string email) {
-			FirstName = firstName;
-			LastName = lastName;
-			Email = email;
+		public ChangeManager(string firstName, string lastName, string email) : base(firstName, lastName, email) {
 
 			CreatedChangeInitiatives = new List<ChangeInitiative>();
 

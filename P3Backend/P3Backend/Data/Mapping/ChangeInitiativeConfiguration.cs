@@ -20,6 +20,7 @@ namespace P3Backend.Data.Mapping {
 
 			builder.HasOne(ci => ci.ChangeType);
 			builder.HasOne(ci => ci.ChangeSponsor);
+			builder.HasOne(ci => ci.ChangeGroup);
 
 			builder.HasMany(ci => ci.RoadMap).WithOne();
 		}

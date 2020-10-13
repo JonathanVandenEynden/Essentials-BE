@@ -30,6 +30,7 @@ namespace P3Backend.Model {
 			}
 		}
 
+		public ChangeGroup ChangeGroup { get; set; }
 		public IUser ChangeSponsor { get; set; } // could also be another CM
 		public IChangeType ChangeType { get; set; }
 		public IList<RoadMapItem> RoadMap { get; set; }
@@ -44,6 +45,7 @@ namespace P3Backend.Model {
 
 			RoadMap = new List<RoadMapItem>();
 			// TODO standaard voorbereiding item toevoegen aan roadmap
+			// TODO Changegroup
 		}
 
 		protected ChangeInitiative() {
