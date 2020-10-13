@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 
 namespace P3Backend.Model.Users {
-	public class ChangeManager : IUser {
-		public Country Country { get; set; }
-		public Office Office { get; set; }
-		public Factory Factory { get; set; }
-		public Department Department { get; set; }
-		public Team Team { get; set; }
+	public class ChangeManager : Employee {
 
 		public IList<ChangeInitiative> CreatedChangeInitiatives { get; set; }
 
-		//public IList<ChangeInitiative> CreatedChangeInitiatives { get; set; }
 
 		public ChangeManager(string firstName, string lastName, string email) {
 			FirstName = firstName;
