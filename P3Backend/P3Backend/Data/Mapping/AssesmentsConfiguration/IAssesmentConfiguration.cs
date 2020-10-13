@@ -6,16 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace P3Backend.Data.Mapping {
-	public class SurveyConfiguration : IEntityTypeConfiguration<Survey> {
-		public void Configure(EntityTypeBuilder<Survey> builder) {
+namespace P3Backend.Data.Mapping.AssesmentConfiguration {
+	public class IAssesmentConfiguration : IEntityTypeConfiguration<IAssesment> {
+		public void Configure(EntityTypeBuilder<IAssesment> builder) {
 			builder.HasKey(s => s.Id);
 
 			builder.Property(s => s.AmountSubmitted);
 
 			builder.HasMany(s => s.Questions).WithOne();
-			builder.HasOne(s => s.Feedback).WithOne();
-
+			builder.HasOne(s => s.Feedback);
 		}
 	}
 }
