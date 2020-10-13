@@ -4,6 +4,7 @@ using P3Backend.Data.Mapping;
 using P3Backend.Data.Mapping.AssesmentConfiguration;
 using P3Backend.Data.Mapping.ChangeTypesConfiguration;
 using P3Backend.Data.Mapping.OrganizationPartsConfiguration;
+using P3Backend.Data.Mapping.QuestionsConfiguration;
 using P3Backend.Data.Mapping.UsersConfiguration;
 using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
@@ -86,6 +87,10 @@ namespace P3Backend.Data {
 			modelBuilder.ApplyConfiguration(new TechnologicalChangeTypeConfiguration());
 
 			// Questions
+			modelBuilder.ApplyConfiguration(new IQuestionConfiguration());
+			modelBuilder.ApplyConfiguration(new OpenQuestionConfiguration());
+			modelBuilder.ApplyConfiguration(new ClosedQuestionConfiguration());
+			modelBuilder.ApplyConfiguration(new AnswerConfiguration());
 
 
 			// Other
