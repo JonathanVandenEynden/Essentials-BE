@@ -60,6 +60,7 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<ChangeGroup>();
 			modelBuilder.Entity<Organization>();
 			modelBuilder.Entity<Portfolio>();
+			modelBuilder.Entity<Project>();
 
 
 			#region configurations
@@ -101,6 +102,7 @@ namespace P3Backend.Data {
 			modelBuilder.ApplyConfiguration(new ChangeGroupConfiguration());
 			modelBuilder.ApplyConfiguration(new OrganizationConfiguration());
 			modelBuilder.ApplyConfiguration(new PortfolioConfiguration());
+			modelBuilder.ApplyConfiguration(new ProjectConfiguration());
 
 			#endregion
 
