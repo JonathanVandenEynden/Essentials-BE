@@ -61,7 +61,7 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<Organization>();
 			modelBuilder.Entity<Portfolio>();
 			modelBuilder.Entity<Project>();
-
+			modelBuilder.Entity<RoadMapItem>();
 
 			#region configurations
 
@@ -103,6 +103,7 @@ namespace P3Backend.Data {
 			modelBuilder.ApplyConfiguration(new OrganizationConfiguration());
 			modelBuilder.ApplyConfiguration(new PortfolioConfiguration());
 			modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+			modelBuilder.ApplyConfiguration(new RoadMapItemConfiguration());
 
 			#endregion
 
