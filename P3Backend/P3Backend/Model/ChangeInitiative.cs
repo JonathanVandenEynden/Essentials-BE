@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace P3Backend.Model {
 	public class ChangeInitiative {
 		public int Id { get; set; }
+		public string Name { get; set; }
 		public String Description { get; set; }
 		public DateTime StartDate {
 			get { return StartDate; }
@@ -28,11 +29,13 @@ namespace P3Backend.Model {
 					_ = value;
 			}
 		}
+
 		public IUser ChangeSponsor { get; set; } // could also be another CM
 		public IChangeType ChangeType { get; set; }
 		public IList<RoadMapItem> RoadMap { get; set; }
 
-		public ChangeInitiative(string desc, DateTime start, DateTime end, IUser sponsor, IChangeType changeType) {
+		public ChangeInitiative(string name, string desc, DateTime start, DateTime end, IUser sponsor, IChangeType changeType) {
+			Name = name;
 			Description = desc;
 			StartDate = start;
 			EndDate = end;
