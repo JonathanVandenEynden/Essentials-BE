@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using P3Backend.Data.Mapping;
 using P3Backend.Data.Mapping.AssesmentConfiguration;
 using P3Backend.Data.Mapping.ChangeTypesConfiguration;
+using P3Backend.Data.Mapping.OrganizationPartsConfiguration;
 using P3Backend.Data.Mapping.UsersConfiguration;
 using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
+using P3Backend.Model.OrganizationParts;
 using P3Backend.Model.Questions;
 using P3Backend.Model.Users;
 
@@ -34,11 +36,23 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<OpenQuestion>();
 			modelBuilder.Entity<ClosedQuestion>();
 
+			// OrganizationalTypes
+			modelBuilder.Entity<Country>();
+			modelBuilder.Entity<Department>();
+			modelBuilder.Entity<Factory>();
+			modelBuilder.Entity<Office>();
+			modelBuilder.Entity<Team>();
+
 			// ChangeTypes
 			modelBuilder.Entity<TechnologicalChangeType>();
 			modelBuilder.Entity<EconomicalChangeType>();
 			modelBuilder.Entity<OrganizationalChangeType>();
 			modelBuilder.Entity<PersonalChangeType>();
+
+			// Questions
+			modelBuilder.Entity<Answer>();
+			modelBuilder.Entity<OpenQuestion>();
+			modelBuilder.Entity<ClosedQuestion>();
 
 			// Other
 			modelBuilder.Entity<ChangeInitiative>();
@@ -56,12 +70,23 @@ namespace P3Backend.Data {
 			modelBuilder.ApplyConfiguration(new IAssesmentConfiguration());
 			modelBuilder.ApplyConfiguration(new SurveyConfiguration());
 
+			// OrganizationalParts
+			modelBuilder.ApplyConfiguration(new IOrganizationalPartConfiguration());
+			modelBuilder.ApplyConfiguration(new CountryConfiguration());
+			modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+			modelBuilder.ApplyConfiguration(new FactoryConfiguration());
+			modelBuilder.ApplyConfiguration(new OfficeConfiguration());
+			modelBuilder.ApplyConfiguration(new TeamConfiguration());
+
 			// ChangeTypes
 			modelBuilder.ApplyConfiguration(new IChangeTypeConfiguration());
 			modelBuilder.ApplyConfiguration(new EconomicalChangeTypeConfiguration());
 			modelBuilder.ApplyConfiguration(new OrganizationalChangeTypeConfiguration());
 			modelBuilder.ApplyConfiguration(new PersonalChangeTypeConfiguration());
 			modelBuilder.ApplyConfiguration(new TechnologicalChangeTypeConfiguration());
+
+			// Questions
+
 
 			// Other
 			modelBuilder.ApplyConfiguration(new ChangeInitiativeConfiguration());
