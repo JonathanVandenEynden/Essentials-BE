@@ -49,7 +49,7 @@ namespace P3Backend.Controllers {
 				if (result.Succeeded) {
 					// TODO AuthO implementeren
 					//string token = GetToken(user);
-					//return Created("", token);
+					return Created("", "User ingelogd");
 				}
 
 			}
@@ -65,22 +65,27 @@ namespace P3Backend.Controllers {
 		[HttpPost("register")]
 		public async Task<ActionResult<string>> Register(RegisterDTO dto) {
 
-			IUser checkedUser;
-			checkedUser = new Employee(dto.FirstName, dto.LastName, dto.Email);
-			IdentityUser user = new IdentityUser { UserName = checkedUser.Email, Email = checkedUser.Email };
+			try {
+				IUser checkedUser;
+				checkedUser = new Employee(dto.FirstName, dto.LastName, dto.Email);
+				IdentityUser user = new IdentityUser { UserName = checkedUser.Email, Email = checkedUser.Email };
 
-			var result = await _userManager.CreateAsync(user, dto.Password);
+				var result = await _userManager.CreateAsync(user, dto.Password);
 
-			if (result.Succeeded) {
-				_userRepo.Add(checkedUser);
-				_userRepo.SaveChanges();
-				// TODO AuthO implementer
-				//string token = GetToken(user);
-				//return Created("", token);
+				if (result.Succeeded) {
+					_userRepo.Add(checkedUser);
+					_userRepo.SaveChanges();
+					// TODO AuthO implementer
+					//string token = GetToken(user);
+					return Created("", "User aangemaakt");
+				}
+			}
+			catch (Exception e) {
+				return BadRequest(e);
 			}
 
-
 			return BadRequest();
+
 		}
 
 		///// <summary>
