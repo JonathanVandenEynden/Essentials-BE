@@ -37,7 +37,7 @@ namespace P3Backend.Controllers {
 		/// Login a user
 		/// </summary>
 		/// <param name="dto">the email and password of an existing user</param>
-		/// <returns>the JWT-token</returns>
+		/// <returns>message</returns>
 		[AllowAnonymous]
 		[HttpPost("login")]
 		public async Task<ActionResult<string>> Login(LoginDTO dto) {
@@ -60,7 +60,7 @@ namespace P3Backend.Controllers {
 		///  Register a user
 		/// </summary>
 		/// <param name="dto">The user object to be created</param>
-		/// <returns>The GET with the id of the newly created user</returns>
+		/// <returns>message</returns>
 		[AllowAnonymous]
 		[HttpPost("register")]
 		public async Task<ActionResult<string>> Register(RegisterDTO dto) {
