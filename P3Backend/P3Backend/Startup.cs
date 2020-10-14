@@ -33,6 +33,8 @@ namespace P3Backend {
 
 			services.AddScoped<DataInitializer>();
 			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IChangeInitiativeRepository, ChangeInitiativeRepository>();
+
 			services.AddControllers().AddNewtonsoftJson(options =>
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 			);
