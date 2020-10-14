@@ -15,8 +15,18 @@ using P3Backend.Model.Users;
 namespace P3Backend.Data {
 	public class ApplicationDbContext : IdentityDbContext {
 
-		public DbSet<IUser> Users { get; set; }
-		public DbSet<ChangeInitiative> ChangeInitiatives { get; set; }
+		public DbSet<IUser> Users {
+			get; set;
+		}
+		public DbSet<ChangeManager> ChangeManagers {
+			get; set;
+		}
+		public DbSet<Employee> Employees {
+			get; set;
+		}
+		public DbSet<ChangeInitiative> ChangeInitiatives {
+			get; set;
+		}
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
 		}

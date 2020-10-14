@@ -9,11 +9,11 @@ namespace P3Backend.Model.RepoInterfaces {
 
 		ChangeInitiative GetBy(int id);
 
-		void Add(ChangeInitiative u);
+		void Add(ChangeInitiative ci);
 
-		void Update(ChangeInitiative u);
+		void Update(ChangeInitiative ci);
 
-		void Delete(ChangeInitiative u);
+		void Delete(ChangeInitiative ci);
 
 		void SaveChanges();
 

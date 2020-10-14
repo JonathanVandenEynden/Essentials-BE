@@ -26,15 +26,27 @@ namespace P3Backend.Data.Repositories {
 		}
 
 		public IEnumerable<ChangeInitiative> GetAll() {
-			return _changeInitiatives;
+			return _changeInitiatives
+				.Include(ci => ci.ChangeGroup)
+				.Include(ci => ci.RoadMap)
+				.Include(ci => ci.ChangeSponsor);
 		}
 
 		public ChangeInitiative GetBy(int id) {
-			return _changeInitiatives.FirstOrDefault(ci => ci.Id == id);
+			return _changeInitiatives
+				.Include(ci => ci.ChangeGroup)
+				.Include(ci => ci.RoadMap)
+				.Include(ci => ci.ChangeSponsor)
+				.FirstOrDefault(ci => ci.Id == id);
+			;
 		}
 
 		public ChangeInitiative GetByName(string name) {
-			return _changeInitiatives.FirstOrDefault(ci => ci.Name == name);
+			return _changeInitiatives
+				.Include(ci => ci.ChangeGroup)
+				.Include(ci => ci.RoadMap)
+				.Include(ci => ci.ChangeSponsor)
+				.FirstOrDefault(ci => ci.Name == name);
 		}
 
 		public void SaveChanges() {
