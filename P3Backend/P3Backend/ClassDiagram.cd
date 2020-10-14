@@ -55,47 +55,15 @@
       <FileName>Model\ChangeTypes\TechnologicalChangeType.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="P3Backend.Model.OrganizationParts.Country">
-    <Position X="9" Y="6.5" Width="2" />
+  <Class Name="P3Backend.Model.OrganizationParts.OrganizationPart">
+    <Position X="14.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\OrganizationParts\Country.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Model\OrganizationParts\OrganizationPart.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.OrganizationParts.Department">
-    <Position X="11.75" Y="6.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\OrganizationParts\Department.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.OrganizationParts.Factory">
-    <Position X="17.5" Y="6.5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\OrganizationParts\Factory.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.OrganizationParts.IOrganizationPart">
-    <Position X="14.75" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\OrganizationParts\IOrganizationPart.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.OrganizationParts.Office">
-    <Position X="14.75" Y="6.5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\OrganizationParts\Office.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.Team">
-    <Position X="20.25" Y="6.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\OrganizationParts\Team.cs</FileName>
-    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="P3Backend.Model.Questions.Answer">
     <Position X="2.5" Y="15.25" Width="1.5" />
@@ -134,6 +102,9 @@
       <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Users\Admin.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Organizations" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.Users.ChangeManager">
     <Position X="5.25" Y="1" Width="1.5" />
@@ -148,16 +119,12 @@
   <Class Name="P3Backend.Model.Users.Employee">
     <Position X="5.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAIAAAIAAAEAIAAAAAEAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Users\Employee.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Country" />
-      <Property Name="Office" />
-      <Property Name="Factory" />
-      <Property Name="Department" />
-      <Property Name="Team" />
-    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="OrganizationParts" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.IUser">
     <Position X="8.25" Y="0.75" Width="1.5" />
@@ -231,5 +198,12 @@
       <Property Name="Assesment" />
     </ShowAsAssociation>
   </Class>
+  <Enum Name="P3Backend.Model.OrganizationParts.OrganizationPartType">
+    <Position X="17.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIgAAAAAAAACAAAAAQAAAQAAAAAAA=</HashCode>
+      <FileName>Model\OrganizationParts\OrganizationPartType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

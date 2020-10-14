@@ -7,8 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Data.Mapping.OrganizationPartsConfiguration {
-	public class IOrganizationalPartConfiguration : IEntityTypeConfiguration<IOrganizationPart> {
-		public void Configure(EntityTypeBuilder<IOrganizationPart> builder) {
+	public class OrganizationalPartConfiguration : IEntityTypeConfiguration<OrganizationPart> {
+		public void Configure(EntityTypeBuilder<OrganizationPart> builder) {
 
 			builder.HasKey(o => o.Id);
 

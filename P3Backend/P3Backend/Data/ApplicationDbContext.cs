@@ -48,11 +48,8 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<ClosedQuestion>();
 
 			// OrganizationalTypes
-			modelBuilder.Entity<Country>();
-			modelBuilder.Entity<Department>();
-			modelBuilder.Entity<Factory>();
-			modelBuilder.Entity<Office>();
-			modelBuilder.Entity<Team>();
+			modelBuilder.Entity<OrganizationPart>();
+
 
 			// ChangeTypes
 			modelBuilder.Entity<TechnologicalChangeType>();
@@ -86,12 +83,8 @@ namespace P3Backend.Data {
 			modelBuilder.ApplyConfiguration(new SurveyConfiguration());
 
 			// OrganizationalParts
-			modelBuilder.ApplyConfiguration(new IOrganizationalPartConfiguration());
-			modelBuilder.ApplyConfiguration(new CountryConfiguration());
-			modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
-			modelBuilder.ApplyConfiguration(new FactoryConfiguration());
-			modelBuilder.ApplyConfiguration(new OfficeConfiguration());
-			modelBuilder.ApplyConfiguration(new TeamConfiguration());
+			modelBuilder.ApplyConfiguration(new OrganizationalPartConfiguration());
+
 
 			// ChangeTypes
 			modelBuilder.ApplyConfiguration(new IChangeTypeConfiguration());
