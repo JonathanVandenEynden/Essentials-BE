@@ -185,6 +185,7 @@
     <ShowAsAssociation>
       <Property Name="ChangeSponsor" />
       <Property Name="ChangeType" />
+      <Property Name="ChangeGroup" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="RoadMap" />
@@ -216,6 +217,9 @@
       <HashCode>AAACAAAAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Project.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ChangeInitiatives" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.RoadMapItem">
     <Position X="2.5" Y="4.5" Width="1.5" />
