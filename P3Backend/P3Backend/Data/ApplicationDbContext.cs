@@ -33,6 +33,9 @@ namespace P3Backend.Data {
 		public DbSet<ChangeGroup> ChangeGroups {
 			get; set;
 		}
+		public DbSet<Organization> Organizations {
+			get; set;
+		}
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
 		}

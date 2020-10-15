@@ -38,6 +38,7 @@ namespace P3Backend {
 			services.AddScoped<IChangeInitiativeRepository, ChangeInitiativeRepository>();
 			services.AddScoped<ISurveyRepository, SurveyRepository>();
 			services.AddScoped<IChangeGroupRepository, ChangeGroupRepository>();
+			services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 
 			services.AddControllers().AddNewtonsoftJson(options =>
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -54,9 +55,19 @@ namespace P3Backend {
 				options.Password.RequireLowercase = true;
 			});
 
-			services.AddSwaggerDocument();
+			services.AddSwaggerDocument(c => {
+				c.DocumentName = "apidocs";
+				c.Title = "EssentialsToolkit";
+				c.Version = "v1";
+				c.Description = "The essentialsToolkitAPI documentation";
+			});
 
-			services.AddOpenApiDocument(c => { c.DocumentName = "apidocs"; c.Title = "RecipeAPI"; c.Version = "v1"; c.Description = "The RecipeAPI documentationdescription."; });
+			//services.AddOpenApiDocument(c => { 
+			//	c.DocumentName = "apidocs"; 
+			//	c.Title = "EssentialsToolkit"; 
+			//	c.Version = "v1"; 
+			//	c.Description = "The essentialsToolkitAPI documentation"; 
+			//});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
