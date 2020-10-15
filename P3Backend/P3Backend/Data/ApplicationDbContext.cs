@@ -15,8 +15,34 @@ using P3Backend.Model.Users;
 namespace P3Backend.Data {
 	public class ApplicationDbContext : IdentityDbContext {
 
-		public DbSet<IUser> Users { get; set; }
-		public DbSet<ChangeInitiative> ChangeInitiatives { get; set; }
+		public DbSet<IUser> Users {
+			get; set;
+		}
+		public DbSet<ChangeManager> ChangeManagers {
+			get; set;
+		}
+		public DbSet<Employee> Employees {
+			get; set;
+		}
+		public DbSet<ChangeInitiative> ChangeInitiatives {
+			get; set;
+		}
+		public DbSet<Survey> Surveys {
+			get; set;
+		}
+		public DbSet<ChangeGroup> ChangeGroups {
+			get; set;
+		}
+		public DbSet<Organization> Organizations {
+			get; set;
+		}
+		public DbSet<Project> Projects {
+			get; set;
+		}
+		public DbSet<RoadMapItem> RoadMapItems {
+			get; set;
+		}
+
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
 		}
@@ -38,11 +64,8 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<ClosedQuestion>();
 
 			// OrganizationalTypes
-			modelBuilder.Entity<Country>();
-			modelBuilder.Entity<Department>();
-			modelBuilder.Entity<Factory>();
-			modelBuilder.Entity<Office>();
-			modelBuilder.Entity<Team>();
+			modelBuilder.Entity<OrganizationPart>();
+
 
 			// ChangeTypes
 			modelBuilder.Entity<TechnologicalChangeType>();
@@ -76,12 +99,8 @@ namespace P3Backend.Data {
 			modelBuilder.ApplyConfiguration(new SurveyConfiguration());
 
 			// OrganizationalParts
-			modelBuilder.ApplyConfiguration(new IOrganizationalPartConfiguration());
-			modelBuilder.ApplyConfiguration(new CountryConfiguration());
-			modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
-			modelBuilder.ApplyConfiguration(new FactoryConfiguration());
-			modelBuilder.ApplyConfiguration(new OfficeConfiguration());
-			modelBuilder.ApplyConfiguration(new TeamConfiguration());
+			modelBuilder.ApplyConfiguration(new OrganizationalPartConfiguration());
+
 
 			// ChangeTypes
 			modelBuilder.ApplyConfiguration(new IChangeTypeConfiguration());

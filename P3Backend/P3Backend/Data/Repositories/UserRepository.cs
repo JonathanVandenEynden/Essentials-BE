@@ -1,4 +1,5 @@
-﻿using P3Backend.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using P3Backend.Model;
 using P3Backend.Model.RepoInterfaces;
 using System;
 using System.Collections.Generic;
@@ -7,32 +8,41 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Data.Repositories {
 	public class UserRepository : IUserRepository {
+
+		private readonly ApplicationDbContext _context;
+		private readonly DbSet<IUser> _users;
+
+		public UserRepository(ApplicationDbContext context) {
+			_context = context;
+			_users = _context.Users;
+		}
+
 		public void Add(IUser u) {
-			throw new NotImplementedException();
+			_users.Add(u);
 		}
 
 		public void Delete(IUser u) {
-			throw new NotImplementedException();
+			_users.Remove(u);
 		}
 
 		public IEnumerable<IUser> GetAll() {
-			throw new NotImplementedException();
+			return _users;
 		}
 
 		public IUser GetBy(int id) {
-			throw new NotImplementedException();
+			return _users.FirstOrDefault(u => u.Id == id);
 		}
 
 		public IUser GetByEmail(string email) {
-			throw new NotImplementedException();
+			return _users.FirstOrDefault(u => u.Email == email);
 		}
 
 		public void SaveChanges() {
-			throw new NotImplementedException();
+			_context.SaveChanges();
 		}
 
 		public void Update(IUser u) {
-			throw new NotImplementedException();
+			_users.Update(u);
 		}
 	}
 }

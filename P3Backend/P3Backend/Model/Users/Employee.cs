@@ -4,15 +4,13 @@ using System.ComponentModel;
 
 namespace P3Backend.Model.Users {
 	public class Employee : IUser {
-		public Country Country { get; set; }
-		public Office Office { get; set; }
-		public Factory Factory { get; set; }
-		public Department Department { get; set; }
-		public Team Team { get; set; }
+		public List<OrganizationPart> OrganizationParts {
+			get; set;
+		}
 
 
 		public Employee(string firstName, string lastName, string email) : base(firstName, lastName, email) {
-
+			this.OrganizationParts = new List<OrganizationPart>();
 		}
 
 		protected Employee() {

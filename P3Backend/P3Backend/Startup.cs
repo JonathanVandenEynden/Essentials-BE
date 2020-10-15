@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using P3Backend.Data;
+using P3Backend.Data.Repositories;
+using P3Backend.Model.RepoInterfaces;
 
 namespace P3Backend {
 	public class Startup {
@@ -20,7 +22,9 @@ namespace P3Backend {
 			Configuration = configuration;
 		}
 
-		public IConfiguration Configuration { get; }
+		public IConfiguration Configuration {
+			get;
+		}
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
@@ -28,13 +32,44 @@ namespace P3Backend {
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 			services.AddScoped<DataInitializer>();
-			services.AddControllers();
+			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+			services.AddScoped<IChangeManagerRepository, ChangeManagerRepository>();
+			services.AddScoped<IChangeInitiativeRepository, ChangeInitiativeRepository>();
+			services.AddScoped<ISurveyRepository, SurveyRepository>();
+			services.AddScoped<IChangeGroupRepository, ChangeGroupRepository>();
+			services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+			services.AddScoped<IProjectRepository, ProjectRepository>();
+			services.AddScoped<IRoadmapItemRepository, RoadMapItemRepository>();
+
+			services.AddControllers().AddNewtonsoftJson(options =>
+				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+			);
 
 			services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
-			services.AddSwaggerDocument();
+			services.Configure<IdentityOptions>(options => {
+				// Password settings
+				options.Password.RequireDigit = true;
+				options.Password.RequiredLength = 8;
+				options.Password.RequireNonAlphanumeric = false;
+				options.Password.RequireUppercase = true;
+				options.Password.RequireLowercase = true;
+			});
 
-			services.AddOpenApiDocument(c => { c.DocumentName = "apidocs"; c.Title = "RecipeAPI"; c.Version = "v1"; c.Description = "The RecipeAPI documentationdescription."; });
+			services.AddSwaggerDocument(c => {
+				c.DocumentName = "apidocs";
+				c.Title = "EssentialsToolkit";
+				c.Version = "v1";
+				c.Description = "The essentialsToolkitAPI documentation";
+			});
+
+			//services.AddOpenApiDocument(c => { 
+			//	c.DocumentName = "apidocs"; 
+			//	c.Title = "EssentialsToolkit"; 
+			//	c.Version = "v1"; 
+			//	c.Description = "The essentialsToolkitAPI documentation"; 
+			//});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
