@@ -30,6 +30,9 @@ namespace P3Backend.Data {
 		public DbSet<Survey> Surveys {
 			get; set;
 		}
+		public DbSet<ChangeGroup> ChangeGroups {
+			get; set;
+		}
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
 		}
