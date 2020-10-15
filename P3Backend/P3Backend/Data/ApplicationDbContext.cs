@@ -27,6 +27,9 @@ namespace P3Backend.Data {
 		public DbSet<ChangeInitiative> ChangeInitiatives {
 			get; set;
 		}
+		public DbSet<Survey> Surveys {
+			get; set;
+		}
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
 		}

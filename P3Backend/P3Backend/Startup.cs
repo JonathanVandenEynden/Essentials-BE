@@ -36,6 +36,7 @@ namespace P3Backend {
 			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 			services.AddScoped<IChangeManagerRepository, ChangeManagerRepository>();
 			services.AddScoped<IChangeInitiativeRepository, ChangeInitiativeRepository>();
+			services.AddScoped<ISurveyRepository, SurveyRepository>();
 
 			services.AddControllers().AddNewtonsoftJson(options =>
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
