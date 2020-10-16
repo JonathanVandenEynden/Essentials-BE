@@ -2,38 +2,65 @@
 using P3Backend.Model.Users;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class ChangeInitiative {
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public String Description { get; set; }
+
+		private DateTime _endDate;
+		private DateTime _startDate;
+
+		public int Id {
+			get; set;
+		}
+		[Required]
+		public string Name {
+			get; set;
+		}
+		[Required]
+		public String Description {
+			get; set;
+		}
+		[Required]
 		public DateTime StartDate {
-			get { return StartDate; }
+			get {
+				return _startDate;
+			}
 			set {
 				if (value <= DateTime.Now)
 					throw new ArgumentException("Start must be in the future");
 				else
-					_ = value;
+					_startDate = value;
 			}
 		}
+		[Required]
 		public DateTime EndDate {
-			get { return EndDate; }
+			get {
+				return _endDate;
+			}
 			set {
 				if (value <= StartDate)
 					throw new ArgumentException("End must be after start");
 				else
-					_ = value;
+					_endDate = value;
 			}
 		}
 
-		public ChangeGroup ChangeGroup { get; set; }
-		public IUser ChangeSponsor { get; set; } // could also be another CM
-		public IChangeType ChangeType { get; set; }
-		public IList<RoadMapItem> RoadMap { get; set; }
+		public ChangeGroup ChangeGroup {
+			get; set;
+		}
+		public IUser ChangeSponsor {
+			get; set;
+		} // could also be another CM
+		public IChangeType ChangeType {
+			get; set;
+		}
+		public IList<RoadMapItem> RoadMap {
+			get; set;
+		}
 
 		public ChangeInitiative(string name, string desc, DateTime start, DateTime end, IUser sponsor, IChangeType changeType) {
 			Name = name;

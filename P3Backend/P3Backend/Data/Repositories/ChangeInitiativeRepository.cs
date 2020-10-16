@@ -49,6 +49,14 @@ namespace P3Backend.Data.Repositories {
 				.FirstOrDefault(ci => ci.Name == name);
 		}
 
+		public IEnumerable<ChangeInitiative> GetForUserId(int userId) {
+			return _changeInitiatives
+				.Include(ci => ci.ChangeGroup)
+				.Include(ci => ci.RoadMap)
+				.Include(ci => ci.ChangeSponsor)
+				.Where(c => c.ChangeGroup.Users.Any(u => u.Id == userId));
+		}
+
 		public void SaveChanges() {
 			_context.SaveChanges();
 		}

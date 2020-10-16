@@ -117,7 +117,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.Users.Employee">
-    <Position X="5.25" Y="3" Width="1.5" />
+    <Position X="5.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Users\Employee.cs</FileName>
@@ -150,9 +150,9 @@
       <FileName>Model\ChangeInitiative.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="ChangeGroup" />
       <Property Name="ChangeSponsor" />
       <Property Name="ChangeType" />
-      <Property Name="ChangeGroup" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="RoadMap" />
@@ -180,6 +180,21 @@
   </Class>
   <Class Name="P3Backend.Model.Project">
     <Position X="18.5" Y="2.25" Width="1.5" />
+    <AssociationLine Name="ChangeInitiatives" Type="P3Backend.Model.ChangeInitiative" ManuallyRouted="true">
+      <Path>
+        <Point X="19.25" Y="2.25" />
+        <Point X="19.25" Y="2" />
+        <Point X="13" Y="2" />
+        <Point X="13" Y="3.434" />
+        <Point X="9.083" Y="3.434" Type="JumpStart" />
+        <Point X="8.917" Y="3.434" Type="JumpEnd" />
+        <Point X="7" Y="3.434" />
+        <Point X="7" Y="2.689" />
+        <Point X="6.083" Y="2.689" Type="JumpStart" />
+        <Point X="5.917" Y="2.689" Type="JumpEnd" />
+        <Point X="3.75" Y="2.689" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Project.cs</FileName>
