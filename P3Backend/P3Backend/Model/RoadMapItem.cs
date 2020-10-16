@@ -3,7 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace P3Backend.Model {
 	public class RoadMapItem {
-		public int Id { get; set; }
+        private DateTime _startDate;
+        private DateTime _endDate;
+
+        public int Id { get; set; }
 		[Required]
 		public string Title { get; set; }
 		public IAssesment Assesment { get; set; }
@@ -12,23 +15,23 @@ namespace P3Backend.Model {
 
 		[Required]
 		public DateTime StartDate {
-			get { return StartDate; }
+			get { return _startDate; }
 			set {
-				if (value <= DateTime.Now)
+				if (value < DateTime.Now)
 					throw new ArgumentException("Start must be in the future");
 				else
-					_ = value;
+					_startDate = value;
 			}
 		}
 
 		[Required]
 		public DateTime EndDate {
-			get { return EndDate; }
+			get { return _endDate; }
 			set {
 				if (value <= StartDate)
 					throw new ArgumentException("End must be after start");
 				else
-					_ = value;
+					_endDate = value;
 			}
 		}
 
