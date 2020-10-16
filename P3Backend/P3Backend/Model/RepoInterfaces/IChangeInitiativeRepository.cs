@@ -18,5 +18,9 @@ namespace P3Backend.Model.RepoInterfaces {
 		void SaveChanges();
 
 		ChangeInitiative GetByName(string name);
+
+		IEnumerable<ChangeInitiative> GetForUserId(int userId);
+
+
 	}
 }
