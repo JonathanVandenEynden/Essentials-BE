@@ -117,7 +117,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.Users.Employee">
-    <Position X="5.25" Y="3" Width="1.5" />
+    <Position X="5.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Users\Employee.cs</FileName>

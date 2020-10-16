@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class ChangeInitiative {
+
+		private DateTime _endDate;
+		private DateTime _startDate;
+
 		public int Id {
 			get; set;
 		}
@@ -23,25 +27,25 @@ namespace P3Backend.Model {
 		[Required]
 		public DateTime StartDate {
 			get {
-				return StartDate;
+				return _startDate;
 			}
 			set {
 				if (value <= DateTime.Now)
 					throw new ArgumentException("Start must be in the future");
 				else
-					_ = value;
+					_startDate = value;
 			}
 		}
 		[Required]
 		public DateTime EndDate {
 			get {
-				return EndDate;
+				return _endDate;
 			}
 			set {
 				if (value <= StartDate)
 					throw new ArgumentException("End must be after start");
 				else
-					_ = value;
+					_endDate = value;
 			}
 		}
 

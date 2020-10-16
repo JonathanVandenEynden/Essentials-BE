@@ -22,10 +22,15 @@ namespace P3Backend.Controllers {
 		private readonly IProjectRepository _projectRepo;
 		private readonly IChangeManagerRepository _changeManagerRepo;
 
-		public ChangeInitiativesController(IChangeInitiativeRepository changeRepo,
-			IUserRepository userRepo) {
+		public ChangeInitiativesController(
+			IChangeInitiativeRepository changeRepo,
+			IUserRepository userRepo,
+			IProjectRepository projectRepo,
+			IChangeManagerRepository changeManagerRepo) {
 			_changeRepo = changeRepo;
 			_userRepo = userRepo;
+			_projectRepo = projectRepo;
+			_changeManagerRepo = changeManagerRepo;
 
 		}
 
@@ -38,7 +43,6 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public IEnumerable<ChangeInitiative> getChangeInitiatives(int userId) {
 			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(userId);
-
 
 			return changes;
 		}
@@ -99,6 +103,7 @@ namespace P3Backend.Controllers {
 
 				Project p = _projectRepo.GetBy(projectId);
 				ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
+
 
 				ChangeInitiative newCi = new ChangeInitiative(dto.Name, dto.Description, dto.StartDate, dto.EndDate, sponsor, type);
 
