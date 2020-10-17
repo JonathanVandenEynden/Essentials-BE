@@ -10,11 +10,11 @@ namespace P3Backend.Model.RepoInterfaces {
 
 		Organization GetBy(int id);
 
-		void Add(Organization ci);
+		void Add(Organization o);
 
-		void Update(Organization ci);
+		void Update(Organization o);
 
-		void Delete(Organization ci);
+		void Delete(Organization o);
 
 		void SaveChanges();
 

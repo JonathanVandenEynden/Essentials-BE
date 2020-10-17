@@ -16,12 +16,12 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			/*_dbContext.Database.EnsureDeleted();
+			_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
 
-                #region Surveys
-                Survey survey1 = new Survey();
-				Survey survey2 = new Survey();				
+				#region Surveys
+				Survey survey1 = new Survey();
+				Survey survey2 = new Survey();
 				#endregion
 
 				#region RoadmapItems
@@ -30,12 +30,12 @@ namespace P3Backend.Data {
 				roadMapItem1.Assesment = survey1;
 				roadMapItem2.Assesment = survey2;
 				var roadmapItems = new List<RoadMapItem> { roadMapItem1, roadMapItem2 };
-				_dbContext.AddRange(roadmapItems);				
-                #endregion
+				_dbContext.AddRange(roadmapItems);
+				#endregion
 
-                _dbContext.SaveChanges();
+				_dbContext.SaveChanges();
 				Console.WriteLine("Database created");
-			}*/
+			}
 		}
 	}
 }
