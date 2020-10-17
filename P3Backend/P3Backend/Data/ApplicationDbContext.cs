@@ -42,6 +42,9 @@ namespace P3Backend.Data {
 		public DbSet<RoadMapItem> RoadMapItems {
 			get; set;
 		}
+		public DbSet<Admin> Admins {
+			get; set;
+		}
 
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
