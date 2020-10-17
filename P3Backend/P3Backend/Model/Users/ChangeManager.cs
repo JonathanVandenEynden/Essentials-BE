@@ -16,6 +16,10 @@ namespace P3Backend.Model.Users {
 		protected ChangeManager() {
 			// EF
 		}
+
+		public ChangeManager(Employee e) : this(e.FirstName, e.LastName, e.Email) {
+			OrganizationParts = e.OrganizationParts;
+		}
 	}
 
 }
