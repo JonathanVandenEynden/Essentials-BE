@@ -14,6 +14,8 @@ namespace P3Backend.Data.Mapping {
 
 			builder.Property(o => o.Name).IsRequired();
 
+			builder.HasMany(o => o.Employees).WithOne();
+			builder.HasMany(o => o.ChangeManagers).WithOne();
 			builder.HasOne(o => o.Portfolio);
 		}
 	}

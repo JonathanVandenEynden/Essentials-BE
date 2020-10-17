@@ -35,6 +35,7 @@ namespace P3Backend {
 			services.AddScoped<IUserRepository, UserRepository>();
 			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 			services.AddScoped<IChangeManagerRepository, ChangeManagerRepository>();
+			services.AddScoped<IAdminRepository, AdminRepository>();
 			services.AddScoped<IChangeInitiativeRepository, ChangeInitiativeRepository>();
 			services.AddScoped<ISurveyRepository, SurveyRepository>();
 			services.AddScoped<IChangeGroupRepository, ChangeGroupRepository>();

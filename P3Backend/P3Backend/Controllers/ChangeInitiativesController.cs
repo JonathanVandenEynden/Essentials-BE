@@ -41,7 +41,7 @@ namespace P3Backend.Controllers {
 		/// <returns>list of changes for this user</returns>
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public IEnumerable<ChangeInitiative> getChangeInitiatives(int userId) {
+		public IEnumerable<ChangeInitiative> GetChangeInitiatives(int userId) {
 			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(userId);
 
 			return changes;
@@ -82,22 +82,14 @@ namespace P3Backend.Controllers {
 				return NotFound();
 			}
 
-			IChangeType type;
-
-			switch (dto.ChangeType) {
-				case "personal":
-				type = new PersonalChangeType();
-				break;
-				case "economical":
-				type = new EconomicalChangeType();
-				break;
-				case "technological":
-				type = new TechnologicalChangeType();
-				break;
-				default:
-				type = new OrganizationalChangeType();
-				break;
+			IChangeType type = dto.ChangeType switch
+			{
+				"personal" => new PersonalChangeType(),
+				"economical" => new EconomicalChangeType(),
+				"technological" => new TechnologicalChangeType(),
+				_ => new OrganizationalChangeType(),
 			};
+			;
 
 			try {
 
