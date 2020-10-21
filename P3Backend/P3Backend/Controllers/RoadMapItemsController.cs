@@ -47,13 +47,13 @@ namespace P3Backend.Controllers {
 		[HttpGet("{changeInitiativeId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public IEnumerable<RoadMapItem> GetRoadMapItemsForChangeInitiative(int changeInitiativeId) {
+		public ActionResult<IEnumerable<RoadMapItem>> GetRoadMapItemsForChangeInitiative(int changeInitiativeId) {
 			ChangeInitiative ci = _changeInitiativeRepo.GetBy(changeInitiativeId);
 
 			if (ci == null) {
-				return new List<RoadMapItem>();
+				return NotFound();
 			}
-			return ci.RoadMap;
+			return ci.RoadMap.ToList();
 		}
 
 		[HttpPost]
