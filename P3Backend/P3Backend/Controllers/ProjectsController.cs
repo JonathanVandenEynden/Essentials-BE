@@ -11,6 +11,8 @@ using P3Backend.Model.RepoInterfaces;
 namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Produces("application/json")]
+
 	public class ProjectsController : ControllerBase {
 
 		private readonly IProjectRepository _projectRepo;
