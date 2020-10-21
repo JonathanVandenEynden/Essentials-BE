@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model.RepoInterfaces {
-	interface IEmployeeRepository {
+	public interface IEmployeeRepository {
 		IEnumerable<Employee> GetAll();
 
 		Employee GetBy(int id);
