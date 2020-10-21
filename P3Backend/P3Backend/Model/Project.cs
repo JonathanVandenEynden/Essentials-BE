@@ -12,8 +12,13 @@ namespace P3Backend.Model {
 		public string Name { get; set; }
 		public List<ChangeInitiative> ChangeInitiatives { get; set; }
 
-		public Project() {
+		public Project(string name) {
+			Name = name;
 			ChangeInitiatives = new List<ChangeInitiative>();
+		}
+
+		protected Project() {
+			// EF
 		}
 
 	}
