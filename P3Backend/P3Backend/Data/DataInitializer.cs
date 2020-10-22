@@ -39,8 +39,6 @@ namespace P3Backend.Data {
 				roadMapItem2.Assesment = survey2;
 				roadMapItem3.Assesment = survey3;
 				roadMapItem4.Assesment = survey4;
-				//var roadmapItems = new List<RoadMapItem> { roadMapItem1, roadMapItem2 };
-				//_dbContext.AddRange(roadmapItems);
 				#endregion
 
 				#region OrganizationalChangeTypes
@@ -78,6 +76,8 @@ namespace P3Backend.Data {
 
                 #region ChangeManagers
                 ChangeManager changeManagerSuktrit = new ChangeManager("Sukrit", "Bhattacharya", "Sukrit.bhattacharya@essentials.com");
+				changeManagerSuktrit.CreatedChangeInitiatives.Add(changeInitiative1);
+				changeManagerSuktrit.CreatedChangeInitiatives.Add(changeInitiative2);
 				changeManagerSuktrit.OrganizationParts.Add(organizationPart1);
 				management.Users.Add(changeManagerSuktrit);				
 				_dbContext.ChangeGroups.Add(management);

@@ -39,11 +39,21 @@ namespace P3Backend.Controllers {
 		/// </summary>
 		/// <param name="userId"></param>
 		/// <returns>list of changes for this user</returns>
-		[HttpGet]
+		/*[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public IEnumerable<ChangeInitiative> GetChangeInitiatives(int userId) {
 			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(userId);
 
+			return changes;
+		}*/
+
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public IEnumerable<ChangeInitiative> GetChangeInitiativesUser() {
+			IUser user = _userRepo.GetByEmail("Sukrit.bhattacharya@essentials.com");
+			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(user.Id);
+			Console.WriteLine("test");
+			Console.WriteLine(changes.Count());
 			return changes;
 		}
 
