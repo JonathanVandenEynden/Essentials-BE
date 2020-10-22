@@ -12,7 +12,7 @@
 			get; set;
 		}
 
-		protected OrganizationPart(string name, OrganizationPartType type) {
+		public OrganizationPart(string name, OrganizationPartType type) {
 			Name = name;
 			Type = type;
 		}
