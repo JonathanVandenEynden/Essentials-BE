@@ -46,16 +46,22 @@ namespace P3Backend.Data {
 				EconomicalChangeType economicalChange = new EconomicalChangeType();
 				PersonalChangeType personalChange = new PersonalChangeType();
 				TechnologicalChangeType technologicalChange = new TechnologicalChangeType();
-                #endregion
+				#endregion
 
-                #region ChangeInitiatives
-                Employee sponsor = new Employee("Sponser", "Sponser", "sponser@essentials.com");
+				#region ChangeGroups
+				ChangeGroup management = new ChangeGroup("Management");
+				#endregion
+
+				#region ChangeInitiatives
+				Employee sponsor = new Employee("Sponser", "Sponser", "sponser@essentials.com");
 				ChangeInitiative changeInitiative1 = new ChangeInitiative("New Catering", "A new catering will be added to the cafetari on the ground floor", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, organizationalChange);
 				ChangeInitiative changeInitiative2 = new ChangeInitiative("Expansion German Market", "We will try to expand more on the German Market", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, economicalChange);
 				changeInitiative1.RoadMap.Add(roadMapItem1);
 				changeInitiative1.RoadMap.Add(roadMapItem2);
 				changeInitiative2.RoadMap.Add(roadMapItem3);
 				changeInitiative2.RoadMap.Add(roadMapItem4);
+				changeInitiative1.ChangeGroup = management;
+				changeInitiative2.ChangeGroup = management;
 				#endregion
 
 				#region Projects
@@ -68,11 +74,7 @@ namespace P3Backend.Data {
 
 				#region OrganizationParts
 				OrganizationPart organizationPart1 = new OrganizationPart("Giga Berlin", OrganizationPartType.FACTORY);
-				#endregion
-
-				#region ChangeGroups
-				ChangeGroup management = new ChangeGroup("Management");
-                #endregion
+				#endregion				
 
                 #region ChangeManagers
                 ChangeManager changeManagerSuktrit = new ChangeManager("Sukrit", "Bhattacharya", "Sukrit.bhattacharya@essentials.com");
