@@ -18,6 +18,7 @@ namespace P3Backend.Model {
 			Feedback.PossibleAnswers.Add(new Answer("Bad"));
 			Feedback.PossibleAnswers.Add(new Answer("OK"));
 			Feedback.PossibleAnswers.Add(new Answer("Good"));
+
 		}
 
 	}

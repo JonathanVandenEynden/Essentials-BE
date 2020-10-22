@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
 using P3Backend.Model.OrganizationParts;
+using P3Backend.Model.Questions;
 using P3Backend.Model.Users;
 
 namespace P3Backend.Data {
@@ -30,8 +31,12 @@ namespace P3Backend.Data {
 				Survey survey4 = new Survey();
 				#endregion
 
-				#region RoadmapItems
-				RoadMapItem roadMapItem1 = new RoadMapItem("Step 1", DateTime.Now.AddDays(1), DateTime.Now.AddDays(1).AddHours(1));
+				#region Questions
+				survey1.Questions.Add(new ClosedQuestion("closedQuestions1", 5));
+                #endregion
+
+                #region RoadmapItems
+                RoadMapItem roadMapItem1 = new RoadMapItem("Step 1", DateTime.Now.AddDays(1), DateTime.Now.AddDays(1).AddHours(1));
 				RoadMapItem roadMapItem2 = new RoadMapItem("Step 2", DateTime.Now.AddDays(2), DateTime.Now.AddDays(2).AddHours(1));
 				RoadMapItem roadMapItem3 = new RoadMapItem("Step 3", DateTime.Now.AddDays(3), DateTime.Now.AddDays(3).AddHours(1));
 				RoadMapItem roadMapItem4 = new RoadMapItem("Step 4", DateTime.Now.AddDays(4), DateTime.Now.AddDays(4).AddHours(1));
