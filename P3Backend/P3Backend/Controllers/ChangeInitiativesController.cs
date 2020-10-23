@@ -124,18 +124,29 @@ namespace P3Backend.Controllers {
 			}
 		}
 
-
+		/// <summary>
+		/// Delete a changeInitiative with a given id
+		/// </summary>
+		/// <param name="id">id of changeinitiative that has to be deleted</param>
+		/// <returns>NoContent</returns>
 		[HttpDelete("{id}")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public IActionResult DeleteChangeInitiative(int id) {
-			ChangeInitiative changeInitiative = _changeRepo.GetBy(id);
+            try {
+				ChangeInitiative changeInitiative = _changeRepo.GetBy(id);
 
-			if(changeInitiative == null) {
-				return NotFound("ChangeInitiative does not exist or is allready deleted");
-            }
+				if (changeInitiative == null) {
+					return NotFound("ChangeInitiative does not exist or is allready deleted");
+				}
 
-			_changeRepo.Delete(changeInitiative);
-			_changeRepo.SaveChanges();
-			return NoContent();
+				_changeRepo.Delete(changeInitiative);
+				_changeRepo.SaveChanges();
+				return NoContent();
+			} catch(Exception e) {
+				return BadRequest(e.Message);
+            }			
         }
 	}
 }
