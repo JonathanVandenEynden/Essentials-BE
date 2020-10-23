@@ -122,8 +122,20 @@ namespace P3Backend.Controllers {
 			catch {
 				return BadRequest();
 			}
-
-
 		}
+
+
+		[HttpDelete("{id}")]
+		public IActionResult DeleteChangeInitiative(int id) {
+			ChangeInitiative changeInitiative = _changeRepo.GetBy(id);
+
+			if(changeInitiative == null) {
+				return NotFound("ChangeInitiative does not exist or is allready deleted");
+            }
+
+			_changeRepo.Delete(changeInitiative);
+			_changeRepo.SaveChanges();
+			return NoContent();
+        }
 	}
 }
