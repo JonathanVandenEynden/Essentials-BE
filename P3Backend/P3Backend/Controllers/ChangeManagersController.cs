@@ -38,7 +38,7 @@ namespace P3Backend.Controllers {
 			Organization o = _organizationRepo.GetBy(organizationId);
 
 			if (o == null) {
-				return NotFound();
+				return NotFound("change manager not found");
 			}
 
 			return o.ChangeManagers;
@@ -74,7 +74,15 @@ namespace P3Backend.Controllers {
 
 				Employee empl = _employeeRepo.GetBy(employeeId);
 
+				if (empl == null) {
+					return NotFound("Employee not found");
+				}
+
 				Organization o = _organizationRepo.GetAll().Where(o => o.Employees.Any(e => e.Id == empl.Id)).FirstOrDefault();
+
+				if (o == null) {
+					return NotFound("There is no organization with this employee");
+				}
 
 				ChangeManager newCm = new ChangeManager(empl);
 

@@ -36,7 +36,7 @@ namespace P3Backend.Controllers {
 			Organization o = _organizationRepo.GetBy(organizationId);
 
 			if (o == null) {
-				return NotFound();
+				return NotFound("Organization not found");
 			}
 			return o.Portfolio.Projects;
 		}
@@ -52,7 +52,7 @@ namespace P3Backend.Controllers {
 			Project p = _projectRepo.GetBy(projectId);
 
 			if (p == null) {
-				return NotFound();
+				return NotFound("Project not found");
 			}
 			return p;
 		}
@@ -65,6 +65,10 @@ namespace P3Backend.Controllers {
 			try {
 				Organization o = _organizationRepo.GetBy(organizationId);
 
+				if (o == null) {
+					return NotFound("Organization not found");
+				}
+
 				Project newP = new Project(dto.Name);
 
 				o.Portfolio.Projects.Add(newP);
@@ -73,8 +77,8 @@ namespace P3Backend.Controllers {
 
 				return CreatedAtAction(nameof(GetProjectById), new { projectId = newP.Id }, newP);
 			}
-			catch {
-				return BadRequest();
+			catch (Exception e) {
+				return BadRequest(e.Message);
 			}
 
 		}
