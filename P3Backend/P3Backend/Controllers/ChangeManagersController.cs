@@ -32,7 +32,7 @@ namespace P3Backend.Controllers {
 		/// <param name="organizationId"></param>
 		/// <returns></returns>
 		[Route("[action]/{organizationId}")]
-		[HttpGet("{organizationId}")]
+		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public ActionResult<IEnumerable<ChangeManager>> GetChangeManagersFromOrganization(int organizationId) {
 			Organization o = _organizationRepo.GetBy(organizationId);

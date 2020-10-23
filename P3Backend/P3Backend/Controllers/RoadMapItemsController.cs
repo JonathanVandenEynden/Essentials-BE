@@ -44,7 +44,7 @@ namespace P3Backend.Controllers {
 		/// <param name="changeInitiativeId"></param>
 		/// <returns></returns>
 		[Route("[action]/{changeInitiativeId}")]
-		[HttpGet("{changeInitiativeId}")]
+		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public ActionResult<IEnumerable<RoadMapItem>> GetRoadMapItemsForChangeInitiative(int changeInitiativeId) {
