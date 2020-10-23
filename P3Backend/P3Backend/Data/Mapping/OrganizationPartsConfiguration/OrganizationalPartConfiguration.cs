@@ -13,6 +13,8 @@ namespace P3Backend.Data.Mapping.OrganizationPartsConfiguration {
 			builder.HasKey(o => o.Id);
 
 			builder.Property(o => o.Name).IsRequired();
+
+			builder.HasMany(o => o.Users).
 		}
 	}
 }
