@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P3Backend.Model.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace P3Backend.Model.DTO_s {
 		public DateTime EndDate {
 			get; set;
 		}
-		public int SponsorId {
+		public EmployeeDTO Sponsor {
 			get; set;
 		}
 		public string ChangeType {

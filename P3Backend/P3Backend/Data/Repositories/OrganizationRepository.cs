@@ -28,14 +28,14 @@ namespace P3Backend.Data.Repositories {
 		public IEnumerable<Organization> GetAll() {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
-				.Include(o => o.Employees)
+				.Include(o => o.Employees).ThenInclude(e => e.OrganizationParts)
 				.Include(o => o.ChangeManagers);
 		}
 
 		public Organization GetBy(int id) {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
-				.Include(o => o.Employees)
+				.Include(o => o.Employees).ThenInclude(e => e.OrganizationParts)
 				.Include(o => o.ChangeManagers)
 				.FirstOrDefault(o => o.Id == id);
 		}
@@ -43,7 +43,7 @@ namespace P3Backend.Data.Repositories {
 		public Organization GetByName(string name) {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
-				.Include(o => o.Employees)
+				.Include(o => o.Employees).ThenInclude(e => e.OrganizationParts)
 				.Include(o => o.ChangeManagers)
 				.FirstOrDefault(o => o.Name == name);
 		}

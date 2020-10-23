@@ -45,6 +45,9 @@ namespace P3Backend.Data {
 		public DbSet<Admin> Admins {
 			get; set;
 		}
+		public DbSet<OrganizationPart> OrganizationParts {
+			get; set;
+		}
 
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {

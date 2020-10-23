@@ -86,7 +86,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public IActionResult PostChangeInitiative(int projectId, int changeManagerId, ChangeInitiativeDTO dto) {
-			IUser sponsor = _userRepo.GetBy(dto.SponsorId);
+			IUser sponsor = _userRepo.GetByEmail(dto.Sponsor.Email);
 
 			if (sponsor == null) {
 				return NotFound();
