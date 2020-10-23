@@ -8,7 +8,7 @@ namespace P3Backend.Model.OrganizationParts {
 
 		public string Name { get; set; }
 
-		public IList<UserOrganizationPart> UserOrganizationParts { get; set; }
+		public IList<EmployeeOrganizationPart> EmployeeOrganizationParts { get; set; }
 
 		public OrganizationPartType Type { get; set; }
 
@@ -16,7 +16,7 @@ namespace P3Backend.Model.OrganizationParts {
 			Name = name;
 			Type = type;
 
-			UserOrganizationParts = new List<UserOrganizationPart>();
+			EmployeeOrganizationParts = new List<EmployeeOrganizationPart>();
 		}
 		protected OrganizationPart() {
 			// EF

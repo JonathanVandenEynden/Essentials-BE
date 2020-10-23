@@ -10,6 +10,7 @@ using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
 using P3Backend.Model.OrganizationParts;
 using P3Backend.Model.Questions;
+using P3Backend.Model.TussenTabellen;
 using P3Backend.Model.Users;
 
 namespace P3Backend.Data {
@@ -91,6 +92,18 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<Portfolio>();
 			modelBuilder.Entity<Project>();
 			modelBuilder.Entity<RoadMapItem>();
+
+			//Tussentabellen
+			modelBuilder.Entity<EmployeeOrganizationPart>()
+				.HasKey(eo => new { eo.EmployeeId, eo.OrganizationPartId });
+			modelBuilder.Entity<EmployeeOrganizationPart>()
+				.HasOne(eo => eo.Employee)
+				.WithMany(e => e.EmployeeOrganizationParts)
+				.HasForeignKey(eo => eo.EmployeeId);
+			modelBuilder.Entity<EmployeeOrganizationPart>()
+				.HasOne(eo => eo.OrganizationPart)
+				.WithMany(o => o.EmployeeOrganizationParts)
+				.HasForeignKey(eo => eo.OrganizationPartId);
 
 			#region configurations
 

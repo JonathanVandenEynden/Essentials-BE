@@ -38,7 +38,7 @@ namespace P3Backend.Controllers {
 			Organization o = _organizationRepo.GetBy(organizationId);
 
 			if (o == null) {
-				return NotFound("change manager not found");
+				return NotFound("organization not found");
 			}
 
 			return o.ChangeManagers;
@@ -55,7 +55,7 @@ namespace P3Backend.Controllers {
 			ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
 
 			if (cm == null) {
-				return NotFound();
+				return NotFound("Change manager not found");
 			}
 
 			return cm;

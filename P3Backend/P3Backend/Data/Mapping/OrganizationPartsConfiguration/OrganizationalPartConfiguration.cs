@@ -14,7 +14,7 @@ namespace P3Backend.Data.Mapping.OrganizationPartsConfiguration {
 
 			builder.Property(o => o.Name).IsRequired();
 
-			builder.HasMany(o => o.Users).
+			builder.HasMany(o => o.EmployeeOrganizationParts).WithOne(eo => eo.OrganizationPart);
 		}
 	}
 }

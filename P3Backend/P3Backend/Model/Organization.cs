@@ -17,6 +17,8 @@ namespace P3Backend.Model {
 		[Required]
 		public List<ChangeManager> ChangeManagers { get; set; }
 
+		public List<OrganizationPart> OrganizationParts { get; set; }
+
 		[Required]
 		public Portfolio Portfolio { get; set; }
 
@@ -25,6 +27,7 @@ namespace P3Backend.Model {
 			Employees = employees;
 			ChangeManagers = new List<ChangeManager>() { cm };
 
+			OrganizationParts = new List<OrganizationPart>();
 			Portfolio = new Portfolio();
 		}
 

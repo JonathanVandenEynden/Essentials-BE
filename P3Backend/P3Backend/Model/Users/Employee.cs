@@ -5,11 +5,12 @@ using System.ComponentModel;
 
 namespace P3Backend.Model.Users {
 	public class Employee : IUser {
-		public List<UserOrganizationPart> UserOrganizationParts { get; set; }
+
+		public List<EmployeeOrganizationPart> EmployeeOrganizationParts { get; set; }
 
 
 		public Employee(string firstName, string lastName, string email) : base(firstName, lastName, email) {
-			UserOrganizationParts = new List<UserOrganizationPart>();
+			EmployeeOrganizationParts = new List<EmployeeOrganizationPart>();
 		}
 
 		protected Employee() {
