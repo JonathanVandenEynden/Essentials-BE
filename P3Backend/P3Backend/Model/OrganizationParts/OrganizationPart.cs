@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using P3Backend.Model.TussenTabellen;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace P3Backend.Model.OrganizationParts {
@@ -7,7 +8,7 @@ namespace P3Backend.Model.OrganizationParts {
 
 		public string Name { get; set; }
 
-		public IList<IUser> Users { get; set; }
+		public IList<UserOrganizationPart> UserOrganizationParts { get; set; }
 
 		public OrganizationPartType Type { get; set; }
 
@@ -15,7 +16,7 @@ namespace P3Backend.Model.OrganizationParts {
 			Name = name;
 			Type = type;
 
-			Users = new List<IUser>();
+			UserOrganizationParts = new List<UserOrganizationPart>();
 		}
 		protected OrganizationPart() {
 			// EF
