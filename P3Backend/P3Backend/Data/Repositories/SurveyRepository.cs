@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using P3Backend.Model;
 using P3Backend.Model.Questions;
 using P3Backend.Model.RepoInterfaces;
@@ -33,10 +34,12 @@ namespace P3Backend.Data.Repositories {
 
 		public Survey GetBy(int id) {
 			return _surveys
-				.Include(s => s.Questions)				
+				.Include(s => s.Questions)			
 				.Include(s => s.Feedback)
 				.FirstOrDefault(s => s.Id == id);
-		}		
+
+			
+		}	
 
 		public void SaveChanges() {
 			_context.SaveChanges();

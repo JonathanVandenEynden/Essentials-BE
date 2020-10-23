@@ -21,7 +21,7 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			_dbContext.Database.EnsureDeleted();
+			/*_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
 
 				#region Surveys
@@ -93,7 +93,7 @@ namespace P3Backend.Data {
 
                 _dbContext.SaveChanges();
 				Console.WriteLine("Database created");
-			}
+			}*/
 		}
 	}
 }

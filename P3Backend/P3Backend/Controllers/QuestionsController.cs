@@ -26,8 +26,8 @@ namespace P3Backend.Controllers
 
         [HttpGet("{surveyId}")]
         public IEnumerable<IQuestion> GetQuestionsFromSurvey(int surveyId) {
-            
-            IEnumerable<IQuestion> questions = _surveyRepository.GetBy(surveyId).Questions;
+
+            IEnumerable<IQuestion> questions = _surveyRepository.GetQuestions(surveyId);
             return questions;
         }
 
@@ -73,10 +73,5 @@ namespace P3Backend.Controllers
             _surveyRepository.SaveChanges();
             return NoContent();
         }
-
-
-
-
-
     }
 }
