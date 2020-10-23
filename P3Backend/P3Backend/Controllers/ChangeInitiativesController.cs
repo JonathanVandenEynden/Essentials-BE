@@ -50,6 +50,7 @@ namespace P3Backend.Controllers {
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public IEnumerable<ChangeInitiative> GetChangeInitiativesUser() {
+			// TODO niet meer hardcoded maken
 			IUser user = _userRepo.GetByEmail("Sukrit.bhattacharya@essentials.com");
 			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(user.Id);
 			Console.WriteLine("test");
@@ -69,7 +70,7 @@ namespace P3Backend.Controllers {
 			ChangeInitiative ci = _changeRepo.GetBy(id);
 
 			if (ci == null) {
-				return NotFound();
+				return NotFound("Change initiative not found");
 			}
 
 			return ci;
@@ -89,7 +90,7 @@ namespace P3Backend.Controllers {
 			IUser sponsor = _userRepo.GetByEmail(dto.Sponsor.Email);
 
 			if (sponsor == null) {
-				return NotFound();
+				return NotFound("Sponsor not found");
 			}
 
 			IChangeType type = dto.ChangeType switch
@@ -119,8 +120,8 @@ namespace P3Backend.Controllers {
 					id = newCi.Id
 				}, newCi);
 			}
-			catch {
-				return BadRequest();
+			catch (Exception e) {
+				return BadRequest(e.Message);
 			}
 		}
 

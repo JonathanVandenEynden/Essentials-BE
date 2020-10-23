@@ -32,7 +32,7 @@ namespace P3Backend.Controllers {
 			Organization o = _organizationRepository.GetBy(organizationId);
 
 			if (o == null) {
-				return NotFound();
+				return NotFound("Organization not found");
 			}
 
 			return o;
@@ -45,6 +45,10 @@ namespace P3Backend.Controllers {
 			try {
 
 				Admin a = _adminRepository.GetBy(AdminId);
+
+				if (a == null) {
+					return NotFound("Admin not found");
+				}
 
 				List<Employee> employees = new List<Employee>();
 
@@ -66,8 +70,8 @@ namespace P3Backend.Controllers {
 
 				return CreatedAtAction(nameof(GetOrganizationById), new { organizationId = newO.Id }, newO);
 			}
-			catch {
-				return BadRequest();
+			catch (Exception e) {
+				return BadRequest(e.Message);
 			}
 		}
 
@@ -79,7 +83,7 @@ namespace P3Backend.Controllers {
 			Organization oldO = _organizationRepository.GetBy(organizationId);
 
 			if (oldO == null) {
-				return NotFound();
+				return NotFound("Organization not found");
 			}
 
 			_organizationRepository.Delete(oldO);

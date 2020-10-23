@@ -53,7 +53,7 @@ namespace P3Backend.Controllers {
 				}
 
 			}
-			return BadRequest();
+			return BadRequest("Wrong credentials");
 		}
 
 		/// <summary>
@@ -84,7 +84,7 @@ namespace P3Backend.Controllers {
 				return BadRequest(e);
 			}
 
-			return BadRequest();
+			return BadRequest("Something went wrong");
 
 		}
 
