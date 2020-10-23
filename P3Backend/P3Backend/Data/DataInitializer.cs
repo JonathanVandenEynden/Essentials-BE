@@ -98,7 +98,6 @@ namespace P3Backend.Data {
 				//TechnologicalChangeType technologicalChange = new TechnologicalChangeType();
 				#endregion
 
-
 				#region ChangeInitiatives
 				ChangeInitiative ciNewCatering = new ChangeInitiative("New Catering", "A new catering will be added to the cafeteria on the ground floor", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, organizationalChange);
 				ChangeInitiative ciExpansion = new ChangeInitiative("Expansion German Market", "We will try to expand more on the German Market", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, economicalChange);
