@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualBasic;
 using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
@@ -25,6 +26,7 @@ namespace P3Backend.Data {
 		public async Task InitializeData() {
 			_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
+				//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
 				Admin admin = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
