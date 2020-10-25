@@ -47,12 +47,13 @@ namespace P3Backend.Controllers {
 			return changes;
 		}*/
 
+		[Route("[action]/{userId}")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public IEnumerable<ChangeInitiative> GetChangeInitiativesUser() {
+		public IEnumerable<ChangeInitiative> GetChangeInitiativesForUser(int userId = 3) {
 			// TODO niet meer hardcoded maken
 			IUser user = _userRepo.GetByEmail("Sukrit.bhattacharya@essentials.com");
-			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(user.Id);
+			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(userId);
 			Console.WriteLine("test");
 			Console.WriteLine(changes.Count());
 			return changes;
@@ -135,7 +136,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public IActionResult DeleteChangeInitiative(int id) {
-            try {
+			try {
 				ChangeInitiative changeInitiative = _changeRepo.GetBy(id);
 
 				if (changeInitiative == null) {
@@ -145,9 +146,10 @@ namespace P3Backend.Controllers {
 				_changeRepo.Delete(changeInitiative);
 				_changeRepo.SaveChanges();
 				return NoContent();
-			} catch(Exception e) {
+			}
+			catch (Exception e) {
 				return BadRequest(e.Message);
-            }			
-        }
+			}
+		}
 	}
 }
