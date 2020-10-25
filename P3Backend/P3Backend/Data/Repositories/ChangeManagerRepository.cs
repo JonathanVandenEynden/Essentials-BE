@@ -27,20 +27,20 @@ namespace P3Backend.Data.Repositories {
 
 		public IEnumerable<ChangeManager> GetAll() {
 			return _changeManagers
-				.Include(e => e.OrganizationParts)
+				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
 				.Include(e => e.CreatedChangeInitiatives);
 		}
 
 		public ChangeManager GetBy(int id) {
 			return _changeManagers
-				.Include(e => e.OrganizationParts)
+				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
 				.Include(e => e.CreatedChangeInitiatives)
 				.FirstOrDefault(cm => cm.Id == id);
 		}
 
 		public ChangeManager GetByEmail(string email) {
 			return _changeManagers
-				.Include(e => e.OrganizationParts)
+				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
 				.Include(e => e.CreatedChangeInitiatives)
 				.FirstOrDefault(cm => cm.Email == email);
 		}

@@ -10,7 +10,7 @@ namespace P3Backend.Data.Mapping.UsersConfiguration {
 	public class EmployeeConfiguration : IEntityTypeConfiguration<Employee> {
 		public void Configure(EntityTypeBuilder<Employee> builder) {
 
-			builder.HasMany(e => e.OrganizationParts);
+			builder.HasMany(e => e.EmployeeOrganizationParts).WithOne(eo => eo.Employee);
 
 		}
 	}

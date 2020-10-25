@@ -27,18 +27,18 @@ namespace P3Backend.Data.Repositories {
 
 		public IEnumerable<Employee> GetAll() {
 			return _employees
-				.Include(e => e.OrganizationParts);
+				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart);
 		}
 
 		public Employee GetBy(int id) {
 			return _employees
-				.Include(e => e.OrganizationParts)
+				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
 				.FirstOrDefault(e => e.Id == id);
 		}
 
 		public Employee GetByEmail(string email) {
 			return _employees
-				.Include(e => e.OrganizationParts)
+				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
 				.FirstOrDefault(e => e.Email == email);
 		}
 

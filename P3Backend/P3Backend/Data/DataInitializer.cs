@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualBasic;
 using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
 using P3Backend.Model.OrganizationParts;
 using P3Backend.Model.Questions;
+using P3Backend.Model.TussenTabellen;
 using P3Backend.Model.Users;
 
 namespace P3Backend.Data {
@@ -24,6 +26,7 @@ namespace P3Backend.Data {
 		public async Task InitializeData() {
 			_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
+				//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
 				Admin admin = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
@@ -42,45 +45,46 @@ namespace P3Backend.Data {
 				_dbContext.ChangeManagers.Add(changeManagerSuktrit);
 				#endregion
 
-				#region OrganizationalParts
-				OrganizationPart jellyTeam = new OrganizationPart("Jelly Team", OrganizationPartType.TEAM);
-				OrganizationPart belgium = new OrganizationPart("belgium", OrganizationPartType.COUNTRY);
-				OrganizationPart Netherlands = new OrganizationPart("The Netherlands", OrganizationPartType.COUNTRY);
-				OrganizationPart officeBE = new OrganizationPart("Belgian Office", OrganizationPartType.OFFICE);
-				OrganizationPart officeNL = new OrganizationPart("Dutch Office", OrganizationPartType.OFFICE);
-				OrganizationPart departmentHR = new OrganizationPart("HR", OrganizationPartType.DEPARTMENT);
-
-				changeManagerSuktrit.OrganizationParts.Add(departmentHR);
-				changeManagerSuktrit.OrganizationParts.Add(belgium);
-				changeManagerSuktrit.OrganizationParts.Add(officeBE);
-
-				ziggy.OrganizationParts.Add(belgium);
-				ziggy.OrganizationParts.Add(jellyTeam);
-				ziggy.OrganizationParts.Add(officeBE);
-
-				marbod.OrganizationParts.Add(Netherlands);
-				marbod.OrganizationParts.Add(jellyTeam);
-				marbod.OrganizationParts.Add(officeNL);
-
-				IList<OrganizationPart> ops = new List<OrganizationPart>() {
-					jellyTeam,
-					belgium,
-					Netherlands,
-					officeBE,
-					officeNL,
-					departmentHR
-				};
-				_dbContext.OrganizationParts.AddRange(ops);
-
-
-				#endregion
-
 				#region Organization
 				Organization hogent = new Organization("Hogent", new List<Employee>() { sponsor, ziggy, marbod }, changeManagerSuktrit);
 				admin.Organizations.Add(hogent);
 
 				_dbContext.Organizations.Add(hogent);
 				#endregion
+
+				#region OrganizationalParts
+				OrganizationPart jellyTeam = new OrganizationPart("Jelly Team", OrganizationPartType.TEAM);
+				OrganizationPart belgium = new OrganizationPart("belgium", OrganizationPartType.COUNTRY);
+				OrganizationPart netherlands = new OrganizationPart("The Netherlands", OrganizationPartType.COUNTRY);
+				OrganizationPart officeBE = new OrganizationPart("Belgian Office", OrganizationPartType.OFFICE);
+				OrganizationPart officeNL = new OrganizationPart("Dutch Office", OrganizationPartType.OFFICE);
+				OrganizationPart departmentHR = new OrganizationPart("HR", OrganizationPartType.DEPARTMENT);
+
+				changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, departmentHR));
+				changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, belgium));
+				changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, officeBE));
+
+				ziggy.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(ziggy, belgium));
+				ziggy.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(ziggy, jellyTeam));
+				ziggy.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(ziggy, officeBE));
+
+				marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, netherlands));
+				marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, jellyTeam));
+				marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, officeNL));
+
+				IList<OrganizationPart> ops = new List<OrganizationPart>() {
+					jellyTeam,
+					belgium,
+					netherlands,
+					officeBE,
+					officeNL,
+					departmentHR
+				};
+
+				hogent.OrganizationParts.AddRange(ops);
+
+				#endregion
+
 
 				#region Projects
 				Project project = new Project("Our big project");
@@ -101,6 +105,9 @@ namespace P3Backend.Data {
 				#region ChangeInitiatives
 				ChangeInitiative ciNewCatering = new ChangeInitiative("New Catering", "A new catering will be added to the cafeteria on the ground floor", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, organizationalChange);
 				ChangeInitiative ciExpansion = new ChangeInitiative("Expansion German Market", "We will try to expand more on the German Market", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, economicalChange);
+				changeManagerSuktrit.CreatedChangeInitiatives.Add(ciNewCatering);
+				changeManagerSuktrit.CreatedChangeInitiatives.Add(ciExpansion);
+
 				project.ChangeInitiatives.Add(ciNewCatering);
 				project.ChangeInitiatives.Add(ciExpansion);
 
