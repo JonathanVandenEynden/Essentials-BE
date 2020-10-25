@@ -34,11 +34,11 @@ namespace P3Backend.Controllers {
 
 		}
 
-		/// <summary>
-		/// Return the change initiatives for a specific user
-		/// </summary>
-		/// <param name="userId"></param>
-		/// <returns>list of changes for this user</returns>
+		///// <summary>
+		///// Return the change initiatives for a specific user
+		///// </summary>
+		///// <param name="userId"></param>
+		///// <returns>list of changes for this user</returns>
 		/*[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public IEnumerable<ChangeInitiative> GetChangeInitiatives(int userId) {
@@ -47,16 +47,45 @@ namespace P3Backend.Controllers {
 			return changes;
 		}*/
 
-		[Route("[action]/{userId}")]
+		/// <summary>
+		/// Get the change initiatives applicable for a user
+		/// </summary>
+		/// <param name="employeeId"></param>
+		/// <returns></returns>
+		[Route("[action]/{employeeId}")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public IEnumerable<ChangeInitiative> GetChangeInitiativesForUser(int userId = 3) {
+		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForEmployee(int employeeId = 3) {
 			// TODO niet meer hardcoded maken
-			IUser user = _userRepo.GetByEmail("Sukrit.bhattacharya@essentials.com");
-			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(userId);
-			Console.WriteLine("test");
-			Console.WriteLine(changes.Count());
-			return changes;
+			//IUser user = _userRepo.GetByEmail("Sukrit.bhattacharya@essentials.com");
+			try {
+				IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(employeeId);
+
+				return changes.ToList();
+			}
+			catch (Exception e) {
+				return NotFound(e.Message);
+			}
+		}
+
+		/// <summary>
+		/// Get the change initiatives from a change manager
+		/// </summary>
+		/// <param name="changeManagerId"></param>
+		/// <returns></returns>
+		[Route("[action]/{changeManagerId}")]
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(int changeManagerId = 2) {
+			try {
+				// TODO niet meer hardcoded maken
+				ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
+
+				return cm.CreatedChangeInitiatives.ToList();
+			}
+			catch (Exception e) {
+				return NotFound(e.Message);
+			}
 		}
 
 		/// <summary>
