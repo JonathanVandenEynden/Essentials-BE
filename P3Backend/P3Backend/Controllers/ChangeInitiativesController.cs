@@ -86,7 +86,7 @@ namespace P3Backend.Controllers {
 			catch (Exception e) {
 				return NotFound(e.Message);
 			}
-		}
+		}		
 
 		/// <summary>
 		/// Return a change initiative by a given id
@@ -117,6 +117,8 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public IActionResult PostChangeInitiative(int projectId, int changeManagerId, ChangeInitiativeDTO dto) {
+			projectId = 1;
+			changeManagerId = 2;
 			IUser sponsor = _userRepo.GetByEmail(dto.Sponsor.Email);
 
 			if (sponsor == null) {

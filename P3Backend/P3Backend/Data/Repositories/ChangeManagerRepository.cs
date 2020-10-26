@@ -34,14 +34,18 @@ namespace P3Backend.Data.Repositories {
 		public ChangeManager GetBy(int id) {
 			return _changeManagers
 				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
-				.Include(e => e.CreatedChangeInitiatives)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeSponsor)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeGroup)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap)
 				.FirstOrDefault(cm => cm.Id == id);
 		}
 
 		public ChangeManager GetByEmail(string email) {
 			return _changeManagers
 				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
-				.Include(e => e.CreatedChangeInitiatives)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeSponsor)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeGroup)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap)
 				.FirstOrDefault(cm => cm.Email == email);
 		}
 
