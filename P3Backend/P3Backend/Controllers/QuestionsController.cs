@@ -25,10 +25,10 @@ namespace P3Backend.Controllers
 
 
         [HttpGet("{surveyId}")]
-        public IEnumerable<IQuestion> GetQuestionsFromSurvey(int surveyId) {
+        public Survey GetQuestionsFromSurvey(int surveyId) {
 
-            IEnumerable<IQuestion> questions = _surveyRepository.GetQuestions(surveyId);
-            return questions;
+            Survey survey = _surveyRepository.GetBy(surveyId);
+            return survey;
         }
 
         [HttpGet]
