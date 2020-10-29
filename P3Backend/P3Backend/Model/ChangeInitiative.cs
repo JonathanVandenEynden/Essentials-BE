@@ -83,6 +83,8 @@ namespace P3Backend.Model {
 		internal void update(ChangeInitiativeDTO dto) {
 			Name = dto.Name;
 			Description = dto.Description;
+			_startDate = dto.StartDate;
+			EndDate = dto.EndDate;
 		}
 	}
 }

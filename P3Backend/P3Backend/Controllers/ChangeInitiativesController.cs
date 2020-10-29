@@ -168,9 +168,6 @@ namespace P3Backend.Controllers {
 		/// <returns></returns>
 		[HttpPut("{id}")]
 		public IActionResult UpdateChangeInitiative(int id, ChangeInitiativeDTO dto) {
-			if (id != dto.Id) {
-				return BadRequest("id's do not match");
-			}
 
 			try {
 				ChangeInitiative ciToBeUpdated = _changeRepo.GetBy(id);
@@ -178,12 +175,12 @@ namespace P3Backend.Controllers {
 				ciToBeUpdated.update(dto);
 
 				_changeRepo.SaveChanges();
+
+				return CreatedAtAction(nameof(GetChangeInitiative), new { id = id }, ciToBeUpdated);
 			}
 			catch (Exception e) {
 				return BadRequest(e.Message);
 			}
-
-			return CreatedAtAction(nameof(GetChangeInitiative), new { id = dto.Id }, dto);
 		}
 
 		/// <summary>
