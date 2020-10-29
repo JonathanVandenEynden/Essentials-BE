@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace P3Backend.Model {
 	public class RoadMapItem {
-        private DateTime _startDate;
-        private DateTime _endDate;
+		private DateTime _startDate;
+		private DateTime _endDate;
 
-        public int Id { get; set; }
+		public int Id { get; set; }
 		[Required]
 		public string Title { get; set; }
 		public IAssesment Assesment { get; set; }

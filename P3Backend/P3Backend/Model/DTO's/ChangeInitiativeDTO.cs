@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model.DTO_s {
 	public class ChangeInitiativeDTO {
+		public int Id { get; set; }
 		public string Name {
 			get; set;
 		}

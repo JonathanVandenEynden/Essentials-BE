@@ -1,4 +1,5 @@
 ﻿using P3Backend.Model.ChangeTypes;
+using P3Backend.Model.DTO_s;
 using P3Backend.Model.Users;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace P3Backend.Model {
 		public ChangeGroup ChangeGroup {
 			get; set;
 		}
-		public IUser ChangeSponsor {
+		public Employee ChangeSponsor {
 			get; set;
 		} // could also be another CM
 		public IChangeType ChangeType {
@@ -62,7 +63,7 @@ namespace P3Backend.Model {
 			get; set;
 		}
 
-		public ChangeInitiative(string name, string desc, DateTime start, DateTime end, IUser sponsor, IChangeType changeType) {
+		public ChangeInitiative(string name, string desc, DateTime start, DateTime end, Employee sponsor, IChangeType changeType) {
 			Name = name;
 			Description = desc;
 			StartDate = start;
@@ -77,6 +78,11 @@ namespace P3Backend.Model {
 
 		protected ChangeInitiative() {
 			// EF
+		}
+
+		internal void update(ChangeInitiativeDTO dto) {
+			Name = dto.Name;
+			Description = dto.Description;
 		}
 	}
 }

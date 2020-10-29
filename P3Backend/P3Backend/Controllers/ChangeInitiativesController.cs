@@ -21,16 +21,19 @@ namespace P3Backend.Controllers {
 		private readonly IUserRepository _userRepo;
 		private readonly IProjectRepository _projectRepo;
 		private readonly IChangeManagerRepository _changeManagerRepo;
+		private readonly IEmployeeRepository _employeeRepo;
 
 		public ChangeInitiativesController(
 			IChangeInitiativeRepository changeRepo,
 			IUserRepository userRepo,
 			IProjectRepository projectRepo,
-			IChangeManagerRepository changeManagerRepo) {
+			IChangeManagerRepository changeManagerRepo,
+			IEmployeeRepository employeeRepo) {
 			_changeRepo = changeRepo;
 			_userRepo = userRepo;
 			_projectRepo = projectRepo;
 			_changeManagerRepo = changeManagerRepo;
+			_employeeRepo = employeeRepo;
 
 		}
 
@@ -86,7 +89,7 @@ namespace P3Backend.Controllers {
 			catch (Exception e) {
 				return NotFound(e.Message);
 			}
-		}		
+		}
 
 		/// <summary>
 		/// Return a change initiative by a given id
@@ -119,7 +122,7 @@ namespace P3Backend.Controllers {
 		public IActionResult PostChangeInitiative(int projectId, int changeManagerId, ChangeInitiativeDTO dto) {
 			projectId = 1;
 			changeManagerId = 2;
-			IUser sponsor = _userRepo.GetByEmail(dto.Sponsor.Email);
+			Employee sponsor = _employeeRepo.GetByEmail(dto.Sponsor.Email);
 
 			if (sponsor == null) {
 				return NotFound("Sponsor not found");
@@ -155,6 +158,32 @@ namespace P3Backend.Controllers {
 			catch (Exception e) {
 				return BadRequest(e.Message);
 			}
+		}
+
+		/// <summary>
+		/// update a change initiative
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="dto"></param>
+		/// <returns></returns>
+		[HttpPut("{id}")]
+		public IActionResult UpdateChangeInitiative(int id, ChangeInitiativeDTO dto) {
+			if (id != dto.Id) {
+				return BadRequest("id's do not match");
+			}
+
+			try {
+				ChangeInitiative ciToBeUpdated = _changeRepo.GetBy(id);
+
+				ciToBeUpdated.update(dto);
+
+				_changeRepo.SaveChanges();
+			}
+			catch (Exception e) {
+				return BadRequest(e.Message);
+			}
+
+			return CreatedAtAction(nameof(GetChangeInitiative), new { id = dto.Id }, dto);
 		}
 
 		/// <summary>
