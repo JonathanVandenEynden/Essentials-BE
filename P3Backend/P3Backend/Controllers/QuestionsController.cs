@@ -28,10 +28,11 @@ namespace P3Backend.Controllers
         public Survey GetQuestionsFromSurvey(int surveyId) {
 
             Survey survey = _surveyRepository.GetBy(surveyId);
+            //survey.Questions.Add(survey.Feedback);
             return survey;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("Feedback/{surveyId}")]
         public ActionResult<IQuestion> GetFeedbackFromSurvey(int surveyId) {
             try {
@@ -42,7 +43,7 @@ namespace P3Backend.Controllers
             }catch(Exception e) {
                 return BadRequest(e.Message);
             }            
-        }
+        }*/
 
         [HttpPost]
         [Route("ClosedQuestion/{surveyId}")]
@@ -57,14 +58,14 @@ namespace P3Backend.Controllers
             return CreatedAtAction(nameof(GetQuestionsFromSurvey), new { surveyId = closedQuestion.Id }, closedQuestion);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("OpenQuestion/{surveyId}")]
         public ActionResult<OpenQuestion> PostOpenQuestionToSurvey(int surveyId, OpenQuestionDTO dto) {
             OpenQuestion openQuestion = new OpenQuestion(dto.Answer);
             _surveyRepository.GetBy(surveyId).Questions.Add(openQuestion);
             _surveyRepository.SaveChanges();
             return CreatedAtAction(nameof(GetQuestionsFromSurvey), new { surveyId = openQuestion.Id }, openQuestion);
-        }
+        }*/
 
         [HttpDelete("{surveyId}")]
         public IActionResult DeleteQuestions(int surveyId) {
