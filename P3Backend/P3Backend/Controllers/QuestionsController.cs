@@ -23,34 +23,29 @@ namespace P3Backend.Controllers
             _surveyRepository = surveyRepository;
         }
 
-
+        /// <summary>
+        /// Gives back all the questions and possible answers for a specific survey, given its Id
+        /// </summary>
+        /// <param name="surveyId">The Id of the survey</param>
+        /// <returns>A survey with questions and possible answers</returns>
         [HttpGet("{surveyId}")]
         public Survey GetQuestionsFromSurvey(int surveyId) {
 
             Survey survey = _surveyRepository.GetBy(surveyId);
-            //survey.Questions.Add(survey.Feedback);
             return survey;
         }
-
-        /*[HttpGet]
-        [Route("Feedback/{surveyId}")]
-        public ActionResult<IQuestion> GetFeedbackFromSurvey(int surveyId) {
-            try {
-                ClosedQuestion feedback = _surveyRepository.GetBy(surveyId).Feedback;
-                if (feedback == null)
-                    return NotFound("There was not yet a feedback question implemented");
-                return feedback;
-            }catch(Exception e) {
-                return BadRequest(e.Message);
-            }            
-        }*/
-
-        [HttpPost]
-        [Route("ClosedQuestion/{surveyId}")]
-        public ActionResult<ClosedQuestion> PostClosedQuestionToSurvey(int surveyId, ClosedQuestionDTO dto) {
-            ClosedQuestion closedQuestion = new ClosedQuestion(dto.QuestionString, dto.MaxAmount);
+        
+        /// <summary>
+        /// Make questions and possible answers for a specific survey, given its Id
+        /// </summary>
+        /// <param name="surveyId">The Id of the survey</param>
+        /// <param name="dto">Questions and possible answers</param>
+        /// <returns></returns>
+        [HttpPost("{surveyId}")]
+        public ActionResult<ClosedQuestion> PostClosedQuestionToSurvey(int surveyId, ClosedQuestionDTO questionsDTO) {
+            ClosedQuestion closedQuestion = new ClosedQuestion(questionsDTO.QuestionString, questionsDTO.MaxAmount);
             List<Answer> possibleAnswers = new List<Answer>();
-            dto.PossibleAnswers.ForEach(e => possibleAnswers.Add(new Answer(e.AnswerString)));
+            questionsDTO.PossibleAnswers.ForEach(e => possibleAnswers.Add(new Answer(e.AnswerString)));
 
             closedQuestion.PossibleAnswers = possibleAnswers;
             _surveyRepository.GetBy(surveyId).Questions.Add(closedQuestion);
@@ -58,15 +53,11 @@ namespace P3Backend.Controllers
             return CreatedAtAction(nameof(GetQuestionsFromSurvey), new { surveyId = closedQuestion.Id }, closedQuestion);
         }
 
-        /*[HttpPost]
-        [Route("OpenQuestion/{surveyId}")]
-        public ActionResult<OpenQuestion> PostOpenQuestionToSurvey(int surveyId, OpenQuestionDTO dto) {
-            OpenQuestion openQuestion = new OpenQuestion(dto.Answer);
-            _surveyRepository.GetBy(surveyId).Questions.Add(openQuestion);
-            _surveyRepository.SaveChanges();
-            return CreatedAtAction(nameof(GetQuestionsFromSurvey), new { surveyId = openQuestion.Id }, openQuestion);
-        }*/
-
+        /// <summary>
+        /// Delete all the questions and possible answers from the survey (This won't delete the survey, only its questions. If you Get this survey after using this API-call, you will get back a survey with an emtpy list of Questions)
+        /// </summary>
+        /// <param name="surveyId">The Id of the survey</param>
+        /// <returns>NoContent</returns>
         [HttpDelete("{surveyId}")]
         public IActionResult DeleteQuestions(int surveyId) {
             IAssesment survey = _surveyRepository.GetBy(surveyId);

@@ -8,7 +8,7 @@ namespace P3Backend.Model.DTO_s
 {
     public class IAssesmentDTO
     {
-        public List<IQuestionDTO> Questions { get; set; }
+        public List<ClosedQuestion> Questions { get; set; }
         public ClosedQuestionDTO Feedback { get; set; }
         public int AmountSubmitted { get; set; }
     }
