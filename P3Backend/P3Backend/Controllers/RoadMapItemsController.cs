@@ -31,7 +31,7 @@ namespace P3Backend.Controllers {
 
 			if (rmi == null) {
 
-				return NotFound();
+				return NotFound("Item not found");
 			}
 
 			return rmi;
@@ -44,14 +44,14 @@ namespace P3Backend.Controllers {
 		/// <param name="changeInitiativeId"></param>
 		/// <returns></returns>
 		[Route("[action]/{changeInitiativeId}")]
-		[HttpGet("{changeInitiativeId}")]
+		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public ActionResult<IEnumerable<RoadMapItem>> GetRoadMapItemsForChangeInitiative(int changeInitiativeId) {
 			ChangeInitiative ci = _changeInitiativeRepo.GetBy(changeInitiativeId);
 
 			if (ci == null) {
-				return NotFound();
+				return NotFound("Change Initiative not found");
 			}
 			return ci.RoadMap.ToList();
 		}
@@ -62,6 +62,10 @@ namespace P3Backend.Controllers {
 
 				ChangeInitiative ci = _changeInitiativeRepo.GetBy(changeInitiativeId);
 
+				if (ci == null) {
+					return NotFound("Change Initiative not found");
+				}
+
 				RoadMapItem newRmi = new RoadMapItem(dto.Title, dto.StartDate, dto.EndDate);
 				ci.RoadMap.Add(newRmi);
 
@@ -71,8 +75,8 @@ namespace P3Backend.Controllers {
 					id = newRmi.Id
 				}, newRmi);
 			}
-			catch {
-				return BadRequest();
+			catch (Exception e) {
+				return BadRequest(e.Message);
 			}
 
 

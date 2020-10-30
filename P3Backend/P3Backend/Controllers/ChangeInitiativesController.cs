@@ -21,24 +21,27 @@ namespace P3Backend.Controllers {
 		private readonly IUserRepository _userRepo;
 		private readonly IProjectRepository _projectRepo;
 		private readonly IChangeManagerRepository _changeManagerRepo;
+		private readonly IEmployeeRepository _employeeRepo;
 
 		public ChangeInitiativesController(
 			IChangeInitiativeRepository changeRepo,
 			IUserRepository userRepo,
 			IProjectRepository projectRepo,
-			IChangeManagerRepository changeManagerRepo) {
+			IChangeManagerRepository changeManagerRepo,
+			IEmployeeRepository employeeRepo) {
 			_changeRepo = changeRepo;
 			_userRepo = userRepo;
 			_projectRepo = projectRepo;
 			_changeManagerRepo = changeManagerRepo;
+			_employeeRepo = employeeRepo;
 
 		}
 
-		/// <summary>
-		/// Return the change initiatives for a specific user
-		/// </summary>
-		/// <param name="userId"></param>
-		/// <returns>list of changes for this user</returns>
+		///// <summary>
+		///// Return the change initiatives for a specific user
+		///// </summary>
+		///// <param name="userId"></param>
+		///// <returns>list of changes for this user</returns>
 		/*[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public IEnumerable<ChangeInitiative> GetChangeInitiatives(int userId) {
@@ -47,14 +50,45 @@ namespace P3Backend.Controllers {
 			return changes;
 		}*/
 
+		/// <summary>
+		/// Get the change initiatives applicable for a user
+		/// </summary>
+		/// <param name="employeeId"></param>
+		/// <returns></returns>
+		[Route("[action]/{employeeId}")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public IEnumerable<ChangeInitiative> GetChangeInitiativesUser() {
-			IUser user = _userRepo.GetByEmail("Sukrit.bhattacharya@essentials.com");
-			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(user.Id);
-			Console.WriteLine("test");
-			Console.WriteLine(changes.Count());
-			return changes;
+		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForEmployee(int employeeId = 3) {
+			// TODO niet meer hardcoded maken
+			//IUser user = _userRepo.GetByEmail("Sukrit.bhattacharya@essentials.com");
+			try {
+				IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(employeeId);
+
+				return changes.ToList();
+			}
+			catch (Exception e) {
+				return NotFound(e.Message);
+			}
+		}
+
+		/// <summary>
+		/// Get the change initiatives from a change manager
+		/// </summary>
+		/// <param name="changeManagerId"></param>
+		/// <returns></returns>
+		[Route("[action]/{changeManagerId}")]
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(int changeManagerId = 2) {
+			try {
+				// TODO niet meer hardcoded maken
+				ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
+
+				return cm.CreatedChangeInitiatives.ToList();
+			}
+			catch (Exception e) {
+				return NotFound(e.Message);
+			}
 		}
 
 		/// <summary>
@@ -69,7 +103,7 @@ namespace P3Backend.Controllers {
 			ChangeInitiative ci = _changeRepo.GetBy(id);
 
 			if (ci == null) {
-				return NotFound();
+				return NotFound("Change initiative not found");
 			}
 
 			return ci;
@@ -86,10 +120,12 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public IActionResult PostChangeInitiative(int projectId, int changeManagerId, ChangeInitiativeDTO dto) {
-			IUser sponsor = _userRepo.GetBy(dto.SponsorId);
+			projectId = 1;
+			changeManagerId = 2;
+			Employee sponsor = _employeeRepo.GetByEmail(dto.Sponsor.Email);
 
 			if (sponsor == null) {
-				return NotFound();
+				return NotFound("Sponsor not found");
 			}
 
 			IChangeType type = dto.ChangeType switch
@@ -119,11 +155,58 @@ namespace P3Backend.Controllers {
 					id = newCi.Id
 				}, newCi);
 			}
-			catch {
-				return BadRequest();
+			catch (Exception e) {
+				return BadRequest(e.Message);
 			}
+		}
 
+		/// <summary>
+		/// update a change initiative
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="dto"></param>
+		/// <returns></returns>
+		[HttpPut("{id}")]
+		public IActionResult UpdateChangeInitiative(int id, ChangeInitiativeDTO dto) {
 
+			try {
+				ChangeInitiative ciToBeUpdated = _changeRepo.GetBy(id);
+
+				ciToBeUpdated.update(dto);
+
+				_changeRepo.SaveChanges();
+
+				return CreatedAtAction(nameof(GetChangeInitiative), new { id = id }, ciToBeUpdated);
+			}
+			catch (Exception e) {
+				return BadRequest(e.Message);
+			}
+		}
+
+		/// <summary>
+		/// Delete a changeInitiative with a given id
+		/// </summary>
+		/// <param name="id">id of changeinitiative that has to be deleted</param>
+		/// <returns>NoContent</returns>
+		[HttpDelete("{id}")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public IActionResult DeleteChangeInitiative(int id) {
+			try {
+				ChangeInitiative changeInitiative = _changeRepo.GetBy(id);
+
+				if (changeInitiative == null) {
+					return NotFound("ChangeInitiative does not exist or is allready deleted");
+				}
+
+				_changeRepo.Delete(changeInitiative);
+				_changeRepo.SaveChanges();
+				return NoContent();
+			}
+			catch (Exception e) {
+				return BadRequest(e.Message);
+			}
 		}
 	}
 }

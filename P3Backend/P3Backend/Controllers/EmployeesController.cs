@@ -36,7 +36,7 @@ namespace P3Backend.Controllers {
 				return _organizationRepo.GetBy(organizationId).Employees;
 			}
 			catch {
-				return NotFound();
+				return NotFound("Organization not found");
 			}
 		}
 		/// <summary>
@@ -47,13 +47,13 @@ namespace P3Backend.Controllers {
 		[HttpGet("{employeeId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public ActionResult<Employee> GetEmployeeById(int employeeId) {
-			Employee a = _employeeRepo.GetBy(employeeId);
+			Employee e = _employeeRepo.GetBy(employeeId);
 
-			if (a == null) {
-				return NotFound();
+			if (e == null) {
+				return NotFound("Employee not found");
 			}
 
-			return a;
+			return e;
 		}
 
 		/// <summary>
@@ -68,6 +68,10 @@ namespace P3Backend.Controllers {
 			try {
 				Organization o = _organizationRepo.GetBy(organizationId);
 
+				if (o == null) {
+					return NotFound("Organization not found");
+				}
+
 				Employee newE = new Employee(dto.FirstName, dto.LastName, dto.Email);
 
 				o.Employees.Add(newE);
@@ -76,8 +80,8 @@ namespace P3Backend.Controllers {
 
 				return CreatedAtAction(nameof(GetEmployeeById), new { employeeId = newE.Id }, newE);
 			}
-			catch {
-				return BadRequest();
+			catch (Exception e) {
+				return BadRequest(e.Message);
 			}
 		}
 
@@ -93,7 +97,7 @@ namespace P3Backend.Controllers {
 			Employee e = _employeeRepo.GetBy(employeeId);
 
 			if (e == null) {
-				return NotFound();
+				return NotFound("Employee not found");
 			}
 
 			_employeeRepo.Delete(e);

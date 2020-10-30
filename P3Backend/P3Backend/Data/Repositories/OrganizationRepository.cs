@@ -28,23 +28,26 @@ namespace P3Backend.Data.Repositories {
 		public IEnumerable<Organization> GetAll() {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
-				.Include(o => o.Employees)
-				.Include(o => o.ChangeManagers);
+				.Include(o => o.Employees).ThenInclude(e => e.EmployeeOrganizationParts)
+				.Include(o => o.ChangeManagers)
+				.Include(o => o.OrganizationParts);
 		}
 
 		public Organization GetBy(int id) {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
-				.Include(o => o.Employees)
+				.Include(o => o.Employees).ThenInclude(e => e.EmployeeOrganizationParts)
 				.Include(o => o.ChangeManagers)
+				.Include(o => o.OrganizationParts)
 				.FirstOrDefault(o => o.Id == id);
 		}
 
 		public Organization GetByName(string name) {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
-				.Include(o => o.Employees)
+				.Include(o => o.Employees).ThenInclude(e => e.EmployeeOrganizationParts)
 				.Include(o => o.ChangeManagers)
+				.Include(o => o.OrganizationParts)
 				.FirstOrDefault(o => o.Name == name);
 		}
 

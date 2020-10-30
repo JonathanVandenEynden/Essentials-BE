@@ -39,7 +39,7 @@ namespace P3Backend.Controllers {
 			Admin a = _adminRepo.GetBy(adminId);
 
 			if (a == null) {
-				return NotFound();
+				return NotFound("Admin not found");
 			}
 
 			return a;
@@ -62,8 +62,8 @@ namespace P3Backend.Controllers {
 
 				return CreatedAtAction(nameof(GetAdminById), new { adminId = newA.Id }, newA);
 			}
-			catch {
-				return BadRequest();
+			catch (Exception e) {
+				return BadRequest(e.Message);
 			}
 		}
 
@@ -74,7 +74,7 @@ namespace P3Backend.Controllers {
 			Admin a = _adminRepo.GetBy(adminId);
 
 			if (a == null) {
-				return NotFound();
+				return NotFound("Admin not found");
 			}
 
 			_adminRepo.Delete(a);
