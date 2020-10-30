@@ -7,7 +7,7 @@ namespace P3Backend.Model.DTO_s
 {
     public class ClosedQuestionDTO : IQuestionDTO
     {
-        public IList<AnswerDTO> PossibleAnswers { get; set; }
+        public List<AnswerDTO> PossibleAnswers { get; set; }
         public int MaxAmount { get; set; }
     }
 }

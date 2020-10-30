@@ -53,9 +53,9 @@ namespace P3Backend.Controllers
                     return NotFound("There was no survey with this id");
                 return survey;
             }
-            catch
+            catch(Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
             
         }
@@ -77,9 +77,9 @@ namespace P3Backend.Controllers
                 _roadmapItemRepository.SaveChanges();
                 return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, survey);
             }
-            catch
+            catch(Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }            
         }
         /// <summary>
@@ -91,23 +91,19 @@ namespace P3Backend.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Survey> GetSurveyByRoadmapItemId(int roadmapItemId)
-        {
+        public ActionResult<Survey> GetSurveyByRoadmapItemId(int roadmapItemId) {
             try
             {
                 IAssesment survey = _roadmapItemRepository.GetBy(roadmapItemId).Assesment;
-                if (survey is Survey)
-                {
+                if (survey is Survey) {
                     return (Survey)_roadmapItemRepository.GetBy(roadmapItemId).Assesment;
                 }
-                else
-                {
+                else {
                     return BadRequest("The assesment was not a survey");
                 }
             }
-            catch
-            {
-                return BadRequest();
+            catch(Exception e) {
+                return BadRequest(e.Message);
             }           
         }
 

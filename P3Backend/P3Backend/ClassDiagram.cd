@@ -9,9 +9,6 @@
     <ShowAsAssociation>
       <Property Name="Feedback" />
     </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="Questions" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.Survey">
     <Position X="5.5" Y="7.25" Width="1.5" />
@@ -171,7 +168,7 @@
   <Class Name="P3Backend.Model.Portfolio">
     <Position X="21.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
       <FileName>Model\Portfolio.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -196,7 +193,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Project.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>

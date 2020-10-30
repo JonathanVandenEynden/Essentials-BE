@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using P3Backend.Model;
+using P3Backend.Model.Questions;
 using P3Backend.Model.RepoInterfaces;
 using System;
 using System.Collections.Generic;
@@ -27,15 +29,15 @@ namespace P3Backend.Data.Repositories {
 		public IEnumerable<Survey> GetAll() {
 			return _surveys
 				.Include(s => s.Questions)
-				.Include(s => s.Feedback);
+				.ThenInclude(q => q.PossibleAnswers);
 		}
 
 		public Survey GetBy(int id) {
 			return _surveys
 				.Include(s => s.Questions)
-				.Include(s => s.Feedback)
-				.FirstOrDefault(s => s.Id == id);
-		}
+				.ThenInclude(q => q.PossibleAnswers)
+				.FirstOrDefault(s => s.Id == id);			
+		}	
 
 		public void SaveChanges() {
 			_context.SaveChanges();
