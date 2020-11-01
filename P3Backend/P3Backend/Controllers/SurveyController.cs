@@ -73,7 +73,7 @@ namespace P3Backend.Controllers
             try
             {
                 Survey survey = new Survey();
-                _roadmapItemRepository.GetBy(roadmapItemId).Assesment = survey;
+                _roadmapItemRepository.GetBy(roadmapItemId).Assessment = survey;
                 _roadmapItemRepository.SaveChanges();
                 return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, survey);
             }
@@ -94,9 +94,9 @@ namespace P3Backend.Controllers
         public ActionResult<Survey> GetSurveyByRoadmapItemId(int roadmapItemId) {
             try
             {
-                IAssesment survey = _roadmapItemRepository.GetBy(roadmapItemId).Assesment;
+                IAssessment survey = _roadmapItemRepository.GetBy(roadmapItemId).Assessment;
                 if (survey is Survey) {
-                    return (Survey)_roadmapItemRepository.GetBy(roadmapItemId).Assesment;
+                    return (Survey)_roadmapItemRepository.GetBy(roadmapItemId).Assessment;
                 }
                 else {
                     return BadRequest("The assesment was not a survey");
@@ -123,10 +123,10 @@ namespace P3Backend.Controllers
                 RoadMapItem roadmapItem = _roadmapItemRepository.GetBy(roadmapItemId);
                 if (roadmapItem == null)
                     return NotFound("Roadmap with given id does not exist");
-                IAssesment assesment = roadmapItem.Assesment;
+                IAssessment assesment = roadmapItem.Assessment;
                 if (assesment == null)
                     return NotFound("Roadmap doesn't have a survey or the survey is allready deleted");
-                roadmapItem.Assesment = null;
+                roadmapItem.Assessment = null;
                 _surveyRepository.Delete((Survey)assesment);
                 _surveyRepository.SaveChanges();
                 return NoContent();

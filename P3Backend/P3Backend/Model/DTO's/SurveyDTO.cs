@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model.DTO_s
 {
-    public class SurveyDTO : IAssesmentDTO
+    public class SurveyDTO : IAssessmentDTO
     {
           
     }

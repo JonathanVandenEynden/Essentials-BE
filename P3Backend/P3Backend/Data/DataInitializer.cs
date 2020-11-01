@@ -24,7 +24,7 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			//_dbContext.Database.EnsureDeleted();
+			/*//_dbContext.Database.EnsureDeleted();
 			//if (_dbContext.Database.EnsureCreated()) {
 			if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
@@ -182,10 +182,10 @@ namespace P3Backend.Data {
 				questionResto4.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
 				surveyResto4.Questions.Add(questionResto4);
 
-				roadMapItemResto1.Assesment = surveyResto1;
-				roadMapItemResto2.Assesment = surveyResto2;
-				roadMapItemResto3.Assesment = surveyResto3;
-				roadMapItemResto4.Assesment = surveyResto4;
+				roadMapItemResto1.Assessment = surveyResto1;
+				roadMapItemResto2.Assessment = surveyResto2;
+				roadMapItemResto3.Assessment = surveyResto3;
+				roadMapItemResto4.Assessment = surveyResto4;
 
 				/////////////
 				Survey surveyExpansion1 = new Survey();
@@ -206,10 +206,10 @@ namespace P3Backend.Data {
 				questionExpansion4.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
 				surveyExpansion4.Questions.Add(questionExpansion4);
 
-				roadMapItemExpansion1.Assesment = surveyExpansion1;
-				roadMapItemExpansion2.Assesment = surveyExpansion2;
-				roadMapItemExpansion3.Assesment = surveyExpansion3;
-				roadMapItemExpansion4.Assesment = surveyExpansion4;
+				roadMapItemExpansion1.Assessment = surveyExpansion1;
+				roadMapItemExpansion2.Assessment = surveyExpansion2;
+				roadMapItemExpansion3.Assessment = surveyExpansion3;
+				roadMapItemExpansion4.Assessment = surveyExpansion4;
 
 				IList<Survey> s = new List<Survey>() {
 					surveyExpansion1,
@@ -244,7 +244,7 @@ namespace P3Backend.Data {
 
 				_dbContext.SaveChanges();
 				Console.WriteLine("Database created");
-			}
+			}*/
 		}
 	}
 }

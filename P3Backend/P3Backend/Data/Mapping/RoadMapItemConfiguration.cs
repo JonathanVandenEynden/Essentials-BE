@@ -17,7 +17,7 @@ namespace P3Backend.Data.Mapping {
 			builder.Property(r => r.StartDate).IsRequired();
 			builder.Property(r => r.EndDate).IsRequired();
 
-			builder.HasOne(r => r.Assesment);
+			builder.HasOne(r => r.Assessment);
 		}
 	}
 }
