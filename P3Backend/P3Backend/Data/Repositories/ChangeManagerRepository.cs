@@ -28,7 +28,7 @@ namespace P3Backend.Data.Repositories {
 		public IEnumerable<ChangeManager> GetAll() {
 			return _changeManagers
 				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
-				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assesment).ThenInclude(a => a.Questions).ThenInclude(q=>q.PossibleAnswers);
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions).ThenInclude(q=>q.PossibleAnswers);
 		}
 
 		public ChangeManager GetBy(int id) {
@@ -36,7 +36,7 @@ namespace P3Backend.Data.Repositories {
 				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
 				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeSponsor)
 				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeGroup)
-				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assesment).ThenInclude(a => a.Questions).ThenInclude(q => q.PossibleAnswers)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions).ThenInclude(q => q.PossibleAnswers)
 				.FirstOrDefault(cm => cm.Id == id);
 		}
 
@@ -45,7 +45,7 @@ namespace P3Backend.Data.Repositories {
 				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
 				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeSponsor)
 				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeGroup)
-				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assesment).ThenInclude(a => a.Questions).ThenInclude(q => q.PossibleAnswers)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions).ThenInclude(q => q.PossibleAnswers)
 				.FirstOrDefault(cm => cm.Email == email);
 		}
 
