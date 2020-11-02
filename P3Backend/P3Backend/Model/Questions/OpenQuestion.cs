@@ -4,14 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model.Questions {
-	public class OpenQuestion : IQuestion {
-		public string Answer { get; set; }
+    public class OpenQuestion : Question {
+        public List<string> Answers { get; set; }
 
-		public OpenQuestion(string questionString) : base(questionString) {
-		}
+        public OpenQuestion(string questionString) : base(questionString) {
+            Answers = new List<string>();
+            Type = QuestionType.OPEN;
+        }
 
-		protected OpenQuestion() {
-			// EF
-		}
-	}
+        public OpenQuestion() {
+            //Ef
+        }
+    }
 }

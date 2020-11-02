@@ -7,12 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Data.Mapping.QuestionsConfiguration {
-	public class ClosedQuestionConfiguration : IEntityTypeConfiguration<ClosedQuestion> {
-		public void Configure(EntityTypeBuilder<ClosedQuestion> builder) {
-
-			builder.Property(cq => cq.MaxAmount);
-
-			builder.HasMany(cq => cq.PossibleAnswers).WithOne();
+	public class QuestionConfiguration : IEntityTypeConfiguration<Question> {
+		public void Configure(EntityTypeBuilder<Question> builder) {			
 
 		}
 	}

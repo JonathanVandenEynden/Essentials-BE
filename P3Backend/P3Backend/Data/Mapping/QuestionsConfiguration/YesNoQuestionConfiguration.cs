@@ -8,13 +8,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Data.Mapping.QuestionsConfiguration {
-    public class OpenQuestionConfiguration : IEntityTypeConfiguration<OpenQuestion> {
-        public void Configure(EntityTypeBuilder<OpenQuestion> builder) {
+    public class YesNoQuestionConfiguration : IEntityTypeConfiguration<YesNoQuestion> {
+        public void Configure(EntityTypeBuilder<YesNoQuestion> builder) {
 
-            builder.Property(mc => mc.Answers).HasConversion(
+            builder.Property(mc => mc.PossibleAnswers).HasConversion(
                d => JsonConvert.SerializeObject(d, Formatting.None),
-               s => JsonConvert.DeserializeObject<List<string>>(s)).HasMaxLength(4000);
+               s => JsonConvert.DeserializeObject<Dictionary<bool, int>>(s)).HasMaxLength(4000);
         }
     }
 }
-

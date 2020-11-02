@@ -11,8 +11,6 @@ namespace P3Backend.Data.Mapping.AssesmentConfiguration {
 		public void Configure(EntityTypeBuilder<IAssessment> builder) {
 			builder.HasKey(s => s.Id);
 
-			builder.Property(s => s.AmountSubmitted);
-
 			builder.HasMany(s => s.Questions).WithOne();
 			builder.HasOne(s => s.Feedback);
 		}

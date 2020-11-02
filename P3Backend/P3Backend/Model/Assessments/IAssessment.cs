@@ -5,26 +5,17 @@ namespace P3Backend.Model {
 	public abstract class IAssessment {
 		public int Id { get; set; }
 		// public List<IQuestion> Questions { get; set; }
-		public List<ClosedQuestion> Questions { get; set; }
-		public ClosedQuestion Feedback { get; set; }
-		public int AmountSubmitted { get; set; }
+		public List<Question> Questions { get; set; }
+		public MultipleChoiceQuestion Feedback { get; set; }
 
 		protected IAssessment() {
-			/*Questions = new List<IQuestion>();
-			AmountSubmitted = 0;
-
+			Questions = new List<Question>();
 			//TODO misschien nog aan te passen naar wens
-			Feedback = new ClosedQuestion("How is your mood about this change initiative?", 1);*/
+			Feedback = new MultipleChoiceQuestion("How is your mood about this change initiative?");
 
-			
-
-			Questions = new List<ClosedQuestion>();
-			AmountSubmitted = 0;
-
-			Feedback = new ClosedQuestion("How is your mood about this change initiative?", 1);
-			Feedback.PossibleAnswers.Add(new Answer("Bad"));
-			Feedback.PossibleAnswers.Add(new Answer("OK"));
-			Feedback.PossibleAnswers.Add(new Answer("Good"));
+			Feedback.PossibleAnswers.Add("Good", 0);
+			Feedback.PossibleAnswers.Add("Okay", 0);
+			Feedback.PossibleAnswers.Add("Bad", 0);
 		}
 	}
 }

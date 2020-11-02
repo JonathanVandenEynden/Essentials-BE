@@ -24,9 +24,9 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			/*//_dbContext.Database.EnsureDeleted();
-			//if (_dbContext.Database.EnsureCreated()) {
-			if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+			_dbContext.Database.EnsureDeleted();
+			if (_dbContext.Database.EnsureCreated()) {
+			//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
 				Admin admin = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
@@ -169,18 +169,24 @@ namespace P3Backend.Data {
 				Survey surveyResto3 = new Survey();
 				Survey surveyResto4 = new Survey();
 
-				ClosedQuestion questionResto1 = new ClosedQuestion("What was you opinion about the old Catering?", 1);
-				questionResto1.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
-				surveyResto1.Questions.Add(questionResto1);
-				ClosedQuestion questionResto2 = new ClosedQuestion("What was you opinion about the new Catering?", 1);
-				questionResto2.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
-				surveyResto2.Questions.Add(questionResto2);
-				ClosedQuestion questionResto3 = new ClosedQuestion("What was you opinion about the rennovation?", 1);
-				questionResto3.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
-				surveyResto3.Questions.Add(questionResto3);
-				ClosedQuestion questionResto4 = new ClosedQuestion("What is you opinion about the food?", 1);
-				questionResto4.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
-				surveyResto4.Questions.Add(questionResto4);
+
+				List<string> answers1 = new List<string> { "Good", "Okay", "Bad" };
+				MultipleChoiceQuestion mc1 = new MultipleChoiceQuestion("What was your opinion about the old catering?");				
+				MultipleChoiceQuestion mc2 = new MultipleChoiceQuestion("What was your opinion about the old size of the company?");
+				mc1.AddPossibleAnswers(answers1);
+				mc2.AddPossibleAnswers(answers1);
+
+				MultipleChoiceQuestion mcquestionResto1 = mc1;
+				surveyResto1.Questions.Add(mcquestionResto1);
+
+				MultipleChoiceQuestion mcquestionResto2 = mc1;
+				surveyResto2.Questions.Add(mcquestionResto2);
+
+				MultipleChoiceQuestion mcquestionResto3 = mc1;
+				surveyResto3.Questions.Add(mcquestionResto3);
+
+				MultipleChoiceQuestion mcquestionResto4 = mc1;
+				surveyResto4.Questions.Add(mcquestionResto4);
 
 				roadMapItemResto1.Assessment = surveyResto1;
 				roadMapItemResto2.Assessment = surveyResto2;
@@ -193,18 +199,27 @@ namespace P3Backend.Data {
 				Survey surveyExpansion3 = new Survey();
 				Survey surveyExpansion4 = new Survey();
 
-				ClosedQuestion questionExpansion1 = new ClosedQuestion("What was you opinion about the old size of the company?", 1);
-				questionExpansion1.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
-				surveyExpansion1.Questions.Add(questionExpansion1);
-				ClosedQuestion questionExpansion2 = new ClosedQuestion("What was you opinion about the new size of the company?", 1);
-				questionExpansion2.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
-				surveyExpansion2.Questions.Add(questionExpansion2);
-				ClosedQuestion questionExpansion3 = new ClosedQuestion("What is your oppinion about the risks?", 1);
-				questionExpansion3.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
-				surveyExpansion3.Questions.Add(questionExpansion3);
-				ClosedQuestion questionExpansion4 = new ClosedQuestion("What is you opinion after the expansion?", 1);
-				questionExpansion4.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
-				surveyExpansion4.Questions.Add(questionExpansion4);
+
+
+				MultipleChoiceQuestion mcquestionExpansion1 = mc2;
+				YesNoQuestion yesNoQuestionExpansion1 = new YesNoQuestion("Do you think this is a good change?");
+				RangedQuestion rangedQuestionExpansion1 = new RangedQuestion("How good do you think this change is?");
+				OpenQuestion openQuestionExpansion1 = new OpenQuestion("How do you know about this change");
+				openQuestionExpansion1.Answers.Add("I do not know");
+				openQuestionExpansion1.Answers.Add("I heard it from a friend");
+				surveyExpansion1.Questions.Add(mcquestionExpansion1);
+				surveyExpansion1.Questions.Add(yesNoQuestionExpansion1);
+				surveyExpansion1.Questions.Add(rangedQuestionExpansion1);
+				surveyExpansion1.Questions.Add(openQuestionExpansion1);
+
+				MultipleChoiceQuestion mcquestionExpansion2 = mc2;
+				surveyExpansion2.Questions.Add(mcquestionExpansion2);
+
+				MultipleChoiceQuestion mcquestionExpansion3 = mc2;
+				surveyExpansion3.Questions.Add(mcquestionExpansion3);
+
+				MultipleChoiceQuestion mcquestionExpansion4 = mc2;
+				surveyExpansion4.Questions.Add(mcquestionExpansion4);
 
 				roadMapItemExpansion1.Assessment = surveyExpansion1;
 				roadMapItemExpansion2.Assessment = surveyExpansion2;
@@ -244,7 +259,7 @@ namespace P3Backend.Data {
 
 				_dbContext.SaveChanges();
 				Console.WriteLine("Database created");
-			}*/
+			}
 		}
 	}
 }
