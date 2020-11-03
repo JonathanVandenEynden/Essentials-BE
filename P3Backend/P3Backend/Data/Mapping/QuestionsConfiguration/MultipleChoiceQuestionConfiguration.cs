@@ -4,12 +4,14 @@ using Newtonsoft.Json;
 using P3Backend.Model.Questions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Data.Mapping.QuestionsConfiguration {
-    public class OpenQuestionConfiguration : IEntityTypeConfiguration<OpenQuestion> {
-        public void Configure(EntityTypeBuilder<OpenQuestion> builder) {
+    public class MultipleChoiceQuestionConfiguration : IEntityTypeConfiguration<MultipleChoiceQuestion> {
+        public void Configure(EntityTypeBuilder<MultipleChoiceQuestion> builder) {
+
 
             builder.Property(mc => mc.PossibleAnswers).HasConversion(
                d => JsonConvert.SerializeObject(d, Formatting.None),
@@ -17,4 +19,3 @@ namespace P3Backend.Data.Mapping.QuestionsConfiguration {
         }
     }
 }
-

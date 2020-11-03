@@ -49,6 +49,9 @@ namespace P3Backend.Data {
 		public DbSet<OrganizationPart> OrganizationParts {
 			get; set;
 		}
+		public DbSet<Question> Questions {
+			get; set;
+        }
 
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
@@ -67,8 +70,11 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<Survey>();
 
 			// Questions
+			modelBuilder.Entity<Question>();
+			modelBuilder.Entity<MultipleChoiceQuestion>();
+			modelBuilder.Entity<YesNoQuestion>();
+			modelBuilder.Entity<RangedQuestion>();
 			modelBuilder.Entity<OpenQuestion>();
-			modelBuilder.Entity<ClosedQuestion>();
 
 			// OrganizationalTypes
 			modelBuilder.Entity<OrganizationPart>();
@@ -78,12 +84,7 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<TechnologicalChangeType>();
 			modelBuilder.Entity<EconomicalChangeType>();
 			modelBuilder.Entity<OrganizationalChangeType>();
-			modelBuilder.Entity<PersonalChangeType>();
-
-			// Questions
-			modelBuilder.Entity<Answer>();
-			modelBuilder.Entity<OpenQuestion>();
-			modelBuilder.Entity<ClosedQuestion>();
+			modelBuilder.Entity<PersonalChangeType>();			
 
 			// Other
 			modelBuilder.Entity<ChangeInitiative>();
@@ -129,10 +130,11 @@ namespace P3Backend.Data {
 			modelBuilder.ApplyConfiguration(new TechnologicalChangeTypeConfiguration());
 
 			// Questions
-			modelBuilder.ApplyConfiguration(new IQuestionConfiguration());
+			modelBuilder.ApplyConfiguration(new QuestionConfiguration());
+			modelBuilder.ApplyConfiguration(new MultipleChoiceQuestionConfiguration());
+			modelBuilder.ApplyConfiguration(new YesNoQuestionConfiguration());
+			modelBuilder.ApplyConfiguration(new RangedQuestionConfiguration());
 			modelBuilder.ApplyConfiguration(new OpenQuestionConfiguration());
-			modelBuilder.ApplyConfiguration(new ClosedQuestionConfiguration());
-			modelBuilder.ApplyConfiguration(new AnswerConfiguration());
 
 
 			// Other
