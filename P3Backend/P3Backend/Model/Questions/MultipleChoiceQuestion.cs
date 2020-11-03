@@ -5,12 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model.Questions {
-    public class MultipleChoiceQuestion : Question{
+    public class MultipleChoiceQuestion: Question<string> {
         
-        public IDictionary<string, int> PossibleAnswers { get; set; }
-
-        
-
         public MultipleChoiceQuestion(string questionString) : base(questionString) {
             PossibleAnswers = new Dictionary<string, int>();
             Type = QuestionType.MULTIPLECHOICE;

@@ -15,7 +15,7 @@ namespace P3Backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    public class QuestionsController : ControllerBase
+    public class QuestionsController<X> : ControllerBase
     {
         private readonly ISurveyRepository _surveyRepository;
 
@@ -34,24 +34,49 @@ namespace P3Backend.Controllers
             Survey survey = _surveyRepository.GetBy(surveyId);
             return survey;
         }
-        
+
         /// <summary>
         /// Make questions and possible answers for a specific survey, given its Id
         /// </summary>
+        /// <param name=""></param>
         /// <param name="surveyId">The Id of the survey</param>
         /// <param name="dto">Questions and possible answers</param>
         /// <returns></returns>
-        /*[HttpPost("{surveyId}")]
-        public ActionResult<ClosedQuestion> PostClosedQuestionToSurvey(int surveyId, ClosedQuestionDTO questionsDTO) {
-            ClosedQuestion closedQuestion = new ClosedQuestion(questionsDTO.QuestionString, questionsDTO.MaxAmount);
-            List<Answer> possibleAnswers = new List<Answer>();
-            questionsDTO.PossibleAnswers.ForEach(e => possibleAnswers.Add(new Answer(e.AnswerString)));
+        [HttpPost("{surveyId}")]
+        public ActionResult<Question<X>> PostClosedQuestionToSurvey(int surveyId, QuestionDTO questionDTO, List<string>? possibleAnwsers) {
 
-            closedQuestion.PossibleAnswers = possibleAnswers;
-            _surveyRepository.GetBy(surveyId).Questions.Add(closedQuestion);
-            _surveyRepository.SaveChanges();
-            return CreatedAtAction(nameof(GetQuestionsFromSurvey), new { surveyId = closedQuestion.Id }, closedQuestion);
-        }*/
+            Question<X> question;
+            if(questionDTO.Type == QuestionType.MULTIPLECHOICE) {
+
+                question = new MultipleChoiceQuestion<X>(questionDTO.QuestionString);
+                
+            } else if (questionDTO.Type == QuestionType.YESNO) {
+                question = new YesNoQuestion(questionDTO.QuestionString);
+            } else {
+                OpenQuestion question = new OpenQuestion(questionDTO.QuestionString);
+            }
+            return null;
+
+            
+
+            /*switch (questionDTO.Type) {                
+
+                case QuestionType.MULTIPLECHOICE:
+                    MultipleChoiceQuestion question = new MultipleChoiceQuestion(questionDTO.QuestionString);
+                    
+                    break;
+                case QuestionType.RANGED:
+                    RangedQuestion question = new RangedQuestion(questionDTO.QuestionString);
+                    break;
+                case QuestionType.YESNO:
+                    question = new YesNoQuestion(questionDTO.QuestionString);
+                    break;
+                case QuestionType.OPEN:
+                    question = new OpenQuestion(questionDTO.QuestionString);
+                    break;
+            }*/
+
+        }
 
         /// <summary>
         /// Delete all the questions and possible answers from the survey (This won't delete the survey, only its questions. If you Get this survey after using this API-call, you will get back a survey with an emtpy list of Questions)

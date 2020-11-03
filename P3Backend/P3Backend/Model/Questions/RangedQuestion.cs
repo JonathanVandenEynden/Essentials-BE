@@ -4,9 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model.Questions {
-    public class RangedQuestion : Question {
-
-        public IDictionary<double, int> PossibleAnswers { get; set; }
+    public class RangedQuestion : Question<double> {
         private const double RANGE_AMOUNT = 5;
         private const double RANGE_STEP = 0.5;
 

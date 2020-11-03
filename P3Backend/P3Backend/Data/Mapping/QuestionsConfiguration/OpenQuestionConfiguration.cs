@@ -11,9 +11,9 @@ namespace P3Backend.Data.Mapping.QuestionsConfiguration {
     public class OpenQuestionConfiguration : IEntityTypeConfiguration<OpenQuestion> {
         public void Configure(EntityTypeBuilder<OpenQuestion> builder) {
 
-            builder.Property(mc => mc.Answers).HasConversion(
+            builder.Property(mc => mc.PossibleAnswers).HasConversion(
                d => JsonConvert.SerializeObject(d, Formatting.None),
-               s => JsonConvert.DeserializeObject<List<string>>(s)).HasMaxLength(4000);
+               s => JsonConvert.DeserializeObject<Dictionary<string, int>>(s)).HasMaxLength(4000);
         }
     }
 }
