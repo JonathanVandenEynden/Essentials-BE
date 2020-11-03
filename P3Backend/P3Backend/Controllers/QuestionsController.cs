@@ -113,7 +113,7 @@ namespace P3Backend.Controllers
             try {
                 switch (question.Type) {
                     case QuestionType.MULTIPLECHOICE:
-                        ((MultipleChoiceQuestion)question).AddPossibleAnswers(possibleAnswers);
+                        ((MultipleChoiceQuestion)question).AddPossibleAnswers(possibleAnswers, initialize);
                         break;
                     case QuestionType.RANGED:
                         ((RangedQuestion)question).AddAnswer(possibleAnswers);

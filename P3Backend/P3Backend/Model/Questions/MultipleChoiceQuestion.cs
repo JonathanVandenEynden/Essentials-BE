@@ -17,8 +17,8 @@ namespace P3Backend.Model.Questions {
             //EF
         }
 
-        public void AddPossibleAnswers(List<string> answers) {
-            if (PossibleAnswers.Count() == 0) {
+        public void AddPossibleAnswers(List<string> answers, bool initialize) {
+            if (initialize) {
                 answers.ForEach(s => PossibleAnswers.Add(s, 0));
             } else {
                 foreach (string a in answers) {
