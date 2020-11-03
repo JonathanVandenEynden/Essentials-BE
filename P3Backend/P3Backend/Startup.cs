@@ -30,7 +30,7 @@ namespace P3Backend {
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-						.EnableSensitiveDataLogging());
+						);
 
 			services.AddScoped<DataInitializer>();
 			services.AddScoped<IUserRepository, UserRepository>();
