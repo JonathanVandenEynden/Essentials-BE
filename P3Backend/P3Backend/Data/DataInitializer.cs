@@ -164,62 +164,57 @@ namespace P3Backend.Data {
 				#endregion
 
 				#region Surveys
+
 				Survey surveyResto1 = new Survey();
 				Survey surveyResto2 = new Survey();
 				Survey surveyResto3 = new Survey();
 				Survey surveyResto4 = new Survey();
 
-
-				List<string> answers1 = new List<string> { "Good", "Okay", "Bad" };
-				MultipleChoiceQuestion mc1 = new MultipleChoiceQuestion("What was your opinion about the old catering?");				
-				MultipleChoiceQuestion mc2 = new MultipleChoiceQuestion("What was your opinion about the old size of the company?");
-				mc1.AddPossibleAnswers(answers1);
-				mc2.AddPossibleAnswers(answers1);
-
-				MultipleChoiceQuestion mcquestionResto1 = mc1;
-				surveyResto1.Questions.Add(mcquestionResto1);
-
-				MultipleChoiceQuestion mcquestionResto2 = mc1;
-				surveyResto2.Questions.Add(mcquestionResto2);
-
-				MultipleChoiceQuestion mcquestionResto3 = mc1;
-				surveyResto3.Questions.Add(mcquestionResto3);
-
-				MultipleChoiceQuestion mcquestionResto4 = mc1;
-				surveyResto4.Questions.Add(mcquestionResto4);
+				MultipleChoiceQuestion questionResto1 = new MultipleChoiceQuestion("What was your opinion about the old Catering?");
+				questionResto1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				surveyResto1.Questions.Add(questionResto1);
+				MultipleChoiceQuestion questionResto2 = new MultipleChoiceQuestion("What was your opinion about the new Catering?"); 
+				questionResto2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				surveyResto2.Questions.Add(questionResto2);
+				MultipleChoiceQuestion questionResto3 = new MultipleChoiceQuestion("What was your opinion about the rennovation?");
+				questionResto3.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				surveyResto3.Questions.Add(questionResto3);
+				MultipleChoiceQuestion questionResto4 = new MultipleChoiceQuestion("What is your opinion about the food?");
+				questionResto4.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				surveyResto4.Questions.Add(questionResto4);
 
 				roadMapItemResto1.Assessment = surveyResto1;
 				roadMapItemResto2.Assessment = surveyResto2;
 				roadMapItemResto3.Assessment = surveyResto3;
 				roadMapItemResto4.Assessment = surveyResto4;
-
 				/////////////
 				Survey surveyExpansion1 = new Survey();
 				Survey surveyExpansion2 = new Survey();
 				Survey surveyExpansion3 = new Survey();
 				Survey surveyExpansion4 = new Survey();
 
-
-
-				MultipleChoiceQuestion mcquestionExpansion1 = mc2;
+				MultipleChoiceQuestion questionExpansion1 = new MultipleChoiceQuestion("What was your opinion about the old size of the company?");
+				questionExpansion1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
 				YesNoQuestion yesNoQuestionExpansion1 = new YesNoQuestion("Do you think this is a good change?");
 				RangedQuestion rangedQuestionExpansion1 = new RangedQuestion("How good do you think this change is?");
 				OpenQuestion openQuestionExpansion1 = new OpenQuestion("How do you know about this change");
-				openQuestionExpansion1.Answers.Add("I do not know");
-				openQuestionExpansion1.Answers.Add("I heard it from a friend");
-				surveyExpansion1.Questions.Add(mcquestionExpansion1);
+				openQuestionExpansion1.PossibleAnswers.Add("I do not know", 0);
+				openQuestionExpansion1.PossibleAnswers.Add("I heard it from a friend", 0);
+				surveyExpansion1.Questions.Add(questionExpansion1);
 				surveyExpansion1.Questions.Add(yesNoQuestionExpansion1);
 				surveyExpansion1.Questions.Add(rangedQuestionExpansion1);
 				surveyExpansion1.Questions.Add(openQuestionExpansion1);
 
-				MultipleChoiceQuestion mcquestionExpansion2 = mc2;
-				surveyExpansion2.Questions.Add(mcquestionExpansion2);
+				MultipleChoiceQuestion questionExpansion2 = new MultipleChoiceQuestion("What was your opinion about the new size of the company?");
+				questionExpansion2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				surveyExpansion2.Questions.Add(questionExpansion2);
+				MultipleChoiceQuestion questionExpansion3 = new MultipleChoiceQuestion("What is yourr oppinion about the risks?");
+				questionExpansion3.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				surveyExpansion3.Questions.Add(questionExpansion3);
+				MultipleChoiceQuestion questionExpansion4 = new MultipleChoiceQuestion("What is your opinion after the expansion?");
+				questionExpansion4.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				surveyExpansion4.Questions.Add(questionExpansion4);
 
-				MultipleChoiceQuestion mcquestionExpansion3 = mc2;
-				surveyExpansion3.Questions.Add(mcquestionExpansion3);
-
-				MultipleChoiceQuestion mcquestionExpansion4 = mc2;
-				surveyExpansion4.Questions.Add(mcquestionExpansion4);
 
 				roadMapItemExpansion1.Assessment = surveyExpansion1;
 				roadMapItemExpansion2.Assessment = surveyExpansion2;

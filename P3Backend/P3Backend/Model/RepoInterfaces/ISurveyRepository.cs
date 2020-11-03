@@ -17,5 +17,9 @@ namespace P3Backend.Model.RepoInterfaces {
 		public void SaveChanges();
 
 		public void Update(Survey s);
+
+		public void UpdateQuestions(Question q);
+
+		public Question GetQuestion(int id);
 	}
 }

@@ -49,6 +49,9 @@ namespace P3Backend.Data {
 		public DbSet<OrganizationPart> OrganizationParts {
 			get; set;
 		}
+		public DbSet<Question> Questions {
+			get; set;
+        }
 
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {

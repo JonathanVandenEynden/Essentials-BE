@@ -5,8 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model.Questions {
-    public class MultipleChoiceQuestion: Question<string> {
-        
+    public class MultipleChoiceQuestion: Question {
+        public Dictionary<string, int> PossibleAnswers { get; set; }
+
         public MultipleChoiceQuestion(string questionString) : base(questionString) {
             PossibleAnswers = new Dictionary<string, int>();
             Type = QuestionType.MULTIPLECHOICE;
@@ -17,7 +18,18 @@ namespace P3Backend.Model.Questions {
         }
 
         public void AddPossibleAnswers(List<string> answers) {
-            answers.ForEach(s => PossibleAnswers.Add(s, 0));
+            if (PossibleAnswers.Count() == 0) {
+                answers.ForEach(s => PossibleAnswers.Add(s, 0));
+            } else {
+                foreach (string a in answers) {
+                    if (PossibleAnswers.ContainsKey(a)) {
+                        PossibleAnswers[a]++;
+                    } else {
+                        PossibleAnswers.Add(a, 1);
+                    }
+                }
+            }
+            
         }
     }
 }
