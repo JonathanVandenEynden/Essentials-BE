@@ -30,12 +30,14 @@ namespace P3Backend.Data.Repositories {
 
 		public IEnumerable<Survey> GetAll() {
 			return _surveys
-				.Include(s => s.Questions);
+				.Include(s => s.Questions)
+				.Include(s => s.Feedback);
 		}
 
 		public Survey GetBy(int id) {
 			return _surveys
 				.Include(s => s.Questions)
+				.Include(s => s.Feedback)
 				.FirstOrDefault(s => s.Id == id);			
 		}	
 

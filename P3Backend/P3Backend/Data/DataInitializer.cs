@@ -166,6 +166,7 @@ namespace P3Backend.Data {
 				#region Surveys
 
 				Survey surveyResto1 = new Survey();
+				surveyResto1.surveyTemplates("test");
 				Survey surveyResto2 = new Survey();
 				Survey surveyResto3 = new Survey();
 				Survey surveyResto4 = new Survey();
