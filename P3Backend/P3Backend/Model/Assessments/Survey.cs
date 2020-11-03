@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model {
-	public class Survey : IAssesment {
+	public class Survey : IAssessment {
 
 		public Survey() : base() {
 

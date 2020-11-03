@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 
 namespace P3Backend.Model {
-	public abstract class IAssesment {
+	public abstract class IAssessment {
 		public int Id { get; set; }
 		// public List<IQuestion> Questions { get; set; }
 		public List<ClosedQuestion> Questions { get; set; }
 		public ClosedQuestion Feedback { get; set; }
 		public int AmountSubmitted { get; set; }
 
-		protected IAssesment() {
+		protected IAssessment() {
 			/*Questions = new List<IQuestion>();
 			AmountSubmitted = 0;
 

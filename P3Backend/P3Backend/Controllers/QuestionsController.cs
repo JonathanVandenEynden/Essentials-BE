@@ -60,7 +60,7 @@ namespace P3Backend.Controllers
         /// <returns>NoContent</returns>
         [HttpDelete("{surveyId}")]
         public IActionResult DeleteQuestions(int surveyId) {
-            IAssesment survey = _surveyRepository.GetBy(surveyId);
+            IAssessment survey = _surveyRepository.GetBy(surveyId);
             survey.Questions.Clear();
             _surveyRepository.SaveChanges();
             return NoContent();

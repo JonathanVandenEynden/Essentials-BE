@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model.DTO_s
 {
-    public class IAssesmentDTO
+    public class IAssessmentDTO
     {
         public List<ClosedQuestion> Questions { get; set; }
         public ClosedQuestionDTO Feedback { get; set; }

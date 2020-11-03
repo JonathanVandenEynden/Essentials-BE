@@ -114,7 +114,7 @@ namespace P3Backend.Data {
 			modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
 
 			// Assesments
-			modelBuilder.ApplyConfiguration(new IAssesmentConfiguration());
+			modelBuilder.ApplyConfiguration(new IAssessmentConfiguration());
 			modelBuilder.ApplyConfiguration(new SurveyConfiguration());
 
 			// OrganizationalParts

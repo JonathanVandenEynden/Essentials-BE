@@ -7,8 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P3Backend.Data.Mapping.AssesmentConfiguration {
-	public class IAssesmentConfiguration : IEntityTypeConfiguration<IAssesment> {
-		public void Configure(EntityTypeBuilder<IAssesment> builder) {
+	public class IAssessmentConfiguration : IEntityTypeConfiguration<IAssessment> {
+		public void Configure(EntityTypeBuilder<IAssessment> builder) {
 			builder.HasKey(s => s.Id);
 
 			builder.Property(s => s.AmountSubmitted);
