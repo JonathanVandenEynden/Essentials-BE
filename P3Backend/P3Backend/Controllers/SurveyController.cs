@@ -56,8 +56,7 @@ namespace P3Backend.Controllers
             catch(Exception e)
             {
                 return BadRequest(e.Message);
-            }
-            
+            }            
         }
 
         /// <summary>

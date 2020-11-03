@@ -68,9 +68,13 @@ namespace P3Backend.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddQuestionsToMultipleChoice(int questionId, List<string> possibleAnswers) {
+        public ActionResult AddQuestionsToMultipleChoice(int questionId, List<string> possibleAnswers, bool initialize = false) {
             Question question = _surveyRepository.GetQuestion(questionId);
-
+            // TODO Userid veranderen naar User.identity.Name/_usermanager
+            int userid = 1;
+            if (!initialize) {
+                question.CompleteQuestion(userid);
+            }
 
             switch (question.Type) {
                 case QuestionType.MULTIPLECHOICE:

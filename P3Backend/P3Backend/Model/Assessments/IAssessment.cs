@@ -1,4 +1,6 @@
-﻿using P3Backend.Model.Questions;
+﻿using Microsoft.AspNetCore.SignalR;
+using P3Backend.Model.Questions;
+using System;
 using System.Collections.Generic;
 
 namespace P3Backend.Model {
@@ -17,5 +19,6 @@ namespace P3Backend.Model {
 			Feedback.PossibleAnswers.Add("Okay", 0);
 			Feedback.PossibleAnswers.Add("Bad", 0);
 		}
+		
 	}
 }

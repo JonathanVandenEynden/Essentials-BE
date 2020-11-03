@@ -11,13 +11,20 @@ namespace P3Backend.Model.Questions {
 		[Required]
 		public string QuestionString { get; set; }
 		public QuestionType Type { get; set; }
+		public Dictionary<int, DateTime> QuestionRegistered { get; set; }
 
 		public Question(string questionString) {
 			QuestionString = questionString;
+			QuestionRegistered = new Dictionary<int, DateTime>();
         }
 
 		protected Question() {
 			//EF
-        }		
+        }
+
+		public void CompleteQuestion(int userid) {
+			QuestionRegistered.Add(userid, DateTime.Now);
+		}
+
 	}
 }
