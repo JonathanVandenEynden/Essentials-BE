@@ -172,16 +172,16 @@ namespace P3Backend.Data {
 				Survey surveyResto4 = new Survey();
 
 				MultipleChoiceQuestion questionResto1 = new MultipleChoiceQuestion("What was your opinion about the old Catering?");
-				questionResto1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				questionResto1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto1.Questions.Add(questionResto1);
 				MultipleChoiceQuestion questionResto2 = new MultipleChoiceQuestion("What was your opinion about the new Catering?"); 
-				questionResto2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				questionResto2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto2.Questions.Add(questionResto2);
 				MultipleChoiceQuestion questionResto3 = new MultipleChoiceQuestion("What was your opinion about the rennovation?");
-				questionResto3.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				questionResto3.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto3.Questions.Add(questionResto3);
 				MultipleChoiceQuestion questionResto4 = new MultipleChoiceQuestion("What is your opinion about the food?");
-				questionResto4.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				questionResto4.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto4.Questions.Add(questionResto4);
 
 				roadMapItemResto1.Assessment = surveyResto1;
@@ -207,13 +207,13 @@ namespace P3Backend.Data {
 				surveyExpansion1.Questions.Add(openQuestionExpansion1);
 
 				MultipleChoiceQuestion questionExpansion2 = new MultipleChoiceQuestion("What was your opinion about the new size of the company?");
-				questionExpansion2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				questionExpansion2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyExpansion2.Questions.Add(questionExpansion2);
 				MultipleChoiceQuestion questionExpansion3 = new MultipleChoiceQuestion("What is yourr oppinion about the risks?");
-				questionExpansion3.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				questionExpansion3.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyExpansion3.Questions.Add(questionExpansion3);
 				MultipleChoiceQuestion questionExpansion4 = new MultipleChoiceQuestion("What is your opinion after the expansion?");
-				questionExpansion4.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				questionExpansion4.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyExpansion4.Questions.Add(questionExpansion4);
 
 
