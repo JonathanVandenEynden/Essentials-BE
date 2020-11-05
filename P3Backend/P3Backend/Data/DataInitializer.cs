@@ -26,7 +26,7 @@ namespace P3Backend.Data {
 		public async Task InitializeData() {
 			_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
-			//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+				//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
 				Admin admin = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
@@ -198,7 +198,7 @@ namespace P3Backend.Data {
 				MultipleChoiceQuestion questionResto1 = new MultipleChoiceQuestion("What was your opinion about the old Catering?");
 				questionResto1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto1.Questions.Add(questionResto1);
-				MultipleChoiceQuestion questionResto2 = new MultipleChoiceQuestion("What was your opinion about the new Catering?"); 
+				MultipleChoiceQuestion questionResto2 = new MultipleChoiceQuestion("What was your opinion about the new Catering?");
 				questionResto2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto2.Questions.Add(questionResto2);
 				MultipleChoiceQuestion questionResto3 = new MultipleChoiceQuestion("What was your opinion about the rennovation?");
@@ -219,7 +219,7 @@ namespace P3Backend.Data {
 				Survey surveyExpansion4 = new Survey();
 
 				MultipleChoiceQuestion questionExpansion1 = new MultipleChoiceQuestion("What was your opinion about the old size of the company?");
-				questionExpansion1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				questionExpansion1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				YesNoQuestion yesNoQuestionExpansion1 = new YesNoQuestion("Do you think this is a good change?");
 				RangedQuestion rangedQuestionExpansion1 = new RangedQuestion("How good do you think this change is?");
 				OpenQuestion openQuestionExpansion1 = new OpenQuestion("How do you know about this change");
