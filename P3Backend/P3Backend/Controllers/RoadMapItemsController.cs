@@ -18,16 +18,18 @@ namespace P3Backend.Controllers {
 		private readonly IChangeInitiativeRepository _changeInitiativeRepo;
 
 		public RoadMapItemsController(
-			IRoadmapItemRepository roadMapItemsRepo) {
+			IRoadmapItemRepository roadMapItemsRepo,
+			IChangeInitiativeRepository changeInitiativeRepo) {
 			_roadmapItemRepository = roadMapItemsRepo;
+			_changeInitiativeRepo = changeInitiativeRepo;
 
 		}
 
 		[HttpGet("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult<RoadMapItem> GetRoadMapItem(int Id) {
-			RoadMapItem rmi = _roadmapItemRepository.GetBy(Id);
+		public ActionResult<RoadMapItem> GetRoadMapItem(int id) {
+			RoadMapItem rmi = _roadmapItemRepository.GetBy(id);
 
 			if (rmi == null) {
 

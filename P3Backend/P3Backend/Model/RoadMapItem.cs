@@ -9,7 +9,7 @@ namespace P3Backend.Model {
 		public int Id { get; set; }
 		[Required]
 		public string Title { get; set; }
-		public IAssesment Assesment { get; set; }
+		public IAssessment Assessment { get; set; }
 		[Required]
 		public bool Done { get; set; }
 

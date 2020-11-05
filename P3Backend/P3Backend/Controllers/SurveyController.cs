@@ -8,57 +8,51 @@ using P3Backend.Model.RepoInterfaces;
 using P3Backend.Model;
 
 
-namespace P3Backend.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]    
-    [Produces("application/json")]
-    public class SurveyController : ControllerBase
-    {
-        public readonly ISurveyRepository _surveyRepository;
-        public readonly IRoadmapItemRepository _roadmapItemRepository;
+namespace P3Backend.Controllers {
+	[Route("api/[controller]")]
+	[ApiController]
+	[Produces("application/json")]
+	public class SurveyController : ControllerBase {
+		public readonly ISurveyRepository _surveyRepository;
+		public readonly IRoadmapItemRepository _roadmapItemRepository;
 
-        public SurveyController(ISurveyRepository surveyRepository, IRoadmapItemRepository roadMapItemRepository)
-        {
-            _surveyRepository = surveyRepository;
-            _roadmapItemRepository = roadMapItemRepository;
-        }
-        
-        /// <summary>
-        /// Get all surveys
-        /// </summary>
-        /// <returns>All surveys</returns>
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public IEnumerable<Survey> GetSurveys()
-        {
-            IEnumerable<Survey> surveys = _surveyRepository.GetAll();
-            return surveys;
-        }
+		public SurveyController(ISurveyRepository surveyRepository, IRoadmapItemRepository roadMapItemRepository) {
+			_surveyRepository = surveyRepository;
+			_roadmapItemRepository = roadMapItemRepository;
+		}
 
-        /// <summary>
-        /// Get survey with a given surveyId
-        /// </summary>
-        /// <param name="id">The id of the survey</param>
-        /// <returns>One survey by id</returns>
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Survey> GetSurvey(int id)
-        {
-            try
-            {
-                Survey survey = _surveyRepository.GetBy(id);
-                if (survey == null)
-                    return NotFound("There was no survey with this id");
-                return survey;
-            }
-            catch
-            {
-                return BadRequest();
-            }
-            
-        }
+
+		/// <summary>
+		/// Get all surveys
+		/// </summary>
+		/// <returns>All surveys</returns>
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public IEnumerable<Survey> GetSurveys() {
+			IEnumerable<Survey> surveys = _surveyRepository.GetAll();
+			return surveys;
+		}
+
+		/// <summary>
+		/// Get survey with a given surveyId
+		/// </summary>
+		/// <param name="id">The id of the survey</param>
+		/// <returns>One survey by id</returns>
+		[HttpGet("{id}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public ActionResult<Survey> GetSurvey(int id) {
+			try {
+				Survey survey = _surveyRepository.GetBy(id);
+				if (survey == null)
+					return NotFound("There was no survey with this id");
+				return survey;
+			}
+			catch (Exception e) {
+				return BadRequest(e.Message);
+			}
+
+		}
 
         /// <summary>
         /// Make an empty survey for a given roadmapItem
@@ -73,13 +67,13 @@ namespace P3Backend.Controllers
             try
             {
                 Survey survey = new Survey();
-                _roadmapItemRepository.GetBy(roadmapItemId).Assesment = survey;
+                _roadmapItemRepository.GetBy(roadmapItemId).Assessment = survey;
                 _roadmapItemRepository.SaveChanges();
                 return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, survey);
             }
-            catch
+            catch(Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }            
         }
         /// <summary>
@@ -91,23 +85,19 @@ namespace P3Backend.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Survey> GetSurveyByRoadmapItemId(int roadmapItemId)
-        {
+        public ActionResult<Survey> GetSurveyByRoadmapItemId(int roadmapItemId) {
             try
             {
-                IAssesment survey = _roadmapItemRepository.GetBy(roadmapItemId).Assesment;
-                if (survey is Survey)
-                {
-                    return (Survey)_roadmapItemRepository.GetBy(roadmapItemId).Assesment;
+                IAssessment survey = _roadmapItemRepository.GetBy(roadmapItemId).Assessment;
+                if (survey is Survey) {
+                    return (Survey)_roadmapItemRepository.GetBy(roadmapItemId).Assessment;
                 }
-                else
-                {
+                else {
                     return BadRequest("The assesment was not a survey");
                 }
             }
-            catch
-            {
-                return BadRequest();
+            catch(Exception e) {
+                return BadRequest(e.Message);
             }           
         }
 
@@ -127,10 +117,10 @@ namespace P3Backend.Controllers
                 RoadMapItem roadmapItem = _roadmapItemRepository.GetBy(roadmapItemId);
                 if (roadmapItem == null)
                     return NotFound("Roadmap with given id does not exist");
-                IAssesment assesment = roadmapItem.Assesment;
+                IAssessment assesment = roadmapItem.Assessment;
                 if (assesment == null)
                     return NotFound("Roadmap doesn't have a survey or the survey is allready deleted");
-                roadmapItem.Assesment = null;
+                roadmapItem.Assessment = null;
                 _surveyRepository.Delete((Survey)assesment);
                 _surveyRepository.SaveChanges();
                 return NoContent();
@@ -141,5 +131,5 @@ namespace P3Backend.Controllers
             }
         }
 
-    }
+	}
 }

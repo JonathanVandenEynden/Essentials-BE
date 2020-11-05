@@ -1,0 +1,29 @@
+﻿using Microsoft.AspNetCore.SignalR;
+using P3Backend.Model.Questions;
+using System;
+using System.Collections.Generic;
+
+namespace P3Backend.Model {
+	public abstract class IAssessment {
+		public int Id { get; set; }
+		public List<Question> Questions { get; set; }
+		public Question Feedback { get; set; }
+
+		protected IAssessment() {
+			Questions = new List<Question>();
+
+			Feedback = new MultipleChoiceQuestion("How is your mood about this change initiative?");
+			((MultipleChoiceQuestion)Feedback).AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+		}
+
+		public void surveyTemplates(string type) {			
+			/*type = "personal";
+            if (type.Equals("personal")) {
+				Question q1 = new MultipleChoiceQuestion("How is your mood about this change initiative?");				
+				((MultipleChoiceQuestion)q1).AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				Questions.Add(q1);
+			}*/
+		}
+		
+	}
+}

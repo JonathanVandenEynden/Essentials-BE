@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P3Backend.Model.Questions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,5 +17,9 @@ namespace P3Backend.Model.RepoInterfaces {
 		public void SaveChanges();
 
 		public void Update(Survey s);
+
+		public void UpdateQuestions(Question q);
+
+		public Question GetQuestion(int id);
 	}
 }

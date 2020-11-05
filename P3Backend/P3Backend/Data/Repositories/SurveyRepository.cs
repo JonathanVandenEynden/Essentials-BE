@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using P3Backend.Model;
+using P3Backend.Model.Questions;
 using P3Backend.Model.RepoInterfaces;
 using System;
 using System.Collections.Generic;
@@ -11,10 +13,12 @@ namespace P3Backend.Data.Repositories {
 
 		private readonly ApplicationDbContext _context;
 		private readonly DbSet<Survey> _surveys;
+		private readonly DbSet<Question> _questions;
 
 		public SurveyRepository(ApplicationDbContext context) {
 			_context = context;
 			_surveys = _context.Surveys;
+			_questions = _context.Questions;
 		}
 		public void Add(Survey s) {
 			_surveys.Add(s);
@@ -34,15 +38,26 @@ namespace P3Backend.Data.Repositories {
 			return _surveys
 				.Include(s => s.Questions)
 				.Include(s => s.Feedback)
-				.FirstOrDefault(s => s.Id == id);
-		}
+				.FirstOrDefault(s => s.Id == id);			
+		}	
 
 		public void SaveChanges() {
 			_context.SaveChanges();
 		}
 
-		public void Update(Survey s) {
+        public void UpdateQuestions(Question q) {
+			_questions.Update(q);
+			_context.SaveChanges();
+        }
+
+		
+
+        public void Update(Survey s) {
 			_surveys.Update(s);
 		}
-	}
+
+        public Question GetQuestion(int id) {
+			return _questions.FirstOrDefault(q => q.Id == id);
+        }
+    }
 }

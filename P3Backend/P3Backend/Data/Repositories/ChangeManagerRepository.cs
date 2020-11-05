@@ -28,7 +28,7 @@ namespace P3Backend.Data.Repositories {
 		public IEnumerable<ChangeManager> GetAll() {
 			return _changeManagers
 				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
-				.Include(e => e.CreatedChangeInitiatives);
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions);
 		}
 
 		public ChangeManager GetBy(int id) {
@@ -36,7 +36,7 @@ namespace P3Backend.Data.Repositories {
 				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
 				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeSponsor)
 				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeGroup)
-				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.FirstOrDefault(cm => cm.Id == id);
 		}
 
@@ -45,7 +45,7 @@ namespace P3Backend.Data.Repositories {
 				.Include(e => e.EmployeeOrganizationParts).ThenInclude(eo => eo.OrganizationPart)
 				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeSponsor)
 				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.ChangeGroup)
-				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap)
+				.Include(e => e.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.FirstOrDefault(cm => cm.Email == email);
 		}
 

@@ -26,7 +26,7 @@ namespace P3Backend.Data {
 		public async Task InitializeData() {
 			_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
-				//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+			//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
 				Admin admin = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
@@ -188,52 +188,63 @@ namespace P3Backend.Data {
 				#endregion
 
 				#region Surveys
+
 				Survey surveyResto1 = new Survey();
+				surveyResto1.surveyTemplates("test");
 				Survey surveyResto2 = new Survey();
 				Survey surveyResto3 = new Survey();
 				Survey surveyResto4 = new Survey();
 
-				ClosedQuestion questionResto1 = new ClosedQuestion("What was you opinion about the old Catering?", 1);
-				questionResto1.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
+				MultipleChoiceQuestion questionResto1 = new MultipleChoiceQuestion("What was your opinion about the old Catering?");
+				questionResto1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto1.Questions.Add(questionResto1);
-				ClosedQuestion questionResto2 = new ClosedQuestion("What was you opinion about the new Catering?", 1);
-				questionResto2.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
+				MultipleChoiceQuestion questionResto2 = new MultipleChoiceQuestion("What was your opinion about the new Catering?"); 
+				questionResto2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto2.Questions.Add(questionResto2);
-				ClosedQuestion questionResto3 = new ClosedQuestion("What was you opinion about the rennovation?", 1);
-				questionResto3.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
+				MultipleChoiceQuestion questionResto3 = new MultipleChoiceQuestion("What was your opinion about the rennovation?");
+				questionResto3.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto3.Questions.Add(questionResto3);
-				ClosedQuestion questionResto4 = new ClosedQuestion("What is you opinion about the food?", 1);
-				questionResto4.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
+				MultipleChoiceQuestion questionResto4 = new MultipleChoiceQuestion("What is your opinion about the food?");
+				questionResto4.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto4.Questions.Add(questionResto4);
 
-				roadMapItemResto1.Assesment = surveyResto1;
-				roadMapItemResto2.Assesment = surveyResto2;
-				roadMapItemResto3.Assesment = surveyResto3;
-				roadMapItemResto4.Assesment = surveyResto4;
-
+				roadMapItemResto1.Assessment = surveyResto1;
+				roadMapItemResto2.Assessment = surveyResto2;
+				roadMapItemResto3.Assessment = surveyResto3;
+				roadMapItemResto4.Assessment = surveyResto4;
 				/////////////
 				Survey surveyExpansion1 = new Survey();
 				Survey surveyExpansion2 = new Survey();
 				Survey surveyExpansion3 = new Survey();
 				Survey surveyExpansion4 = new Survey();
 
-				ClosedQuestion questionExpansion1 = new ClosedQuestion("What was you opinion about the old size of the company?", 1);
-				questionExpansion1.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
+				MultipleChoiceQuestion questionExpansion1 = new MultipleChoiceQuestion("What was your opinion about the old size of the company?");
+				questionExpansion1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				YesNoQuestion yesNoQuestionExpansion1 = new YesNoQuestion("Do you think this is a good change?");
+				RangedQuestion rangedQuestionExpansion1 = new RangedQuestion("How good do you think this change is?");
+				OpenQuestion openQuestionExpansion1 = new OpenQuestion("How do you know about this change");
+				openQuestionExpansion1.PossibleAnswers.Add("I do not know", 0);
+				openQuestionExpansion1.PossibleAnswers.Add("I heard it from a friend", 0);
 				surveyExpansion1.Questions.Add(questionExpansion1);
-				ClosedQuestion questionExpansion2 = new ClosedQuestion("What was you opinion about the new size of the company?", 1);
-				questionExpansion2.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
+				surveyExpansion1.Questions.Add(yesNoQuestionExpansion1);
+				surveyExpansion1.Questions.Add(rangedQuestionExpansion1);
+				surveyExpansion1.Questions.Add(openQuestionExpansion1);
+
+				MultipleChoiceQuestion questionExpansion2 = new MultipleChoiceQuestion("What was your opinion about the new size of the company?");
+				questionExpansion2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyExpansion2.Questions.Add(questionExpansion2);
-				ClosedQuestion questionExpansion3 = new ClosedQuestion("What is your oppinion about the risks?", 1);
-				questionExpansion3.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
+				MultipleChoiceQuestion questionExpansion3 = new MultipleChoiceQuestion("What is yourr oppinion about the risks?");
+				questionExpansion3.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyExpansion3.Questions.Add(questionExpansion3);
-				ClosedQuestion questionExpansion4 = new ClosedQuestion("What is you opinion after the expansion?", 1);
-				questionExpansion4.PossibleAnswers = new List<Answer>() { new Answer("good"), new Answer("okay"), new Answer("bad") };
+				MultipleChoiceQuestion questionExpansion4 = new MultipleChoiceQuestion("What is your opinion after the expansion?");
+				questionExpansion4.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyExpansion4.Questions.Add(questionExpansion4);
 
-				roadMapItemExpansion1.Assesment = surveyExpansion1;
-				roadMapItemExpansion2.Assesment = surveyExpansion2;
-				roadMapItemExpansion3.Assesment = surveyExpansion3;
-				roadMapItemExpansion4.Assesment = surveyExpansion4;
+
+				roadMapItemExpansion1.Assessment = surveyExpansion1;
+				roadMapItemExpansion2.Assessment = surveyExpansion2;
+				roadMapItemExpansion3.Assessment = surveyExpansion3;
+				roadMapItemExpansion4.Assessment = surveyExpansion4;
 
 				IList<Survey> s = new List<Survey>() {
 					surveyExpansion1,
