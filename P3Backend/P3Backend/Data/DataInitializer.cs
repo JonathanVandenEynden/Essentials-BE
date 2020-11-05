@@ -116,7 +116,7 @@ namespace P3Backend.Data {
 				#endregion
 
 				#region ChangeGroups
-				ChangeGroup allEmployees = new ChangeGroup("All mployees");
+				ChangeGroup allEmployees = new ChangeGroup("All employees");
 				allEmployees.Users.AddRange(new List<IUser>() { ziggy, marbod });
 
 				ChangeGroup justBelgium = new ChangeGroup("Just Belgium");
@@ -212,6 +212,10 @@ namespace P3Backend.Data {
 				roadMapItemResto2.Assessment = surveyResto2;
 				roadMapItemResto3.Assessment = surveyResto3;
 				roadMapItemResto4.Assessment = surveyResto4;
+				roadMapItemResto5.Assessment = surveyResto1;
+				roadMapItemResto6.Assessment = surveyResto2;
+				roadMapItemResto7.Assessment = surveyResto3;
+				roadMapItemResto8.Assessment = surveyResto4;
 				/////////////
 				Survey surveyExpansion1 = new Survey();
 				Survey surveyExpansion2 = new Survey();
@@ -245,6 +249,10 @@ namespace P3Backend.Data {
 				roadMapItemExpansion2.Assessment = surveyExpansion2;
 				roadMapItemExpansion3.Assessment = surveyExpansion3;
 				roadMapItemExpansion4.Assessment = surveyExpansion4;
+				roadMapItemExpansion5.Assessment = surveyExpansion1;
+				roadMapItemExpansion6.Assessment = surveyExpansion2;
+				roadMapItemExpansion7.Assessment = surveyExpansion3;
+				roadMapItemExpansion8.Assessment = surveyExpansion4;
 
 				IList<Survey> s = new List<Survey>() {
 					surveyExpansion1,
