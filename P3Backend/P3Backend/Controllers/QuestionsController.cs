@@ -129,7 +129,8 @@ namespace P3Backend.Controllers {
 				_surveyRepository.SaveChanges();
 				return NoContent();
 			}
-			catch {
+			catch (Exception e) {
+				Console.WriteLine(e.Message);
 				return BadRequest("The Type of the question does not exist or is not yet implemented");
 			}
 		}

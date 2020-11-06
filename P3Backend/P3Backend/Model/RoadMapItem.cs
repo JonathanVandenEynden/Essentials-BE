@@ -39,9 +39,7 @@ namespace P3Backend.Model {
 			Title = title;
 			StartDate = start;
 			EndDate = end;
-
 			Done = false;
-
 		}
 
 		protected RoadMapItem() {
