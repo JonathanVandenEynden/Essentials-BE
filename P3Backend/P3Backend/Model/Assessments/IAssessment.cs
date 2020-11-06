@@ -11,22 +11,20 @@ namespace P3Backend.Model {
 
 		public RoadMapItem RoadMapItem { get; set; }
 
-		protected IAssessment(RoadMapItem rmi)
-		{
+		protected IAssessment(RoadMapItem rmi) {
 			RoadMapItem = rmi;
-			
+
 			Questions = new List<Question>();
 
 			Feedback = new MultipleChoiceQuestion("How is your mood about this change initiative?");
-			((MultipleChoiceQuestion)Feedback).AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+			((MultipleChoiceQuestion)Feedback).AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 		}
 
-		protected IAssessment()
-		{
+		protected IAssessment() {
 			//EF
 		}
 
-		public void surveyTemplates(string type) {			
+		public void surveyTemplates(string type) {
 			/*type = "personal";
             if (type.Equals("personal")) {
 				Question q1 = new MultipleChoiceQuestion("How is your mood about this change initiative?");				
@@ -34,6 +32,6 @@ namespace P3Backend.Model {
 				Questions.Add(q1);
 			}*/
 		}
-		
+
 	}
 }
