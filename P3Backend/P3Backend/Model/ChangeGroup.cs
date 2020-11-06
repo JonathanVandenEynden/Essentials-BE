@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P3Backend.Model.Users;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,13 +11,13 @@ namespace P3Backend.Model {
 
 		[Required]
 		public string Name { get; set; }
-		public List<IUser> Users { get; set; }
+		public List<Employee> Users { get; set; }
 
 
 		public ChangeGroup(string name) {
 			Name = name;
 
-			Users = new List<IUser>();
+			Users = new List<Employee>();
 		}
 
 		protected ChangeGroup() {

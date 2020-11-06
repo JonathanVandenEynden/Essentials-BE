@@ -19,11 +19,14 @@ namespace P3Backend.Controllers {
 
 		private readonly IOrganizationRepository _organizationRepository;
 		private readonly IAdminRepository _adminRepository;
+		private readonly IChangeInitiativeRepository _changeInitiativeRepo;
 
 		public OrganizationsController(IOrganizationRepository organizationRepo,
-			IAdminRepository adminRepository) {
+			IAdminRepository adminRepository,
+			IChangeInitiativeRepository changeInitiativeRepo) {
 			_organizationRepository = organizationRepo;
 			_adminRepository = adminRepository;
+			_changeInitiativeRepo = changeInitiativeRepo;
 		}
 
 		[HttpGet("{organizationId}")]

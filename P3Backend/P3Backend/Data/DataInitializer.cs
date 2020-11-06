@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualBasic;
@@ -117,7 +118,7 @@ namespace P3Backend.Data {
 
 				#region ChangeGroups
 				ChangeGroup allEmployees = new ChangeGroup("All employees");
-				allEmployees.Users.AddRange(new List<IUser>() { ziggy, marbod });
+				allEmployees.Users.AddRange(new List<Employee>() { ziggy, marbod });
 
 				ChangeGroup justBelgium = new ChangeGroup("Just Belgium");
 				justBelgium.Users.Add(ziggy);
