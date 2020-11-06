@@ -41,7 +41,8 @@ namespace P3Backend.Test.Models
 
         [Test]
         [TestCase("")]
-        [TestCase(" ")]
+        [TestCase(" ")]        
+        [TestCase(null)]
         public void InitializeConstructorWithInvalidNameThrowsException(string name)
         {
             Assert.Throws<ArgumentException>(() => new ChangeInitiative(name,
@@ -56,6 +57,7 @@ namespace P3Backend.Test.Models
         [TestCase("")]
         [TestCase(" ")]
         [TestCase("1234")]
+        [TestCase(null)]
         public void InitializeConstructorWithInvalidDescriptionThrowsException(string desc)
         {
             Assert.Throws<ArgumentException>(() => new ChangeInitiative("validName",
