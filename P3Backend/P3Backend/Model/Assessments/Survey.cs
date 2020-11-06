@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 namespace P3Backend.Model {
 	public class Survey : IAssessment {
 
-		public Survey() : base() {
+		public Survey(RoadMapItem rmi) : base(rmi) {
 
+		}
+
+		public Survey(): base()
+		{
+			//EF
 		}
 
 	}

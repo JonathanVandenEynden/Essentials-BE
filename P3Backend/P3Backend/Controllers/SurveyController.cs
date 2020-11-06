@@ -66,7 +66,7 @@ namespace P3Backend.Controllers {
         {
             try
             {
-                Survey survey = new Survey();
+                Survey survey = new Survey(_roadmapItemRepository.GetBy(roadmapItemId));
                 _roadmapItemRepository.GetBy(roadmapItemId).Assessment = survey;
                 _roadmapItemRepository.SaveChanges();
                 return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, survey);
