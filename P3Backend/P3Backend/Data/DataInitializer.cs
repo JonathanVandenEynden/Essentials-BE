@@ -26,7 +26,7 @@ namespace P3Backend.Data {
 		public async Task InitializeData() {
 			_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
-			//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+				//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
 				Admin admin = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
@@ -116,7 +116,7 @@ namespace P3Backend.Data {
 				#endregion
 
 				#region ChangeGroups
-				ChangeGroup allEmployees = new ChangeGroup("All mployees");
+				ChangeGroup allEmployees = new ChangeGroup("All employees");
 				allEmployees.Users.AddRange(new List<IUser>() { ziggy, marbod });
 
 				ChangeGroup justBelgium = new ChangeGroup("Just Belgium");
@@ -198,7 +198,7 @@ namespace P3Backend.Data {
 				MultipleChoiceQuestion questionResto1 = new MultipleChoiceQuestion("What was your opinion about the old Catering?");
 				questionResto1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto1.Questions.Add(questionResto1);
-				MultipleChoiceQuestion questionResto2 = new MultipleChoiceQuestion("What was your opinion about the new Catering?"); 
+				MultipleChoiceQuestion questionResto2 = new MultipleChoiceQuestion("What was your opinion about the new Catering?");
 				questionResto2.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				surveyResto2.Questions.Add(questionResto2);
 				MultipleChoiceQuestion questionResto3 = new MultipleChoiceQuestion("What was your opinion about the rennovation?");
@@ -212,6 +212,10 @@ namespace P3Backend.Data {
 				roadMapItemResto2.Assessment = surveyResto2;
 				roadMapItemResto3.Assessment = surveyResto3;
 				roadMapItemResto4.Assessment = surveyResto4;
+				roadMapItemResto5.Assessment = surveyResto1;
+				roadMapItemResto6.Assessment = surveyResto2;
+				roadMapItemResto7.Assessment = surveyResto3;
+				roadMapItemResto8.Assessment = surveyResto4;
 				/////////////
 				Survey surveyExpansion1 = new Survey(roadMapItemExpansion1);
 				Survey surveyExpansion2 = new Survey(roadMapItemExpansion2);
@@ -219,7 +223,7 @@ namespace P3Backend.Data {
 				Survey surveyExpansion4 = new Survey(roadMapItemExpansion4);
 
 				MultipleChoiceQuestion questionExpansion1 = new MultipleChoiceQuestion("What was your opinion about the old size of the company?");
-				questionExpansion1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+				questionExpansion1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
 				YesNoQuestion yesNoQuestionExpansion1 = new YesNoQuestion("Do you think this is a good change?");
 				RangedQuestion rangedQuestionExpansion1 = new RangedQuestion("How good do you think this change is?");
 				OpenQuestion openQuestionExpansion1 = new OpenQuestion("How do you know about this change");
@@ -245,6 +249,10 @@ namespace P3Backend.Data {
 				roadMapItemExpansion2.Assessment = surveyExpansion2;
 				roadMapItemExpansion3.Assessment = surveyExpansion3;
 				roadMapItemExpansion4.Assessment = surveyExpansion4;
+				roadMapItemExpansion5.Assessment = surveyExpansion1;
+				roadMapItemExpansion6.Assessment = surveyExpansion2;
+				roadMapItemExpansion7.Assessment = surveyExpansion3;
+				roadMapItemExpansion8.Assessment = surveyExpansion4;
 
 				IList<Survey> s = new List<Survey>() {
 					surveyExpansion1,
