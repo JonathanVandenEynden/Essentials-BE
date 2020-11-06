@@ -54,6 +54,7 @@ namespace P3Backend.Controllers {
 
 		}
 
+
 		/// <summary>
 		/// Make an empty survey for a given roadmapItem
 		/// </summary>
@@ -70,7 +71,7 @@ namespace P3Backend.Controllers {
 					_surveyRepository.Delete(rmi.Assessment as Survey);
 				}
 
-				Survey survey = new Survey();
+				Survey survey = new Survey(_roadmapItemRepository.GetBy(roadmapItemId));
 				rmi.Assessment = survey;
 				_roadmapItemRepository.SaveChanges();
 				return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, survey);

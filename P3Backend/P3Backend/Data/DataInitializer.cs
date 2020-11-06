@@ -190,11 +190,11 @@ namespace P3Backend.Data {
 
 				#region Surveys
 
-				Survey surveyResto1 = new Survey();
+				Survey surveyResto1 = new Survey(roadMapItemResto1);
 				surveyResto1.surveyTemplates("test");
-				Survey surveyResto2 = new Survey();
-				Survey surveyResto3 = new Survey();
-				Survey surveyResto4 = new Survey();
+				Survey surveyResto2 = new Survey(roadMapItemResto2);
+				Survey surveyResto3 = new Survey(roadMapItemResto3);
+				Survey surveyResto4 = new Survey(roadMapItemResto4);
 
 				MultipleChoiceQuestion questionResto1 = new MultipleChoiceQuestion("What was your opinion about the old Catering?");
 				questionResto1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
@@ -218,10 +218,10 @@ namespace P3Backend.Data {
 				roadMapItemResto7.Assessment = surveyResto3;
 				roadMapItemResto8.Assessment = surveyResto4;
 				/////////////
-				Survey surveyExpansion1 = new Survey();
-				Survey surveyExpansion2 = new Survey();
-				Survey surveyExpansion3 = new Survey();
-				Survey surveyExpansion4 = new Survey();
+				Survey surveyExpansion1 = new Survey(roadMapItemExpansion1);
+				Survey surveyExpansion2 = new Survey(roadMapItemExpansion2);
+				Survey surveyExpansion3 = new Survey(roadMapItemExpansion3);
+				Survey surveyExpansion4 = new Survey(roadMapItemExpansion4);
 
 				MultipleChoiceQuestion questionExpansion1 = new MultipleChoiceQuestion("What was your opinion about the old size of the company?");
 				questionExpansion1.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);

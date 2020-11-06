@@ -27,18 +27,21 @@ namespace P3Backend.Data.Repositories {
 
 		public IEnumerable<RoadMapItem> GetAll() {
 			return _roadMapItems
-				.Include(rmi => rmi.Assessment).ThenInclude(a => a.Questions);
+				.Include(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
+				.Include(rmi => rmi.Assessment).ThenInclude(a => a.Feedback);
 		}
 
 		public RoadMapItem GetBy(int id) {
 			return _roadMapItems
 				.Include(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
+				.Include(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.FirstOrDefault(rmi => rmi.Id == id);
 		}
 
 		public RoadMapItem GetByTitle(string title) {
 			return _roadMapItems
 				.Include(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
+				.Include(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.FirstOrDefault(rmi => rmi.Title == title);
 		}
 

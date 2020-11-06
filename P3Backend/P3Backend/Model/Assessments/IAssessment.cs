@@ -9,11 +9,19 @@ namespace P3Backend.Model {
 		public List<Question> Questions { get; set; }
 		public MultipleChoiceQuestion Feedback { get; set; }
 
-		protected IAssessment() {
+		public RoadMapItem RoadMapItem { get; set; }
+
+		protected IAssessment(RoadMapItem rmi) {
+			RoadMapItem = rmi;
+
 			Questions = new List<Question>();
 
 			Feedback = new MultipleChoiceQuestion("How is your mood about this change initiative?");
-			Feedback.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
+			Feedback.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
+		}
+
+		protected IAssessment() {
+			//EF
 		}
 
 		public void surveyTemplates(string type) {
