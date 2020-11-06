@@ -70,7 +70,7 @@ namespace P3Backend.Model {
 			EndDate = end;
 			ChangeSponsor = sponsor;
 			ChangeType = changeType;
-
+			ChangeGroup = new ChangeGroup("All Employees");
 			RoadMap = new List<RoadMapItem>();
 			// TODO standaard voorbereiding item toevoegen aan roadmap
 			// TODO Changegroup
