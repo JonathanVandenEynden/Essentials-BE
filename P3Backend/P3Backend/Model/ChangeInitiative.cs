@@ -9,21 +9,55 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model {
-	public class ChangeInitiative {
+	public class ChangeInitiative
+	{
 
+		private string _name;
+		private string _desc;
 		private DateTime _endDate;
 		private DateTime _startDate;
+		private Employee _changeSponsor;
+		private IChangeType _changeType;
 
 		public int Id {
 			get; set;
 		}
 		[Required]
 		public string Name {
-			get; set;
+			get
+			{
+				return _name;
+			}
+			set
+			{
+				if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value))
+				{
+					throw new ArgumentException("Name cannot be null or empty");
+				}
+				else
+				{
+					_name = value;
+				}
+			}
 		}
 		[Required]
 		public String Description {
-			get; set;
+			get
+			{
+				return _desc;
+			}
+			set
+			{
+				if(String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value) || value.Length < 5)
+				{
+					throw new ArgumentException(
+						"Description cannot be null or empty and must be at least 5 characters long");
+				}
+				else
+				{
+					_desc = value;
+				}
+			}
 		}
 		[Required]
 		public DateTime StartDate {
@@ -53,12 +87,31 @@ namespace P3Backend.Model {
 		public ChangeGroup ChangeGroup {
 			get; set;
 		}
-		public Employee ChangeSponsor {
-			get; set;
+
+		public Employee ChangeSponsor
+		{
+			get => _changeSponsor;
+			set
+			{
+				if(value == null)
+				{
+					throw new ArgumentException("Change Sponsor is required and cannot be null");
+				}
+				_changeSponsor = value;
+			}
 		} // could also be another CM
-		public IChangeType ChangeType {
-			get; set;
+
+		public IChangeType ChangeType
+		{
+			get => _changeType;
+			set
+			{
+				if(value == null)
+					throw new ArgumentException("ChangeType is required and cannot be null");
+				_changeType = value;
+			}
 		}
+
 		public IList<RoadMapItem> RoadMap {
 			get; set;
 		}
