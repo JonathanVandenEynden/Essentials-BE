@@ -125,8 +125,8 @@ namespace P3Backend.Controllers {
 				_surveyRepository.SaveChanges();
 				return NoContent();
 			}
-			catch {
-				return BadRequest();
+			catch (Exception e) {
+				return BadRequest(e.Message);
 			}
 		}
 
