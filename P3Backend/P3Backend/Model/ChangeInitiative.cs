@@ -9,8 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace P3Backend.Model {
-	public class ChangeInitiative
-	{
+	public class ChangeInitiative {
 
 		private string _name;
 		private string _desc;
@@ -24,37 +23,29 @@ namespace P3Backend.Model {
 		}
 		[Required]
 		public string Name {
-			get
-			{
+			get {
 				return _name;
 			}
-			set
-			{
-				if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value))
-				{
+			set {
+				if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value)) {
 					throw new ArgumentException("Name cannot be null or empty");
 				}
-				else
-				{
+				else {
 					_name = value;
 				}
 			}
 		}
 		[Required]
 		public String Description {
-			get
-			{
+			get {
 				return _desc;
 			}
-			set
-			{
-				if(String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value) || value.Length < 5)
-				{
+			set {
+				if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value) || value.Length < 5) {
 					throw new ArgumentException(
 						"Description cannot be null or empty and must be at least 5 characters long");
 				}
-				else
-				{
+				else {
 					_desc = value;
 				}
 			}
@@ -88,25 +79,20 @@ namespace P3Backend.Model {
 			get; set;
 		}
 
-		public Employee ChangeSponsor
-		{
+		public Employee ChangeSponsor {
 			get => _changeSponsor;
-			set
-			{
-				if(value == null)
-				{
+			set {
+				if (value == null) {
 					throw new ArgumentException("Change Sponsor is required and cannot be null");
 				}
 				_changeSponsor = value;
 			}
 		} // could also be another CM
 
-		public IChangeType ChangeType
-		{
+		public IChangeType ChangeType {
 			get => _changeType;
-			set
-			{
-				if(value == null)
+			set {
+				if (value == null)
 					throw new ArgumentException("ChangeType is required and cannot be null");
 				_changeType = value;
 			}
@@ -133,7 +119,7 @@ namespace P3Backend.Model {
 			// EF
 		}
 
-		internal void update(ChangeInitiativeDTO dto) {
+		internal void Update(ChangeInitiativeDTO dto) {
 			Name = dto.Name;
 			Description = dto.Description;
 			_startDate = dto.StartDate;
