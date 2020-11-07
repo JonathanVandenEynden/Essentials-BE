@@ -18,4 +18,8 @@
     <ProjectReference Include="..\P3Backend\P3Backend.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
