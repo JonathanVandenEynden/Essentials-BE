@@ -172,7 +172,7 @@ namespace P3Backend.Controllers {
 			try {
 				ChangeInitiative ciToBeUpdated = _changeRepo.GetBy(id);
 
-				ciToBeUpdated.update(dto);
+				ciToBeUpdated.Update(dto);
 
 				_changeRepo.SaveChanges();
 
