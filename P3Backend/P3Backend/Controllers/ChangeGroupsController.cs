@@ -14,16 +14,13 @@ namespace P3Backend.Controllers {
 	[Produces("application/json")]
 	public class ChangeGroupsController : ControllerBase {
 
-		private readonly ApplicationDbContext _dbcontext;
 		private readonly IOrganizationRepository _organizationRepository;
 		private readonly IChangeInitiativeRepository _changeInitiativeRepo;
 
 
 		public ChangeGroupsController(
-			ApplicationDbContext dbcontext,
 			IOrganizationRepository organizationRepository,
 			IChangeInitiativeRepository changeInitiativeRepo) {
-			_dbcontext = dbcontext;
 			_organizationRepository = organizationRepository;
 			_changeInitiativeRepo = changeInitiativeRepo;
 		}
