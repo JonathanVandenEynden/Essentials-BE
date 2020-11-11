@@ -10,12 +10,10 @@ namespace P3Backend.Model.OrganizationParts {
 		private string _name;
 		public int Id { get; set; }
 
-		public string Name
-		{
+		public string Name {
 			get => _name;
-			private set
-			{
-				if(String.IsNullOrWhiteSpace(value))
+			private set {
+				if (String.IsNullOrWhiteSpace(value))
 					throw new ArgumentException("Name cannot be null or empty");
 				_name = value;
 			}
@@ -23,19 +21,17 @@ namespace P3Backend.Model.OrganizationParts {
 
 		public IList<EmployeeOrganizationPart> EmployeeOrganizationParts { get; set; }
 
-		public OrganizationPartType Type
-		{
+		public OrganizationPartType Type {
 			get => _type;
-			set
-			{
-				
-				if(Enum.GetValues(typeof(OrganizationPartType)).HasProperty(value.ToString())){
-					_type = value;
-				}
-				else
-				{
-					throw new InvalidOperationException("Value is not part of the enum");
-				}
+			set {
+				_type = value;
+				//! Check redundant because the value must be an OrganizationPartType eitherway
+				//if (Enum.GetValues(typeof(OrganizationPartType)).HasProperty(value.ToString())) {
+				//	_type = value;
+				//}
+				//else {
+				//	throw new InvalidOperationException("Value is not part of the enum");
+				//}
 			}
 		}
 

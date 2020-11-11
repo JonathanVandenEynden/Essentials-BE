@@ -1,4 +1,5 @@
-﻿using P3Backend.Model.OrganizationParts;
+﻿using NJsonSchema.Annotations;
+using P3Backend.Model.OrganizationParts;
 using P3Backend.Model.Users;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace P3Backend.Model {
 		public int Id { get; set; }
 
 		[Required]
+		[NotNull]
 		public string Name { get; set; }
 		[Required]
 		public List<Employee> Employees { get; set; }

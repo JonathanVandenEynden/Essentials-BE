@@ -82,17 +82,23 @@ namespace P3Backend.Controllers {
 		[HttpDelete("{organizationId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public IActionResult Delete(int organizationId) {
-			Organization oldO = _organizationRepository.GetBy(organizationId);
+			try {
+				Organization oldO = _organizationRepository.GetBy(organizationId);
 
-			if (oldO == null) {
-				return NotFound("Organization not found");
+				if (oldO == null) {
+					return NotFound("Organization not found");
+				}
+
+				_organizationRepository.Delete(oldO);
+				_organizationRepository.SaveChanges();
+
+				return NoContent();
 			}
-
-			_organizationRepository.Delete(oldO);
-			_organizationRepository.SaveChanges();
-
-			return NoContent();
+			catch (Exception e) {
+				return BadRequest(e.Message);
+			}
 
 		}
 	}
