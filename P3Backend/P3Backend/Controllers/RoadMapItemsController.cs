@@ -58,6 +58,12 @@ namespace P3Backend.Controllers {
 			return ci.RoadMap.ToList();
 		}
 
+		/// <summary>
+		/// Add a roadmap item to a change initiative
+		/// </summary>
+		/// <param name="changeInitiativeId"></param>
+		/// <param name="dto"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public IActionResult PostRoadMapItem(int changeInitiativeId, RoadMapItemDTO dto) {
 			try {
