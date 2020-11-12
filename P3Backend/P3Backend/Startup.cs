@@ -48,6 +48,8 @@ namespace P3Backend {
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 			);
 
+			services.AddCors();
+
 			services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
 			services.Configure<IdentityOptions>(options => {
@@ -87,6 +89,8 @@ namespace P3Backend {
 			app.UseAuthorization();
 
 			app.UseAuthentication();
+
+			app.UseCors();
 
 			app.UseOpenApi();
 			app.UseSwaggerUi3();
