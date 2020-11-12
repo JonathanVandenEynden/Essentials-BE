@@ -29,12 +29,12 @@ namespace P3Backend.Controllers {
 		[HttpGet("{surveyId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public IActionResult GetQuestionsFromSurvey(int surveyId) {
+		public ActionResult<Survey> GetQuestionsFromSurvey(int surveyId) {
 			Survey survey = _surveyRepository.GetBy(surveyId);
 			if (survey == null) {
 				return NotFound();
 			}
-			return Ok(survey);
+			return survey;
 		}
 
 		/// <summary>
@@ -53,7 +53,6 @@ namespace P3Backend.Controllers {
 			if (survey == null)
 				return NotFound("There was no survey for the given surveyId");
 			Question question = null;
-
 
 			try {
 				switch (questionDTO.Type) {
