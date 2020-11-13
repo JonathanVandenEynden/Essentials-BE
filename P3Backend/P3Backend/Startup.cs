@@ -18,6 +18,9 @@ using P3Backend.Model.RepoInterfaces;
 
 namespace P3Backend {
 	public class Startup {
+
+		readonly string EssentialsAllowOrigin = "_essentialsAllowOrigin";
+
 		public Startup(IConfiguration configuration) {
 			Configuration = configuration;
 		}
@@ -48,7 +51,18 @@ namespace P3Backend {
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 			);
 
-			services.AddCors();
+
+
+			services.AddCors(options => {
+				options.AddPolicy(name: EssentialsAllowOrigin,
+								  builder => {
+									  builder.WithOrigins("https://essentialstoolkit.netlify.app",
+															"https://essentials-angular.azurewebsites.net")
+										.AllowAnyHeader()
+										.AllowAnyMethod();
+
+								  });
+			});
 
 			services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -90,7 +104,7 @@ namespace P3Backend {
 
 			app.UseAuthentication();
 
-			app.UseCors();
+			app.UseCors(EssentialsAllowOrigin);
 
 			app.UseOpenApi();
 			app.UseSwaggerUi3();
