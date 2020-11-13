@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using P3Backend.Model;
 using P3Backend.Model.DTO_s;
 using P3Backend.Model.RepoInterfaces;
@@ -47,13 +51,25 @@ namespace P3Backend.Controllers {
 
 				var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
 				if (result.Succeeded) {
-					// TODO AuthO implementeren
-					//string token = GetToken(user);
-					return Created("", "User ingelogd");
+					string token = GetToken(user);
+					return Ok(token);
 				}
 
 			}
 			return BadRequest("Wrong credentials");
+		}
+
+		private string GetToken(IdentityUser user) {
+
+			var claims = new[] {
+				new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+				new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+			};
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+			// RELEASE first two (null, null) parameters should be _config["Jwt:Issuer"]
+			var token = new JwtSecurityToken(null, null, claims, expires: DateTime.Now.AddMinutes(30), signingCredentials: creds);
+			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 
 		/// <summary>
@@ -75,9 +91,8 @@ namespace P3Backend.Controllers {
 				if (result.Succeeded) {
 					_userRepo.Add(checkedUser);
 					_userRepo.SaveChanges();
-					// TODO AuthO implementer
-					//string token = GetToken(user);
-					return Created("", "User aangemaakt");
+					string token = GetToken(user);
+					return Created("", token);
 				}
 			}
 			catch (Exception e) {

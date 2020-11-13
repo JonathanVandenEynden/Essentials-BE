@@ -25,13 +25,14 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			_dbContext.Database.EnsureDeleted();
+			/*_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
 				//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
-				Admin admin = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
-				_dbContext.Admins.Add(admin);
+				Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
+				Admin admin2 = new Admin("Jonatan", "Vanden Eynden Van Lysebeth", "Jonathan.vandeneyndenvanlysebeth@student.hogent.be");
+				_dbContext.Admins.AddRange(new List<Admin>() { admin1, admin2 });
 				#endregion
 
 				#region Employees
@@ -48,7 +49,7 @@ namespace P3Backend.Data {
 
 				#region Organization
 				Organization hogent = new Organization("Hogent", new List<Employee>() { sponsor, ziggy, marbod }, changeManagerSuktrit);
-				admin.Organizations.Add(hogent);
+				admin1.Organizations.Add(hogent);
 
 				_dbContext.Organizations.Add(hogent);
 				#endregion
@@ -268,7 +269,14 @@ namespace P3Backend.Data {
 				_dbContext.Surveys.AddRange(s);
 				#endregion
 
-
+				#region Create Identity users
+				await CreateUser(admin1.Email, "P@ssword1");
+				await CreateUser(admin2.Email, "P@ssword1");
+				await CreateUser(sponsor.Email, "P@ssword1");
+				await CreateUser(ziggy.Email, "P@ssword1");
+				await CreateUser(marbod.Email, "P@ssword1");
+				await CreateUser(changeManagerSuktrit.Email, "P@ssword1");
+				#endregion
 
 
 
@@ -288,7 +296,11 @@ namespace P3Backend.Data {
 
 				_dbContext.SaveChanges();
 				Console.WriteLine("Database created");
-			}
+			}*/
+		}
+		private async Task CreateUser(string email, string password) {
+			var gebruiker = new IdentityUser { UserName = email, Email = email };
+			await _usermanager.CreateAsync(gebruiker, password);
 		}
 	}
 }
