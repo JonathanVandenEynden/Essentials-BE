@@ -3,13 +3,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace P3Backend.Model {
 	public class RoadMapItem {
+		private string _title;
 		private DateTime _startDate;
 		private DateTime _endDate;
 
 		public int Id { get; set; }
 		[Required]
-		public string Title { get; set; }
-		public IAssessment Assessment { get; set; }
+		public string Title {
+			get { return _title; }
+			set {
+				if (value == null)
+					throw new ArgumentException("Title should not be emtpy");
+				else
+					_title = value;
+            }
+        }
+        
+        public IAssessment Assessment { get; set; }
 		[Required]
 		public bool Done { get; set; }
 
