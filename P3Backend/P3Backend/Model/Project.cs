@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class Project {
-		public string name;
+		public string _name;
 
 		public int Id { get; set; }
 		[Required]
 		public string Name { 
-			get { return name; }
+			get { return _name; }
 			set {
 				if (value == null)
 					throw new ArgumentException("Name should not be empty");
 				else
-					name = value;
+					_name = value;
 			}
 		}
 		public List<ChangeInitiative> ChangeInitiatives { get; set; }

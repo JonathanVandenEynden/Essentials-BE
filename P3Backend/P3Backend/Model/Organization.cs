@@ -9,18 +9,19 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class Organization {
-		private string name;
+		private string _name;
 
 		public int Id { get; set; }
 
 		[Required]
+		[NotNull]
 		public string Name {
-			get { return name; }
+			get { return _name; }
 			set {
 				if (value == null)
 					throw new ArgumentException("Name of organization should not be null");
 				else
-					name = value;
+					_name = value;
             }
         }
 		[Required]
