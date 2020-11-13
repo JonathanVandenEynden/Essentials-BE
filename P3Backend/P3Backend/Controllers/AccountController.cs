@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -41,47 +42,39 @@ namespace P3Backend.Controllers {
 		/// Login a user
 		/// </summary>
 		/// <param name="dto">the email and password of an existing user</param>
-		/// <returns>message</returns>
+		/// <returns>token</returns>
 		[AllowAnonymous]
 		[HttpPost("login")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<ActionResult<string>> Login(LoginDTO dto) {
-			var user = await _userManager.FindByNameAsync(dto.Email);
+            try {
+				var user = await _userManager.FindByNameAsync(dto.Email);
 
-			if (user != null) {
-
-				var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
-				if (result.Succeeded) {
-					string token = await GetToken(user);
-					return Ok(token);
+				if (user != null) {
+					var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
+					if (result.Succeeded) {
+						string token = await GetToken(user);
+						return Ok(token);
+					}
 				}
-
-			}
-			return BadRequest("Wrong credentials");
-		}
-
-		private async Task<string>GetToken(IdentityUser user) {
-			var roleClaims = await _userManager.GetClaimsAsync(user);
-			var claims = new List<Claim> {
-				new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-				new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
-			};
-			claims.AddRange(roleClaims);
-			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
-			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-			// RELEASE first two (null, null) parameters should be _config["Jwt:Issuer"]
-			var token = new JwtSecurityToken(null, null, claims, expires: DateTime.Now.AddMinutes(30), signingCredentials: creds);
-			return new JwtSecurityTokenHandler().WriteToken(token);
-		}
+				return BadRequest("Wrong credentials");
+			} catch (Exception e) {
+				return BadRequest(e.Message);
+            }
+			
+		}		
 
 		/// <summary>
 		///  Register a user
 		/// </summary>
 		/// <param name="dto">The user object to be created</param>
-		/// <returns>message</returns>
+		/// <returns>token</returns>
 		[AllowAnonymous]
 		[HttpPost("register")]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<ActionResult<string>> Register(RegisterDTO dto) {
-
 			try {
 				IUser checkedUser;
 				checkedUser = new Employee(dto.FirstName, dto.LastName, dto.Email);
@@ -94,49 +87,46 @@ namespace P3Backend.Controllers {
 					_userRepo.SaveChanges();
 					string token = await GetToken(user);
 					return Created("", token);
-				}
+				} else
+					return BadRequest("Could not register");
 			}
 			catch (Exception e) {
-				return BadRequest(e);
+				return BadRequest(e.Message);
 			}
-
-			return BadRequest("Something went wrong");
-
 		}
 
-		///// <summary>
-		///// checks if an email is available
-		///// </summary>
-		///// <param name="email"></param>
-		///// <returns></returns>
-		//[AllowAnonymous]
-		//[HttpGet("checkemail")]
-		//public async Task<ActionResult<Boolean>> checkUsername(string email) {
+        /// <summary>
+        /// checks if an email is available
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>True when email is available (not in use), false when it is not</returns>
+        [AllowAnonymous]
+        [HttpPost("checkemail")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<ActionResult<bool>> checkUsername(string email) {
+            try {
+				var user = await _userManager.FindByNameAsync(email);
+				return user == null;
+			} catch (Exception e) {
+				return BadRequest(e.Message);
+            }
+        }
 
-		//	var user = await _userManager.FindByNameAsync(email);
-		//	return user == null;
-		//}
 
-		//private String GetToken(IdentityUser user) { // header.payload.signature
-		//											 // Create the token
-		//	var claims = new[]
-		//	{
-		//	  new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-		//	  new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
-		//	};
-
-		//	var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
-
-		//	var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-		//	var token = new JwtSecurityToken(
-		//	  null, null,
-		//	  claims,
-		//	  expires: DateTime.Now.AddMinutes(30),
-		//	  signingCredentials: creds);
-
-		//	return new JwtSecurityTokenHandler().WriteToken(token);
-		//}
+		private async Task<string> GetToken(IdentityUser user) {
+			var roleClaims = await _userManager.GetClaimsAsync(user);
+			var claims = new List<Claim> {
+				new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+				new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+			};
+			claims.AddRange(roleClaims);
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+			// RELEASE first two (null, null) parameters should be _config["Jwt:Issuer"]
+			var token = new JwtSecurityToken(null, null, claims, expires: DateTime.Now.AddMinutes(30), signingCredentials: creds);
+			return new JwtSecurityTokenHandler().WriteToken(token);
+		}
 
 	}
 }

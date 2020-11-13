@@ -29,6 +29,7 @@ namespace P3Backend.Controllers {
 		/// <returns>All surveys</returns>
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public IEnumerable<Survey> GetSurveys() {
 			IEnumerable<Survey> surveys = _surveyRepository.GetAll();
 			return surveys;
@@ -90,9 +91,12 @@ namespace P3Backend.Controllers {
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public ActionResult<Survey> GetSurveyByRoadmapItemId(int roadmapItemId) {
 			try {
 				IAssessment survey = _roadmapItemRepository.GetBy(roadmapItemId).Assessment;
+				if (survey == null)
+					return NotFound("The Assessment with given Id does not exist");
 				if (survey is Survey) {
 					return (Survey)_roadmapItemRepository.GetBy(roadmapItemId).Assessment;
 				}

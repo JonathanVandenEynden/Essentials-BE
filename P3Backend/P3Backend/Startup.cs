@@ -76,9 +76,9 @@ namespace P3Backend {
 				});
 
 			services.AddAuthorization(options => {
-				options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
-				options.AddPolicy("Employee", policy => policy.RequireClaim(ClaimTypes.Role, "employee"));
-				options.AddPolicy("ChangeManager", policy => policy.RequireClaim(ClaimTypes.Role, "changeManager"));
+				options.AddPolicy("AdminAccess", p => p.RequireClaim(ClaimTypes.Role, "admin"));
+				options.AddPolicy("ChangeManagerAccess", p => p.RequireAssertion(c => c.User.HasClaim(ClaimTypes.Role, "admin") || c.User.HasClaim(ClaimTypes.Role, "changeManager")));
+				options.AddPolicy("EmployeeAccess", p => p.RequireAssertion(c => c.User.HasClaim(ClaimTypes.Role, "admin") || c.User.HasClaim(ClaimTypes.Role, "changeManager") || c.User.HasClaim(ClaimTypes.Role, "employee")));
 			});
 
 			services.Configure<IdentityOptions>(options => {
