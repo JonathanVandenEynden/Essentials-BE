@@ -66,7 +66,6 @@ namespace P3Backend.Controllers {
 
 				a.Organizations.Add(newO);
 
-
 				_organizationRepository.Add(newO);
 
 				_organizationRepository.SaveChanges();

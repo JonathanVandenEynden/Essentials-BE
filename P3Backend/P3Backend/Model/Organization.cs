@@ -9,11 +9,21 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class Organization {
+		private string _name;
+
 		public int Id { get; set; }
 
 		[Required]
 		[NotNull]
-		public string Name { get; set; }
+		public string Name {
+			get { return _name; }
+			set {
+				if (value == null)
+					throw new ArgumentException("Name of organization should not be null");
+				else
+					_name = value;
+            }
+        }
 		[Required]
 		public List<Employee> Employees { get; set; }
 		[Required]

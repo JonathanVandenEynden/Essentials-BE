@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,9 +13,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using P3Backend.Data;
 using P3Backend.Data.Repositories;
 using P3Backend.Model.RepoInterfaces;
+using System.Text;
+using Microsoft.Extensions.Options;
+using NSwag.Generation.Processors.Security;
+using NSwag;
+using System.Security.Claims;
 
 namespace P3Backend {
 	public class Startup {
@@ -66,6 +73,28 @@ namespace P3Backend {
 
 			services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(options => {
+					options.SaveToken = true;
+					options.TokenValidationParameters = new TokenValidationParameters {
+						ValidateIssuer = false, // true for release
+						ValidateAudience = false, // true for release
+						ValidateLifetime = true,
+						RequireExpirationTime = true,
+						ValidateIssuerSigningKey = true,
+						// Use for release (specify Jwt:Issuer in appsettings.json)
+						//ValidIssuer = Configuration["Jwt:Issuer"],
+						//ValidAudience = Configuration["Jwt:Issuer"],
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+					};
+				});
+
+			services.AddAuthorization(options => {
+				options.AddPolicy("AdminAccess", p => p.RequireClaim(ClaimTypes.Role, "admin"));
+				options.AddPolicy("ChangeManagerAccess", p => p.RequireAssertion(c => c.User.HasClaim(ClaimTypes.Role, "admin") || c.User.HasClaim(ClaimTypes.Role, "changeManager")));
+				options.AddPolicy("EmployeeAccess", p => p.RequireAssertion(c => c.User.HasClaim(ClaimTypes.Role, "admin") || c.User.HasClaim(ClaimTypes.Role, "changeManager") || c.User.HasClaim(ClaimTypes.Role, "employee")));
+			});
+
 			services.Configure<IdentityOptions>(options => {
 				// Password settings
 				options.Password.RequireDigit = true;
@@ -80,6 +109,13 @@ namespace P3Backend {
 				c.Title = "EssentialsToolkit";
 				c.Version = "v1";
 				c.Description = "The essentialsToolkitAPI documentation";
+				c.DocumentProcessors.Add(new SecurityDefinitionAppender("JWT Token", new OpenApiSecurityScheme {
+					Type = OpenApiSecuritySchemeType.ApiKey,
+					Name = "Authorization",
+					In = OpenApiSecurityApiKeyLocation.Header,
+					Description = "Copy 'Bearer' + valid JWT token into field"
+				}));
+				c.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
 			});
 
 			//services.AddOpenApiDocument(c => { 
