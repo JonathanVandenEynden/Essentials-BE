@@ -26,7 +26,7 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			/*_dbContext.Database.EnsureDeleted();
+			_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
 				//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
@@ -297,7 +297,7 @@ namespace P3Backend.Data {
 
 				_dbContext.SaveChanges();
 				Console.WriteLine("Database created");
-			}*/
+			}
 		}
 		private async Task CreateUser(string email, string password, string claim) {
 			var user = new IdentityUser { UserName = email, Email = email };
