@@ -51,7 +51,7 @@ namespace P3Backend.Controllers {
 
 				var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
 				if (result.Succeeded) {
-					string token = GetToken(user);
+					string token = await GetToken(user);
 					return Ok(token);
 				}
 
@@ -59,12 +59,13 @@ namespace P3Backend.Controllers {
 			return BadRequest("Wrong credentials");
 		}
 
-		private string GetToken(IdentityUser user) {
-
-			var claims = new[] {
+		private async Task<string>GetToken(IdentityUser user) {
+			var roleClaims = await _userManager.GetClaimsAsync(user);
+			var claims = new List<Claim> {
 				new Claim(JwtRegisteredClaimNames.Sub, user.Email),
 				new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
 			};
+			claims.AddRange(roleClaims);
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
 			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 			// RELEASE first two (null, null) parameters should be _config["Jwt:Issuer"]
@@ -91,7 +92,7 @@ namespace P3Backend.Controllers {
 				if (result.Succeeded) {
 					_userRepo.Add(checkedUser);
 					_userRepo.SaveChanges();
-					string token = GetToken(user);
+					string token = await GetToken(user);
 					return Created("", token);
 				}
 			}

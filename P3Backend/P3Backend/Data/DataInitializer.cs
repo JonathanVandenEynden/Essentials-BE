@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.DataProtection;
@@ -25,7 +26,7 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			/*_dbContext.Database.EnsureDeleted();
+			_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
 				//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
@@ -270,12 +271,12 @@ namespace P3Backend.Data {
 				#endregion
 
 				#region Create Identity users
-				await CreateUser(admin1.Email, "P@ssword1");
-				await CreateUser(admin2.Email, "P@ssword1");
-				await CreateUser(sponsor.Email, "P@ssword1");
-				await CreateUser(ziggy.Email, "P@ssword1");
-				await CreateUser(marbod.Email, "P@ssword1");
-				await CreateUser(changeManagerSuktrit.Email, "P@ssword1");
+				await CreateUser(admin1.Email, "P@ssword1", "admin");
+				await CreateUser(admin2.Email, "P@ssword1", "admin");
+				await CreateUser(sponsor.Email, "P@ssword1", "employee");
+				await CreateUser(ziggy.Email, "P@ssword1", "employee");
+				await CreateUser(marbod.Email, "P@ssword1", "employee");
+				await CreateUser(changeManagerSuktrit.Email, "P@ssword1", "changeManager");
 				#endregion
 
 
@@ -296,11 +297,12 @@ namespace P3Backend.Data {
 
 				_dbContext.SaveChanges();
 				Console.WriteLine("Database created");
-			}*/
+			}
 		}
-		private async Task CreateUser(string email, string password) {
-			var gebruiker = new IdentityUser { UserName = email, Email = email };
-			await _usermanager.CreateAsync(gebruiker, password);
+		private async Task CreateUser(string email, string password, string claim) {
+			var user = new IdentityUser { UserName = email, Email = email };
+			await _usermanager.CreateAsync(user, password);
+			await _usermanager.AddClaimAsync(user, new Claim(ClaimTypes.Role, claim));
 		}
 	}
 }

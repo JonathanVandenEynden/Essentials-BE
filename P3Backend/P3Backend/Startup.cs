@@ -21,6 +21,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using NSwag.Generation.Processors.Security;
 using NSwag;
+using System.Security.Claims;
 
 namespace P3Backend {
 	public class Startup {
@@ -73,6 +74,12 @@ namespace P3Backend {
 						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
 					};
 				});
+
+			services.AddAuthorization(options => {
+				options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+				options.AddPolicy("Employee", policy => policy.RequireClaim(ClaimTypes.Role, "employee"));
+				options.AddPolicy("ChangeManager", policy => policy.RequireClaim(ClaimTypes.Role, "changeManager"));
+			});
 
 			services.Configure<IdentityOptions>(options => {
 				// Password settings
