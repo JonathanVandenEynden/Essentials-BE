@@ -12,14 +12,14 @@ namespace P3Backend.Model {
 		public string Title {
 			get { return _title; }
 			set {
-				if (value == null)
+				if (string.IsNullOrWhiteSpace(value))
 					throw new ArgumentException("Title should not be emtpy");
 				else
 					_title = value;
-            }
-        }
-        
-        public IAssessment Assessment { get; set; }
+			}
+		}
+
+		public IAssessment Assessment { get; set; }
 		[Required]
 		public bool Done { get; set; }
 

@@ -100,7 +100,6 @@ namespace P3Backend.Test.Controllers {
 			Assert.IsType<NotFoundObjectResult>(result);
 		}
 
-		// TODO no name still possible
 		[Fact]
 		public void PostProjectToOrganization_NoName_ReturnsBadRequest() {
 			_organizationRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.hogent);

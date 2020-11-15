@@ -115,7 +115,6 @@ namespace P3Backend.Test.Controllers {
 
 		}
 
-		// TODO still possible to leave title null
 		[Fact]
 		public void PostRoadMapItem_NoTitle_returnsBadRequest() {
 			_changeRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.ciExpansion);

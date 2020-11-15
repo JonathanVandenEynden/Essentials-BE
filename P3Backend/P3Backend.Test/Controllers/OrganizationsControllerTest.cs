@@ -140,7 +140,6 @@ namespace P3Backend.Test.Controllers {
 
 		}
 
-		// TODO name as null is still possible -> weird because there is a NotNull-annotation...
 		[Fact]
 		public void PostOrganization_NoName_returnsBadRequest() {
 			_adminRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.admin);
