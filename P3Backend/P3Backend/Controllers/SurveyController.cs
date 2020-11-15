@@ -68,12 +68,17 @@ namespace P3Backend.Controllers {
 		public ActionResult<Survey> PostSurvey(int roadmapItemId) {
 			try {
 				RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);
+
+				if (rmi == null) {
+					return NotFound("Roadmap item not found");
+				}
+
 				// Delete old Survey from db
 				if (rmi.Assessment != null) {
 					_surveyRepository.Delete(rmi.Assessment as Survey);
 				}
 
-				Survey survey = new Survey(_roadmapItemRepository.GetBy(roadmapItemId));
+				Survey survey = new Survey(rmi);
 				rmi.Assessment = survey;
 				_roadmapItemRepository.SaveChanges();
 				return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, survey);
