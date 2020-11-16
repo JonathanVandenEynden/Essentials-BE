@@ -18,15 +18,20 @@ namespace P3Backend.Test.Controllers {
 
 		private readonly Mock<IOrganizationRepository> _organizationRepo;
 		private readonly Mock<IChangeInitiativeRepository> _changeRepo;
+		private readonly Mock<IChangeGroupRepository> _changeGroupRepo;
 
 		public ChangeGroupsControllerTest() {
 			_dummyData = new DummyData();
 
 			_organizationRepo = new Mock<IOrganizationRepository>();
 			_changeRepo = new Mock<IChangeInitiativeRepository>();
+			_changeGroupRepo = new Mock<IChangeGroupRepository>();
 
-			_controller = new ChangeGroupsController(_organizationRepo.Object, _changeRepo.Object);
+			_controller = new ChangeGroupsController(_organizationRepo.Object, _changeRepo.Object, _changeGroupRepo.Object);
+
 		}
+
+		// TODO Test _controller.GetChangeGroupForUser
 
 		[Fact]
 		public void GetAllGhangeGroupsOfOrganization_ReturnsCorrectChangeGroups() {

@@ -16,13 +16,22 @@ namespace P3Backend.Controllers {
 
 		private readonly IOrganizationRepository _organizationRepository;
 		private readonly IChangeInitiativeRepository _changeInitiativeRepo;
+		private readonly IChangeGroupRepository _changeGroupRepo;
 
 
 		public ChangeGroupsController(
 			IOrganizationRepository organizationRepository,
-			IChangeInitiativeRepository changeInitiativeRepo) {
+			IChangeInitiativeRepository changeInitiativeRepo,
+			IChangeGroupRepository changeGroupRepo) {
 			_organizationRepository = organizationRepository;
 			_changeInitiativeRepo = changeInitiativeRepo;
+			_changeGroupRepo = changeGroupRepo;
+		}
+
+		// TODO Testen toevoegen
+		[HttpGet("[action]/{userId}")]
+		public ActionResult<List<ChangeGroup>> GetChangeGroupForUser(int userId) {
+			return _changeGroupRepo.GetForUserId(userId);
 		}
 
 		/// <summary>
@@ -60,5 +69,7 @@ namespace P3Backend.Controllers {
 				return BadRequest(e.Message);
 			}
 		}
+
+
 	}
 }
