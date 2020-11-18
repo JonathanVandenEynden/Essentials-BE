@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P3Backend.Model.DTO_s;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace P3Backend.Model {
@@ -54,6 +55,12 @@ namespace P3Backend.Model {
 
 		protected RoadMapItem() {
 			// EF
+		}
+
+		public void Update(RoadMapItemDTO dto) {
+			Title = dto.Title;
+			_startDate = dto.StartDate;
+			EndDate = dto.EndDate;
 		}
 	}
 }

@@ -79,7 +79,7 @@ namespace P3Backend.Controllers {
 		[Route("[action]/{changeManagerId}")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(int changeManagerId = 5) {
+		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(int changeManagerId = 6) {
 			try {
 				// TODO niet meer hardcoded maken
 				ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
