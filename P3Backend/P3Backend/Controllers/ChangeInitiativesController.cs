@@ -75,16 +75,28 @@ namespace P3Backend.Controllers {
 		/// Get the change initiatives from a change manager
 		/// </summary>
 		/// <param name="changeManagerId"></param>
+		/// <param name="group"></param>
+		/// <param name="progress"></param>
 		/// <returns></returns>
 		[Route("[action]/{changeManagerId}")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(int changeManagerId = 5) {
+		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(int changeManagerId = 5, string group = null, string progress = null) {
 			try {
 				// TODO niet meer hardcoded maken
 				ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
 
-				return cm.CreatedChangeInitiatives.ToList();
+				if (string.IsNullOrEmpty(group) && string.IsNullOrEmpty(progress))
+					return cm.CreatedChangeInitiatives.ToList();
+
+				var changes = cm.CreatedChangeInitiatives.AsQueryable();
+
+				if (!string.IsNullOrEmpty(group))
+					changes = changes.Where(r => r.ChangeGroup.Name == group);
+				if (!string.IsNullOrEmpty(progress))
+					changes = changes.Where(r => r.Progress >= float.Parse(progress));
+
+				return changes.OrderBy(r => r.Name).ToList();
 			}
 			catch (Exception e) {
 				return NotFound(e.Message);

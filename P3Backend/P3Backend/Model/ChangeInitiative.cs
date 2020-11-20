@@ -102,6 +102,8 @@ namespace P3Backend.Model {
 			get; set;
 		}
 
+		public float Progress => (this.RoadMap.Where(e => e.Done == true).Count() / this.RoadMap.Count()) * 100 ;
+
 		public ChangeInitiative(string name, string desc, DateTime start, DateTime end, Employee sponsor, IChangeType changeType) {
 			Name = name;
 			Description = desc;
@@ -125,5 +127,10 @@ namespace P3Backend.Model {
 			_startDate = dto.StartDate;
 			EndDate = dto.EndDate;
 		}
+
+		public void filter(string? group = null, int? progress = null)
+        {
+
+        }
 	}
 }
