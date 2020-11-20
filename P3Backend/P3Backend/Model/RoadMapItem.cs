@@ -21,6 +21,7 @@ namespace P3Backend.Model {
 		}
 
 		public IAssessment Assessment { get; set; }
+
 		[Required]
 		public bool Done { get; set; }
 

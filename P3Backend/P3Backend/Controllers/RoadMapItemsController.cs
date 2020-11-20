@@ -119,8 +119,8 @@ namespace P3Backend.Controllers {
 					return NotFound("Roadmap item with this id not found");
 				}
 
-				rmi.Assessment = null;
-				_roadmapItemRepository.SaveChanges();
+				//rmi.Assessment = null;
+				//_roadmapItemRepository.SaveChanges();
 
 				_roadmapItemRepository.Delete(rmi);
 				_roadmapItemRepository.SaveChanges();
