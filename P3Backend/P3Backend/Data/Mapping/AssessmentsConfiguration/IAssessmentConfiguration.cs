@@ -15,7 +15,9 @@ namespace P3Backend.Data.Mapping.AssesmentConfiguration {
 			builder.HasMany(s => s.Questions).WithOne().OnDelete(DeleteBehavior.Cascade);
 			builder.HasOne(s => s.Feedback);
 
-			builder.HasOne(a => a.RoadMapItem);
+			// see FK in IAssesment class
+			//builder.HasOne(a => a.RoadMapItem);
+
 
 		}
 	}

@@ -28,55 +28,54 @@ namespace P3Backend.Data {
 		public async Task InitializeData() {
 			_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
-				if (!_dbContext.Admins.Any())
-				{ // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+				//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
-					#region Admin
-					Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
-					Admin admin2 = new Admin("Jonatan", "Vanden Eynden Van Lysebeth", "Jonathan.vandeneyndenvanlysebeth@student.hogent.be");
-					_dbContext.Admins.AddRange(new List<Admin>() { admin1, admin2 });
-					#endregion
+				#region Admin
+				Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
+				Admin admin2 = new Admin("Jonatan", "Vanden Eynden Van Lysebeth", "Jonathan.vandeneyndenvanlysebeth@student.hogent.be");
+				_dbContext.Admins.AddRange(new List<Admin>() { admin1, admin2 });
+				#endregion
 
-					#region Employees
-					Employee sponsor = new Employee("Sponser", "Sponser", "sponser@essentials.com");
-					Employee ziggy = new Employee("Ziggy", "Moens", "ziggy@essentials.com");
-					Employee marbod = new Employee("Marbod", "Naassens", "marbod@essentials.com");
-					_dbContext.Employees.AddRange(new List<Employee>() { sponsor, ziggy, marbod });
-					#endregion
+				#region Employees
+				Employee sponsor = new Employee("Sponser", "Sponser", "sponser@essentials.com");
+				Employee ziggy = new Employee("Ziggy", "Moens", "ziggy@essentials.com");
+				Employee marbod = new Employee("Marbod", "Naassens", "marbod@essentials.com");
+				_dbContext.Employees.AddRange(new List<Employee>() { sponsor, ziggy, marbod });
+				#endregion
 
-					#region Changemananger
-					ChangeManager changeManagerSuktrit = new ChangeManager("Sukrit", "Bhattacharya", "Sukrit.bhattacharya@essentials.com");
-					_dbContext.ChangeManagers.Add(changeManagerSuktrit);
-					#endregion
+				#region Changemananger
+				ChangeManager changeManagerSuktrit = new ChangeManager("Sukrit", "Bhattacharya", "Sukrit.bhattacharya@essentials.com");
+				_dbContext.ChangeManagers.Add(changeManagerSuktrit);
+				#endregion
 
-					#region Organization
-					Organization hogent = new Organization("Hogent", new List<Employee>() { sponsor, ziggy, marbod }, changeManagerSuktrit);
-					admin1.Organizations.Add(hogent);
+				#region Organization
+				Organization hogent = new Organization("Hogent", new List<Employee>() { sponsor, ziggy, marbod }, changeManagerSuktrit);
+				admin1.Organizations.Add(hogent);
 
-					_dbContext.Organizations.Add(hogent);
-					#endregion
+				_dbContext.Organizations.Add(hogent);
+				#endregion
 
-					#region OrganizationalParts
-					OrganizationPart jellyTeam = new OrganizationPart("Jelly Team", OrganizationPartType.TEAM);
-					OrganizationPart belgium = new OrganizationPart("belgium", OrganizationPartType.COUNTRY);
-					OrganizationPart netherlands = new OrganizationPart("The Netherlands", OrganizationPartType.COUNTRY);
-					OrganizationPart officeBE = new OrganizationPart("Belgian Office", OrganizationPartType.OFFICE);
-					OrganizationPart officeNL = new OrganizationPart("Dutch Office", OrganizationPartType.OFFICE);
-					OrganizationPart departmentHR = new OrganizationPart("HR", OrganizationPartType.DEPARTMENT);
+				#region OrganizationalParts
+				OrganizationPart jellyTeam = new OrganizationPart("Jelly Team", OrganizationPartType.TEAM);
+				OrganizationPart belgium = new OrganizationPart("belgium", OrganizationPartType.COUNTRY);
+				OrganizationPart netherlands = new OrganizationPart("The Netherlands", OrganizationPartType.COUNTRY);
+				OrganizationPart officeBE = new OrganizationPart("Belgian Office", OrganizationPartType.OFFICE);
+				OrganizationPart officeNL = new OrganizationPart("Dutch Office", OrganizationPartType.OFFICE);
+				OrganizationPart departmentHR = new OrganizationPart("HR", OrganizationPartType.DEPARTMENT);
 
-					changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, departmentHR));
-					changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, belgium));
-					changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, officeBE));
+				changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, departmentHR));
+				changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, belgium));
+				changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, officeBE));
 
-					ziggy.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(ziggy, belgium));
-					ziggy.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(ziggy, jellyTeam));
-					ziggy.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(ziggy, officeBE));
+				ziggy.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(ziggy, belgium));
+				ziggy.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(ziggy, jellyTeam));
+				ziggy.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(ziggy, officeBE));
 
-					marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, netherlands));
-					marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, jellyTeam));
-					marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, officeNL));
+				marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, netherlands));
+				marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, jellyTeam));
+				marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, officeNL));
 
-					IList<OrganizationPart> ops = new List<OrganizationPart>() {
+				IList<OrganizationPart> ops = new List<OrganizationPart>() {
 					jellyTeam,
 					belgium,
 					netherlands,

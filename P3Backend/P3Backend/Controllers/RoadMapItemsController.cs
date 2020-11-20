@@ -64,7 +64,7 @@ namespace P3Backend.Controllers {
 		/// <param name="changeInitiativeId"></param>
 		/// <param name="dto"></param>
 		/// <returns></returns>
-		[HttpPost]
+		[HttpPost("{changeInitiativeId}")]
 		public IActionResult PostRoadMapItem(int changeInitiativeId, RoadMapItemDTO dto) {
 			try {
 
@@ -87,8 +87,49 @@ namespace P3Backend.Controllers {
 				return BadRequest(e.Message);
 			}
 
+		}
 
+		[HttpPut("{roadmapItemId}")]
+		public IActionResult PutRoadMapItem(int roadmapItemId, RoadMapItemDTO dto) {
+			try {
+				RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);
 
+				if (rmi == null) {
+					return NotFound("Roadmap item with this id not found");
+				}
+
+				rmi.Update(dto);
+
+				_roadmapItemRepository.SaveChanges();
+
+				return NoContent();
+
+			}
+			catch (Exception e) {
+				return BadRequest(e.Message);
+			}
+		}
+
+		[HttpDelete("{roadmapItemId}")]
+		public IActionResult DeleteRoadMapItem(int roadmapItemId) {
+			try {
+				RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);
+
+				if (rmi == null) {
+					return NotFound("Roadmap item with this id not found");
+				}
+
+				//rmi.Assessment = null;
+				//_roadmapItemRepository.SaveChanges();
+
+				_roadmapItemRepository.Delete(rmi);
+				_roadmapItemRepository.SaveChanges();
+
+				return NoContent();
+			}
+			catch (Exception e) {
+				return BadRequest(e.Message);
+			}
 		}
 	}
 }
