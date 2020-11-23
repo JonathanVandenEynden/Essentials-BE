@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using P3Backend.Controllers;
 using P3Backend.Model;
@@ -47,10 +48,15 @@ namespace P3Backend.Test.Controllers {
 
 		[Fact]
 		public void GetChangeInitiativesForEmployee_returnsCorrectChangeInitiatives() {
+			_dummyData.marbod.Id = 1;
 			var fakeIdentity = new GenericIdentity("email");
-			Thread.CurrentPrincipal = new GenericPrincipal(fakeIdentity, null);
+			var fakePrincipal = new GenericPrincipal(fakeIdentity, null);
 
-			_changeInitiativeRepo.Setup(m => m.GetForUserId(1)).Returns(new List<ChangeInitiative>() { _dummyData.ciNewCatering });
+			_controller.ControllerContext = new ControllerContext() {
+				HttpContext = new DefaultHttpContext() { User = fakePrincipal }
+			};
+
+			_changeInitiativeRepo.Setup(m => m.GetForUserId(_dummyData.marbod.Id)).Returns(new List<ChangeInitiative>() { _dummyData.ciNewCatering });
 			_employeeRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.marbod);
 
 			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForEmployee();
@@ -62,10 +68,15 @@ namespace P3Backend.Test.Controllers {
 
 		[Fact]
 		public void GetChangeInitiativesForEmployee_returnsNotFound() {
+			_dummyData.marbod.Id = 1;
 			var fakeIdentity = new GenericIdentity("email");
-			Thread.CurrentPrincipal = new GenericPrincipal(fakeIdentity, null);
+			var fakePrincipal = new GenericPrincipal(fakeIdentity, null);
 
-			_changeInitiativeRepo.Setup(m => m.GetForUserId(1)).Returns(null as List<ChangeInitiative>);
+			_controller.ControllerContext = new ControllerContext() {
+				HttpContext = new DefaultHttpContext() { User = fakePrincipal }
+			};
+
+			_changeInitiativeRepo.Setup(m => m.GetForUserId(_dummyData.marbod.Id)).Returns(null as List<ChangeInitiative>);
 			_employeeRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.marbod);
 
 			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForEmployee();
@@ -78,11 +89,15 @@ namespace P3Backend.Test.Controllers {
 		public void GetChangeInitiativesForChangeManager_returnsCorrectChangeInitiatives() {
 
 			var fakeIdentity = new GenericIdentity("email");
-			Thread.CurrentPrincipal = new GenericPrincipal(fakeIdentity, null);
+			var fakePrincipal = new GenericPrincipal(fakeIdentity, null);
+
+			_controller.ControllerContext = new ControllerContext() {
+				HttpContext = new DefaultHttpContext() { User = fakePrincipal }
+			};
 
 			_changeManagerRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.changeManagerSuktrit);
 
-			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForEmployee();
+			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForChangeManager();
 
 			Assert.IsType<ActionResult<IEnumerable<ChangeInitiative>>>(result);
 
@@ -135,7 +150,11 @@ namespace P3Backend.Test.Controllers {
 		public void PostChangeInitiative_successfullPost_returnsCreated() {
 
 			var fakeIdentity = new GenericIdentity("email");
-			Thread.CurrentPrincipal = new GenericPrincipal(fakeIdentity, null);
+			var fakePrincipal = new GenericPrincipal(fakeIdentity, null);
+
+			_controller.ControllerContext = new ControllerContext() {
+				HttpContext = new DefaultHttpContext() { User = fakePrincipal }
+			};
 
 			_employeeRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.sponsor);
 			_projectRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.project);
