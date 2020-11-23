@@ -9,6 +9,8 @@ using P3Backend.Test.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
+using System.Threading;
 using Xunit;
 
 namespace P3Backend.Test.Controllers {
@@ -25,6 +27,8 @@ namespace P3Backend.Test.Controllers {
 
 
 		public ChangeInitiativesControllerTest() {
+			_dummyData = new DummyData();
+
 			_changeInitiativeRepo = new Mock<IChangeInitiativeRepository>();
 			_userRepo = new Mock<IUserRepository>();
 			_projectRepo = new Mock<IProjectRepository>();
@@ -39,14 +43,17 @@ namespace P3Backend.Test.Controllers {
 				_employeeRepo.Object
 				);
 
-			_dummyData = new DummyData();
 		}
 
 		[Fact]
 		public void GetChangeInitiativesForEmployee_returnsCorrectChangeInitiatives() {
-			_changeInitiativeRepo.Setup(m => m.GetForUserId(1)).Returns(new List<ChangeInitiative>() { _dummyData.ciNewCatering });
+			var fakeIdentity = new GenericIdentity("email");
+			Thread.CurrentPrincipal = new GenericPrincipal(fakeIdentity, null);
 
-			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForEmployee(1);
+			_changeInitiativeRepo.Setup(m => m.GetForUserId(1)).Returns(new List<ChangeInitiative>() { _dummyData.ciNewCatering });
+			_employeeRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.marbod);
+
+			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForEmployee();
 
 			Assert.IsType<ActionResult<IEnumerable<ChangeInitiative>>>(result);
 			IEnumerable<ChangeInitiative> list = result.Value;
@@ -55,9 +62,13 @@ namespace P3Backend.Test.Controllers {
 
 		[Fact]
 		public void GetChangeInitiativesForEmployee_returnsNotFound() {
-			_changeInitiativeRepo.Setup(m => m.GetForUserId(1)).Returns(null as List<ChangeInitiative>);
+			var fakeIdentity = new GenericIdentity("email");
+			Thread.CurrentPrincipal = new GenericPrincipal(fakeIdentity, null);
 
-			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForEmployee(1);
+			_changeInitiativeRepo.Setup(m => m.GetForUserId(1)).Returns(null as List<ChangeInitiative>);
+			_employeeRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.marbod);
+
+			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForEmployee();
 
 			ActionResult response = result.Result;
 			Assert.IsType<NotFoundObjectResult>(response);
@@ -65,9 +76,13 @@ namespace P3Backend.Test.Controllers {
 
 		[Fact]
 		public void GetChangeInitiativesForChangeManager_returnsCorrectChangeInitiatives() {
-			_changeManagerRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.changeManagerSuktrit);
 
-			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForEmployee(1);
+			var fakeIdentity = new GenericIdentity("email");
+			Thread.CurrentPrincipal = new GenericPrincipal(fakeIdentity, null);
+
+			_changeManagerRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.changeManagerSuktrit);
+
+			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForEmployee();
 
 			Assert.IsType<ActionResult<IEnumerable<ChangeInitiative>>>(result);
 
@@ -80,9 +95,9 @@ namespace P3Backend.Test.Controllers {
 
 		[Fact]
 		public void GetChangeInitiativesForChangeManager_returnsNotFound() {
-			_changeManagerRepo.Setup(m => m.GetBy(1)).Returns(null as ChangeManager);
+			_changeManagerRepo.Setup(m => m.GetByEmail("")).Returns(null as ChangeManager);
 
-			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForChangeManager(1);
+			ActionResult<IEnumerable<ChangeInitiative>> result = _controller.GetChangeInitiativesForChangeManager();
 
 			ActionResult response = result.Result;
 			Assert.IsType<NotFoundObjectResult>(response);
@@ -118,9 +133,13 @@ namespace P3Backend.Test.Controllers {
 
 		[Fact]
 		public void PostChangeInitiative_successfullPost_returnsCreated() {
+
+			var fakeIdentity = new GenericIdentity("email");
+			Thread.CurrentPrincipal = new GenericPrincipal(fakeIdentity, null);
+
 			_employeeRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.sponsor);
 			_projectRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.project);
-			_changeManagerRepo.Setup(m => m.GetBy(2)).Returns(_dummyData.changeManagerSuktrit);
+			_changeManagerRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.changeManagerSuktrit);
 
 			var newDTO = new ChangeInitiativeDTO() {
 				Name = "ciName",
@@ -131,7 +150,7 @@ namespace P3Backend.Test.Controllers {
 				EndDate = DateTime.Now.AddDays(3)
 			};
 
-			var result = _controller.PostChangeInitiative(1, 2, newDTO);
+			var result = _controller.PostChangeInitiative(1, newDTO);
 
 			Assert.IsType<CreatedAtActionResult>(result);
 
@@ -153,7 +172,7 @@ namespace P3Backend.Test.Controllers {
 				EndDate = DateTime.Now.AddDays(3)
 			};
 
-			var result = _controller.PostChangeInitiative(1, 2, newDTO);
+			var result = _controller.PostChangeInitiative(1, newDTO);
 
 			Assert.IsType<NotFoundObjectResult>(result);
 		}
@@ -173,7 +192,7 @@ namespace P3Backend.Test.Controllers {
 				EndDate = DateTime.Now.AddDays(3)
 			};
 
-			var result = _controller.PostChangeInitiative(1, 2, newDTO);
+			var result = _controller.PostChangeInitiative(1, newDTO);
 
 			Assert.IsType<BadRequestObjectResult>(result);
 		}
@@ -193,7 +212,7 @@ namespace P3Backend.Test.Controllers {
 				EndDate = DateTime.Now.AddDays(3)
 			};
 
-			var result = _controller.PostChangeInitiative(1, 2, newDTO);
+			var result = _controller.PostChangeInitiative(1, newDTO);
 
 			Assert.IsType<BadRequestObjectResult>(result);
 		}

@@ -19,13 +19,15 @@ namespace P3Backend.Test.Controllers {
 		private readonly QuestionsController _controller;
 
 		private readonly Mock<ISurveyRepository> _surveyRepo;
+		private readonly Mock<IEmployeeRepository> _employeeRepo;
 
 		public QuestionsControllerTest() {
 			_dummyData = new DummyData();
 
 			_surveyRepo = new Mock<ISurveyRepository>();
+			_employeeRepo = new Mock<IEmployeeRepository>();
 
-			_controller = new QuestionsController(_surveyRepo.Object);
+			_controller = new QuestionsController(_surveyRepo.Object, _employeeRepo.Object);
 		}
 
 		[Fact]
