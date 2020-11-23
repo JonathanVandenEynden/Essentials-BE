@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model.DTO_s;
@@ -12,6 +14,7 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class AdminsController : ControllerBase {
 
 		private readonly IAdminRepository _adminRepo;
@@ -25,6 +28,7 @@ namespace P3Backend.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
+		[Authorize(Policy = "AdminAccess")]
 		public IEnumerable<Admin> GetAllAdmins() {
 			return _adminRepo.GetAll();
 		}
@@ -35,6 +39,7 @@ namespace P3Backend.Controllers {
 		/// <returns>admin obj</returns>
 		[HttpGet("{adminId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "AdminAccess")]
 		public ActionResult<Admin> GetAdminById(int adminId) {
 			Admin a = _adminRepo.GetBy(adminId);
 
@@ -52,6 +57,7 @@ namespace P3Backend.Controllers {
 		/// <returns></returns>
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(Policy = "AdminAccess")]
 		public IActionResult PostAdmin(AdminDTO dto) {
 			try {
 				Admin newA = new Admin(dto.FirstName, dto.LastName, dto.Email);
@@ -70,6 +76,7 @@ namespace P3Backend.Controllers {
 		[HttpDelete("{adminId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[Authorize(Policy = "AdminAccess")]
 		public IActionResult DeleteAdmin(int adminId) {
 			Admin a = _adminRepo.GetBy(adminId);
 

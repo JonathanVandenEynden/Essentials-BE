@@ -48,7 +48,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<ActionResult<string>> Login(LoginDTO dto) {
-            try {
+			try {
 				var user = await _userManager.FindByNameAsync(dto.Email);
 
 				if (user != null) {
@@ -59,11 +59,12 @@ namespace P3Backend.Controllers {
 					}
 				}
 				return BadRequest("Wrong credentials");
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				return BadRequest(e.Message);
-            }
-			
-		}		
+			}
+
+		}
 
 		/// <summary>
 		///  Register a user
@@ -87,7 +88,8 @@ namespace P3Backend.Controllers {
 					_userRepo.SaveChanges();
 					string token = await GetToken(user);
 					return Created("", token);
-				} else
+				}
+				else
 					return BadRequest("Could not register");
 			}
 			catch (Exception e) {
@@ -95,23 +97,24 @@ namespace P3Backend.Controllers {
 			}
 		}
 
-        /// <summary>
-        /// checks if an email is available
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns>True when email is available (not in use), false when it is not</returns>
-        [AllowAnonymous]
-        [HttpPost("checkemail")]
+		/// <summary>
+		/// checks if an email is available
+		/// </summary>
+		/// <param name="email"></param>
+		/// <returns>True when email is available (not in use), false when it is not</returns>
+		[AllowAnonymous]
+		[HttpPost("checkemail")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<ActionResult<bool>> checkUsername(string email) {
-            try {
+			try {
 				var user = await _userManager.FindByNameAsync(email);
 				return user == null;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				return BadRequest(e.Message);
-            }
-        }
+			}
+		}
 
 
 		private async Task<string> GetToken(IdentityUser user) {

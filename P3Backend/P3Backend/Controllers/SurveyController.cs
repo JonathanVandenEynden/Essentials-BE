@@ -13,6 +13,7 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class SurveyController : ControllerBase {
 		public readonly ISurveyRepository _surveyRepository;
 		public readonly IRoadmapItemRepository _roadmapItemRepository;
@@ -30,6 +31,7 @@ namespace P3Backend.Controllers {
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[Authorize(Policy = "EmployeeAccess")]
 		public IEnumerable<Survey> GetSurveys() {
 			IEnumerable<Survey> surveys = _surveyRepository.GetAll();
 			return surveys;
@@ -43,6 +45,7 @@ namespace P3Backend.Controllers {
 		[HttpGet("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
 		public ActionResult<Survey> GetSurvey(int id) {
 			try {
 				Survey survey = _surveyRepository.GetBy(id);
@@ -65,6 +68,7 @@ namespace P3Backend.Controllers {
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<Survey> PostSurvey(int roadmapItemId) {
 			try {
 				RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);
@@ -97,6 +101,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
 		public ActionResult<Survey> GetSurveyByRoadmapItemId(int roadmapItemId) {
 			try {
 				IAssessment survey = _roadmapItemRepository.GetBy(roadmapItemId).Assessment;
@@ -123,6 +128,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult DeleteSurveyByRoadmapItemId(int roadmapItemId) {
 			try {
 				RoadMapItem roadmapItem = _roadmapItemRepository.GetBy(roadmapItemId);

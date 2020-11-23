@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
@@ -12,7 +15,7 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
-
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class ProjectsController : ControllerBase {
 
 		private readonly IProjectRepository _projectRepo;
@@ -32,6 +35,7 @@ namespace P3Backend.Controllers {
 		[Route("[action]/{organizationId}")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<IEnumerable<Project>> GetProjectsForOrganization(int organizationId) {
 			Organization o = _organizationRepo.GetBy(organizationId);
 
@@ -48,6 +52,7 @@ namespace P3Backend.Controllers {
 		/// <returns></returns>
 		[HttpGet("{projectId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<Project> GetProjectById(int projectId) {
 			Project p = _projectRepo.GetBy(projectId);
 
@@ -60,6 +65,7 @@ namespace P3Backend.Controllers {
 		[HttpPost("{organizationId}")]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status201Created)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult PostProjectToOrganization(int organizationId, ProjectDTO dto) {
 
 			try {

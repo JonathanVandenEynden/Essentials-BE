@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Data.Repositories;
@@ -9,16 +12,21 @@ using P3Backend.Model;
 using P3Backend.Model.DTO_s;
 using P3Backend.Model.Questions;
 using P3Backend.Model.RepoInterfaces;
+using P3Backend.Model.Users;
 
 namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class QuestionsController : ControllerBase {
 		private readonly ISurveyRepository _surveyRepository;
+		private readonly IEmployeeRepository _employeeRepository;
 
-		public QuestionsController(ISurveyRepository surveyRepository) {
+		public QuestionsController(ISurveyRepository surveyRepository,
+			IEmployeeRepository employeeRepository) {
 			_surveyRepository = surveyRepository;
+			_employeeRepository = employeeRepository;
 		}
 
 		/// <summary>
@@ -29,6 +37,7 @@ namespace P3Backend.Controllers {
 		[HttpGet("{surveyId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
 		public ActionResult<Survey> GetQuestionsFromSurvey(int surveyId) {
 			Survey survey = _surveyRepository.GetBy(surveyId);
 			if (survey == null) {
@@ -47,6 +56,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<Question> PostQuestionToSurvey(int surveyId, QuestionDTO questionDTO) {
 
 			Survey survey = _surveyRepository.GetBy(surveyId);
@@ -97,16 +107,16 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
 		public ActionResult PostAnswerToQuestion(int questionId, List<string> possibleAnswers, bool initialize = false) {
 			Question question = _surveyRepository.GetQuestion(questionId);
 			if (question == null) {
 				return NotFound("There was no question for the given questionId");
 			}
 
-			// TODO Userid veranderen naar User.identity.Name/_usermanager
-			int userid = 1;
+			Employee loggedInEmployee = _employeeRepository.GetByEmail(User.Identity.Name);
 			if (!initialize) {
-				question.CompleteQuestion(userid);
+				question.CompleteQuestion(loggedInEmployee.Id);
 			}
 
 			try {
@@ -143,6 +153,7 @@ namespace P3Backend.Controllers {
 		[HttpDelete("{surveyId}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult DeleteQuestions(int surveyId) {
 			IAssessment survey = _surveyRepository.GetBy(surveyId);
 			if (survey == null) {

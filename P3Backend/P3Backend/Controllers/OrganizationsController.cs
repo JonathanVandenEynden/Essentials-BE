@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
@@ -15,6 +17,7 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class OrganizationsController : ControllerBase {
 
 		private readonly IOrganizationRepository _organizationRepository;
@@ -31,6 +34,7 @@ namespace P3Backend.Controllers {
 
 		[HttpGet("{organizationId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<Organization> GetOrganizationById(int organizationId) {
 			Organization o = _organizationRepository.GetBy(organizationId);
 
@@ -44,6 +48,7 @@ namespace P3Backend.Controllers {
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(Policy = "AdminAccess")]
 		public IActionResult PostOrganization(int AdminId, OrganizationDTO dto) {
 			try {
 
@@ -82,6 +87,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(Policy = "AdminAccess")]
 		public IActionResult Delete(int organizationId) {
 			try {
 				Organization oldO = _organizationRepository.GetBy(organizationId);
