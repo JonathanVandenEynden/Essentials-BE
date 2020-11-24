@@ -25,16 +25,16 @@ namespace P3Backend.Controllers {
 		/// Gives back all the questions and possible answers for a specific survey, given its Id
 		/// </summary>
 		/// <param name="surveyId">The Id of the survey</param>
-		/// <returns>A survey with questions and possible answers</returns>
+		/// <returns>A list with questions and possible answers</returns>
 		[HttpGet("{surveyId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult<Survey> GetQuestionsFromSurvey(int surveyId) {
+		public ActionResult<IEnumerable<Question>> GetQuestionsFromSurvey(int surveyId) {
 			Survey survey = _surveyRepository.GetBy(surveyId);
 			if (survey == null) {
 				return NotFound();
 			}
-			return survey;
+			return survey.Questions;
 		}
 
 		/// <summary>

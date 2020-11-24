@@ -34,12 +34,12 @@ namespace P3Backend.Test.Controllers {
 
 			var result = _controller.GetQuestionsFromSurvey(1);
 
-			Assert.IsType<ActionResult<Survey>>(result);
+			Assert.IsType<ActionResult<IEnumerable<Question>>>(result);
 
-			var survey = result.Value;
+			var questions = result.Value;
 
 			_dummyData.surveyExpansion1.Questions.ForEach(q => {
-				Assert.Contains(survey.Questions, responseQ => responseQ.QuestionString.Equals(q.QuestionString));
+				Assert.Contains(questions, responseQ => responseQ.QuestionString.Equals(q.QuestionString));
 			});
 
 		}
