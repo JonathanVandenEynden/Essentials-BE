@@ -44,10 +44,10 @@ namespace P3Backend.Controllers {
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public IActionResult PostOrganization(int AdminId, OrganizationDTO dto) {
+		public IActionResult PostOrganization(OrganizationDTO dto) {
 			try {
 
-				Admin a = _adminRepository.GetBy(AdminId);
+				Admin a = _adminRepository.GetByEmail(User.Identity.Name);
 
 				if (a == null) {
 					return NotFound("Admin not found");
@@ -55,14 +55,17 @@ namespace P3Backend.Controllers {
 
 				List<Employee> employees = new List<Employee>();
 
+
+
 				dto.EmployeeDTOs.ForEach(dto => {
 					Employee newEmpl = new Employee(dto.FirstName, dto.LastName, dto.Email);
 					employees.Add(newEmpl);
 				});
 
+
 				ChangeManager changeManager = new ChangeManager(dto.ChangeManager.FirstName, dto.ChangeManager.LastName, dto.ChangeManager.Email);
 
-				Organization newO = new Organization(dto.Name, employees, changeManager);
+				Organization newO = new Organization(dto.Name, employees, null);
 
 				a.Organizations.Add(newO);
 
@@ -70,7 +73,9 @@ namespace P3Backend.Controllers {
 
 				_organizationRepository.SaveChanges();
 
-				return CreatedAtAction(nameof(GetOrganizationById), new { organizationId = newO.Id }, newO);
+				return CreatedAtAction(nameof(GetOrganizationById), new {
+					organizationId = newO.Id
+				}, newO);
 			}
 			catch (Exception e) {
 				return BadRequest(e.Message);
