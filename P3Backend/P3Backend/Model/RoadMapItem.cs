@@ -22,8 +22,9 @@ namespace P3Backend.Model {
 
 		public IAssessment Assessment { get; set; }
 
+		private bool _done;
 		[Required]
-		public bool Done { get; set; }
+		public bool Done { get => _done ? _done : DateTime.Now > EndDate; set { _done = value; } }
 
 		[Required]
 		public DateTime StartDate {
@@ -51,7 +52,7 @@ namespace P3Backend.Model {
 			Title = title;
 			StartDate = start;
 			EndDate = end;
-			Done = false;
+			_done = false;
 		}
 
 		protected RoadMapItem() {

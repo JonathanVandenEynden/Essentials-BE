@@ -62,6 +62,25 @@ namespace P3Backend.Controllers {
 		}
 
 		/// <summary>
+		/// Get employee by a given email
+		/// </summary>
+		/// <param name="email">the email of the employee</param>
+		/// <returns>employee obj</returns>
+		[HttpGet("[action]/{email}")]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public ActionResult<Employee> GetEmployeeByEmail(string email)
+		{
+			Employee e = _employeeRepo.GetByEmail(email);
+
+			if (e == null)
+			{
+				return NotFound("Employee not found");
+			}
+
+			return e;
+		}
+
+		/// <summary>
 		/// Create a new employee
 		/// </summary>
 		/// <param name="dto"></param>

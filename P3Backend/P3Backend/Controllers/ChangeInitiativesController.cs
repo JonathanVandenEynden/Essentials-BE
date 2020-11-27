@@ -99,11 +99,17 @@ namespace P3Backend.Controllers {
 				var changes = loggedInCm.CreatedChangeInitiatives.AsQueryable();
 
 				if (!string.IsNullOrEmpty(group))
-					changes = changes.Where(r => r.ChangeGroup.Name == group);
+					changes = changes.Where(r => r.ChangeGroup.Name.Equals(group));
 				if (!string.IsNullOrEmpty(progress))
-					changes = changes.Where(r => r.Progress >= float.Parse(progress));
-
-				return changes.OrderBy(r => r.Name).ToList();
+                {
+					foreach (var change in changes)
+					{
+						Console.WriteLine(change.Progress);
+					}
+					Console.WriteLine(double.Parse(progress));
+					changes = changes.Where(r => r.Progress >= double.Parse(progress));
+				}
+				return changes.ToList();
 			}
 			catch (Exception e) {
 				return NotFound(e.Message);

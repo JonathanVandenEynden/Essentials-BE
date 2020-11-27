@@ -26,18 +26,18 @@ namespace P3Backend.Data.Repositories {
 
 		public IEnumerable<Project> GetAll() {
 			return _projects
-				.Include(p => p.ChangeInitiatives);
+				.Include(p => p.ChangeInitiatives).ThenInclude(ci => ci.RoadMap);
 		}
 
 		public Project GetBy(int id) {
 			return _projects
-				.Include(p => p.ChangeInitiatives)
+				.Include(p => p.ChangeInitiatives).ThenInclude(ci => ci.RoadMap)
 				.FirstOrDefault(p => p.Id == id);
 		}
 
 		public Project GetByName(string name) {
 			return _projects
-				.Include(p => p.ChangeInitiatives)
+				.Include(p => p.ChangeInitiatives).ThenInclude(ci => ci.RoadMap)
 				.FirstOrDefault(p => p.Name == name);
 		}
 

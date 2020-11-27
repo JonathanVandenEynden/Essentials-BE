@@ -29,7 +29,7 @@ namespace P3Backend.Data.Repositories {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
 				.Include(o => o.Employees).ThenInclude(e => e.EmployeeOrganizationParts)
-				.Include(o => o.ChangeManagers).ThenInclude(cm => cm.CreatedChangeInitiatives)
+				.Include(o => o.ChangeManagers).ThenInclude(cm => cm.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap)
 				.Include(o => o.OrganizationParts);
 		}
 
@@ -37,7 +37,7 @@ namespace P3Backend.Data.Repositories {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
 				.Include(o => o.Employees).ThenInclude(e => e.EmployeeOrganizationParts)
-				.Include(o => o.ChangeManagers).ThenInclude(cm => cm.CreatedChangeInitiatives)
+				.Include(o => o.ChangeManagers).ThenInclude(cm => cm.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap)
 				.Include(o => o.OrganizationParts)
 				.FirstOrDefault(o => o.Id == id);
 		}
@@ -46,7 +46,7 @@ namespace P3Backend.Data.Repositories {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
 				.Include(o => o.Employees).ThenInclude(e => e.EmployeeOrganizationParts)
-				.Include(o => o.ChangeManagers).ThenInclude(cm => cm.CreatedChangeInitiatives)
+				.Include(o => o.ChangeManagers).ThenInclude(cm => cm.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap)
 				.Include(o => o.OrganizationParts)
 				.FirstOrDefault(o => o.Name == name);
 		}

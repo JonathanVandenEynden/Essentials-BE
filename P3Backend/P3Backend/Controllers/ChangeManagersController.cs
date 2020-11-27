@@ -68,6 +68,25 @@ namespace P3Backend.Controllers {
 		}
 
 		/// <summary>
+		/// Get changemanager by a given email
+		/// </summary>
+		/// <param name="email">the email of the changemanager</param>
+		/// <returns>changemanager obj</returns>
+		[HttpGet("[action]/{email}")]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public ActionResult<ChangeManager> GetChangeManagerByEmail(string email)
+		{
+			ChangeManager e = _changeManagerRepo.GetByEmail(email);
+
+			if (e == null)
+			{
+				return NotFound("Employee not found");
+			}
+
+			return e;
+		}
+
+		/// <summary>
 		/// Upgrade an employee to a changeManager
 		/// </summary>
 		/// <param name="employeeId"></param>
