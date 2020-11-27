@@ -35,7 +35,8 @@ namespace P3Backend.Data.Repositories {
 		public ChangeInitiative GetBy(int id) {
 			return _changeInitiatives
 				.Include(ci => ci.ChangeGroup)
-				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
 				.FirstOrDefault(ci => ci.Id == id);
 			;
@@ -44,7 +45,8 @@ namespace P3Backend.Data.Repositories {
 		public ChangeInitiative GetByName(string name) {
 			return _changeInitiatives
 				.Include(ci => ci.ChangeGroup)
-				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
 				.FirstOrDefault(ci => ci.Name == name);
 		}
@@ -52,7 +54,8 @@ namespace P3Backend.Data.Repositories {
 		public IEnumerable<ChangeInitiative> GetForUserId(int userId) {
 			return _changeInitiatives
 				.Include(ci => ci.ChangeGroup)
-				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
 				.Where(c => c.ChangeGroup.Users.Any(u => u.Id == userId));
 		}

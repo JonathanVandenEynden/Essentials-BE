@@ -42,6 +42,10 @@ namespace P3Backend.Data.Repositories {
 				.FirstOrDefault(cg => cg.Name == name);
 		}
 
+		public List<ChangeGroup> GetForUserId(int userId) {
+			return _changeGroups.Include(cg => cg.Users).Where(cg => cg.Users.Any(u => u.Id == userId)).ToList();
+		}
+
 		public void SaveChanges() {
 			_context.SaveChanges();
 		}

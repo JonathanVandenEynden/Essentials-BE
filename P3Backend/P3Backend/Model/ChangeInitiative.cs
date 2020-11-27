@@ -11,19 +11,44 @@ using System.Threading.Tasks;
 namespace P3Backend.Model {
 	public class ChangeInitiative {
 
+		private string _name;
+		private string _desc;
 		private DateTime _endDate;
 		private DateTime _startDate;
+		private Employee _changeSponsor;
+		private IChangeType _changeType;
 
 		public int Id {
 			get; set;
 		}
 		[Required]
 		public string Name {
-			get; set;
+			get {
+				return _name;
+			}
+			set {
+				if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value)) {
+					throw new ArgumentException("Name cannot be null or empty");
+				}
+				else {
+					_name = value;
+				}
+			}
 		}
 		[Required]
 		public String Description {
-			get; set;
+			get {
+				return _desc;
+			}
+			set {
+				if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value) || value.Length < 5) {
+					throw new ArgumentException(
+						"Description cannot be null or empty and must be at least 5 characters long");
+				}
+				else {
+					_desc = value;
+				}
+			}
 		}
 		[Required]
 		public DateTime StartDate {
@@ -53,15 +78,31 @@ namespace P3Backend.Model {
 		public ChangeGroup ChangeGroup {
 			get; set;
 		}
+
 		public Employee ChangeSponsor {
-			get; set;
+			get => _changeSponsor;
+			set {
+				if (value == null) {
+					throw new ArgumentException("Change Sponsor is required and cannot be null");
+				}
+				_changeSponsor = value;
+			}
 		} // could also be another CM
+
 		public IChangeType ChangeType {
-			get; set;
+			get => _changeType;
+			set {
+				if (value == null)
+					throw new ArgumentException("ChangeType is required and cannot be null");
+				_changeType = value;
+			}
 		}
+
 		public IList<RoadMapItem> RoadMap {
 			get; set;
 		}
+
+		public double Progress => (Convert.ToDouble(RoadMap.Count(e => e.Done)) / RoadMap.Count()) * 100;
 
 		public ChangeInitiative(string name, string desc, DateTime start, DateTime end, Employee sponsor, IChangeType changeType) {
 			Name = name;
@@ -70,7 +111,7 @@ namespace P3Backend.Model {
 			EndDate = end;
 			ChangeSponsor = sponsor;
 			ChangeType = changeType;
-
+			ChangeGroup = new ChangeGroup("All Employees");
 			RoadMap = new List<RoadMapItem>();
 			// TODO standaard voorbereiding item toevoegen aan roadmap
 			// TODO Changegroup
@@ -80,11 +121,16 @@ namespace P3Backend.Model {
 			// EF
 		}
 
-		internal void update(ChangeInitiativeDTO dto) {
+		internal void Update(ChangeInitiativeDTO dto) {
 			Name = dto.Name;
 			Description = dto.Description;
 			_startDate = dto.StartDate;
 			EndDate = dto.EndDate;
 		}
+
+		public void filter(string? group = null, int? progress = null)
+        {
+
+        }
 	}
 }

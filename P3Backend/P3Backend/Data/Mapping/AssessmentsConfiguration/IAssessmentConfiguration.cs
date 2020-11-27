@@ -10,10 +10,14 @@ using System.Threading.Tasks;
 namespace P3Backend.Data.Mapping.AssesmentConfiguration {
 	public class IAssessmentConfiguration : IEntityTypeConfiguration<IAssessment> {
 		public void Configure(EntityTypeBuilder<IAssessment> builder) {
-			builder.HasKey(s => s.Id);			
+			builder.HasKey(s => s.Id);
 
-			builder.HasMany(s => s.Questions).WithOne();
+			builder.HasMany(s => s.Questions).WithOne().OnDelete(DeleteBehavior.Cascade);
 			builder.HasOne(s => s.Feedback);
+
+			// see FK in IAssesment class
+			//builder.HasOne(a => a.RoadMapItem);
+
 
 		}
 	}

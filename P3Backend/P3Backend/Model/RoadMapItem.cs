@@ -1,17 +1,30 @@
-﻿using System;
+﻿using P3Backend.Model.DTO_s;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace P3Backend.Model {
 	public class RoadMapItem {
+		private string _title;
 		private DateTime _startDate;
 		private DateTime _endDate;
 
 		public int Id { get; set; }
 		[Required]
-		public string Title { get; set; }
+		public string Title {
+			get { return _title; }
+			set {
+				if (string.IsNullOrWhiteSpace(value))
+					throw new ArgumentException("Title should not be emtpy");
+				else
+					_title = value;
+			}
+		}
+
 		public IAssessment Assessment { get; set; }
+
+		private bool _done;
 		[Required]
-		public bool Done { get; set; }
+		public bool Done { get => _done ? _done : DateTime.Now > EndDate; set { _done = value; } }
 
 		[Required]
 		public DateTime StartDate {
@@ -39,13 +52,17 @@ namespace P3Backend.Model {
 			Title = title;
 			StartDate = start;
 			EndDate = end;
-
-			Done = false;
-
+			_done = false;
 		}
 
 		protected RoadMapItem() {
 			// EF
+		}
+
+		public void Update(RoadMapItemDTO dto) {
+			Title = dto.Title;
+			_startDate = dto.StartDate;
+			EndDate = dto.EndDate;
 		}
 	}
 }

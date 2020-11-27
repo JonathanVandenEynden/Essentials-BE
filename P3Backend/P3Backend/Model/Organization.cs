@@ -1,4 +1,5 @@
-﻿using P3Backend.Model.OrganizationParts;
+﻿using NJsonSchema.Annotations;
+using P3Backend.Model.OrganizationParts;
 using P3Backend.Model.Users;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,21 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model {
 	public class Organization {
+		private string _name;
+
 		public int Id { get; set; }
 
 		[Required]
-		public string Name { get; set; }
+		[NotNull]
+		public string Name {
+			get { return _name; }
+			set {
+				if (value == null)
+					throw new ArgumentException("Name of organization should not be null");
+				else
+					_name = value;
+            }
+        }
 		[Required]
 		public List<Employee> Employees { get; set; }
 		[Required]

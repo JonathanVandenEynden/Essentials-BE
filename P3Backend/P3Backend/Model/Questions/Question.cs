@@ -7,9 +7,21 @@ using System.Threading.Tasks;
 
 namespace P3Backend.Model.Questions {
 	public abstract class Question {
+		private string _questionString;
 		public int Id { get; set; }
+
 		[Required]
-		public string QuestionString { get; set; }
+		public string QuestionString
+		{
+			get => _questionString;
+			set
+			{
+				if(String.IsNullOrWhiteSpace(value))
+					throw new ArgumentException("Questionstring cannot be empty or null");
+				_questionString = value;
+			}
+		}
+
 		public QuestionType Type { get; set; }
 		public Dictionary<int, DateTime> QuestionRegistered { get; set; }
 

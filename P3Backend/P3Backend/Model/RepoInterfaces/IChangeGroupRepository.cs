@@ -19,5 +19,7 @@ namespace P3Backend.Model.RepoInterfaces {
 		void SaveChanges();
 
 		ChangeGroup GetByName(string name);
+
+		List<ChangeGroup> GetForUserId(int userId);
 	}
 }
