@@ -36,7 +36,7 @@ namespace P3Backend.Data.Repositories {
 		public Organization GetBy(int id) {
 			return _organizations
 				.Include(o => o.Portfolio).ThenInclude(p => p.Projects)
-				.Include(o => o.Employees).ThenInclude(e => e.EmployeeOrganizationParts)
+				.Include(o => o.Employees)//.ThenInclude(e => e.EmployeeOrganizationParts) // causes loop --> out of memory
 				.Include(o => o.ChangeManagers).ThenInclude(cm => cm.CreatedChangeInitiatives).ThenInclude(ci => ci.RoadMap)
 				.Include(o => o.OrganizationParts)
 				.FirstOrDefault(o => o.Id == id);

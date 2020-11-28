@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 namespace P3Backend.Model.DTO_s {
 	public class OrganizationDTO {
 		public string Name { get; set; }
-		public List<EmployeeDTO> EmployeeDTOs { get; set; }
-		public EmployeeDTO ChangeManager { get; set; }
+		public List<EmployeeRecordDTO> EmployeeRecordDTOs { get; set; }
+		// CM-role is assigned to the first employee;
+		//public EmployeeDTO ChangeManager { get; set; }
 
 	}
 }
