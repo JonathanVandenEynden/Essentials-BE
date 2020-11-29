@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using P3Backend.Data;
 using P3Backend.Model;
 using P3Backend.Model.DTO_s;
 using P3Backend.Model.OrganizationParts;
@@ -22,13 +25,19 @@ namespace P3Backend.Controllers {
 		private readonly IOrganizationRepository _organizationRepository;
 		private readonly IAdminRepository _adminRepository;
 		private readonly IChangeInitiativeRepository _changeInitiativeRepo;
+		private readonly UserManager<IdentityUser> _usermanager;
+		private readonly ApplicationDbContext _dbContext;
 
 		public OrganizationsController(IOrganizationRepository organizationRepo,
 			IAdminRepository adminRepository,
-			IChangeInitiativeRepository changeInitiativeRepo) {
+			IChangeInitiativeRepository changeInitiativeRepo,
+			UserManager<IdentityUser> userManager,
+			ApplicationDbContext dbContext) {
 			_organizationRepository = organizationRepo;
 			_adminRepository = adminRepository;
 			_changeInitiativeRepo = changeInitiativeRepo;
+			_usermanager = userManager;
+			_dbContext = dbContext;
 		}
 
 		[HttpGet("{organizationId}")]
@@ -46,7 +55,7 @@ namespace P3Backend.Controllers {
 		[HttpPost("{adminId}")]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public IActionResult PostOrganization(int adminId, OrganizationDTO dto) {
+		public async Task<IActionResult> PostOrganization(int adminId, OrganizationDTO dto) {
 			try {
 				// search admin
 				Admin a = _adminRepository.GetBy(adminId);
@@ -85,7 +94,10 @@ namespace P3Backend.Controllers {
 				// create employees
 				List<Employee> employees = new List<Employee>();
 
-				dto.EmployeeRecordDTOs.ForEach(e => {
+				// Make a list of the tasks to create the users
+				List<Task> listOfTasks = new List<Task>();
+
+				dto.EmployeeRecordDTOs.ForEach(async e => {
 					List<string> nameParts = e.Name.Split(" ").ToList();
 
 					string firstname = nameParts.ElementAt(0).Trim();
@@ -96,7 +108,7 @@ namespace P3Backend.Controllers {
 					});
 					string email = firstname + "." + lastname.Replace(" ", "") + "@" + dto.Name + ".com";
 
-					Employee newEmpl = new Employee(firstname, lastname, email.ToLower());
+					Employee newEmpl = new Employee(firstname.Trim(), lastname.Trim(), email.ToLower().Trim());
 
 					// assign country
 					OrganizationPart country = organizationParts.Find(p => p.Name.Equals(e.Country) && p.Type == OrganizationPartType.COUNTRY);
@@ -135,12 +147,10 @@ namespace P3Backend.Controllers {
 					}
 					employees.Add(newEmpl);
 
-					// TODO accounts aanmaken
 				});
 
-				ChangeManager changeManager = new ChangeManager(employees.First());
-
 				// remove employee that became cm
+				ChangeManager changeManager = new ChangeManager(employees.First());
 				employees.RemoveAt(0);
 
 				Organization newO = new Organization(dto.Name, employees, changeManager);
@@ -151,6 +161,12 @@ namespace P3Backend.Controllers {
 				_organizationRepository.Add(newO);
 
 				_organizationRepository.SaveChanges();
+
+				// create cm-user
+				await CreateUsersWithClaim(new List<Employee>() { changeManager }, "changeManager");
+
+				// create employee-users
+				await CreateUsersWithClaim(employees, "employee");
 
 				//return CreatedAtAction(nameof(GetOrganizationById), new { organizationId = newO.Id }, newO);
 				return NoContent();
@@ -182,6 +198,16 @@ namespace P3Backend.Controllers {
 				return BadRequest(e.Message);
 			}
 
+		}
+
+		private async Task CreateUsersWithClaim(List<Employee> employees, string claim) {
+
+			foreach (Employee e in employees) {
+				var user = new IdentityUser { UserName = e.Email, Email = e.Email };
+				string password = "P@ssword1" + e.GetInitials();
+				await _usermanager.CreateAsync(user, password);
+				await _usermanager.AddClaimAsync(user, new Claim(ClaimTypes.Role, claim));
+			}
 		}
 	}
 }

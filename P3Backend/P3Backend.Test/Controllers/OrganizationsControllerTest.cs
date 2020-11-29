@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using P3Backend.Controllers;
 using P3Backend.Model;
@@ -21,6 +22,7 @@ namespace P3Backend.Test.Controllers {
 		private readonly Mock<IOrganizationRepository> _organizationRepo;
 		private readonly Mock<IAdminRepository> _adminRepo;
 		private readonly Mock<IChangeInitiativeRepository> _changeRepo;
+		private readonly Mock<UserManager<IdentityUser>> _userManager;
 
 		public OrganizationsControllerTest() {
 			_dummyData = new DummyData();
@@ -28,8 +30,9 @@ namespace P3Backend.Test.Controllers {
 			_organizationRepo = new Mock<IOrganizationRepository>();
 			_adminRepo = new Mock<IAdminRepository>();
 			_changeRepo = new Mock<IChangeInitiativeRepository>();
+			_userManager = new Mock<UserManager<IdentityUser>>();
 
-			_controller = new OrganizationsController(_organizationRepo.Object, _adminRepo.Object, _changeRepo.Object);
+			_controller = new OrganizationsController(_organizationRepo.Object, _adminRepo.Object, _changeRepo.Object, _userManager.Object);
 		}
 
 		[Fact]
@@ -57,7 +60,7 @@ namespace P3Backend.Test.Controllers {
 			_adminRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.admin);
 
 			OrganizationDTO newDTO = new OrganizationDTO() {
-				ChangeManager = new EmployeeDTO() { FirstName = "nieuwe", LastName = "cm", Email = "nieuwecm@email.com" },
+				//ChangeManager = new EmployeeDTO() { FirstName = "nieuwe", LastName = "cm", Email = "nieuwecm@email.com" },
 				Name = "Nieuwe organisatie",
 				EmployeeDTOs = new List<EmployeeDTO>() {
 					new EmployeeDTO(){ FirstName="employee1", LastName="nieuwe", Email="niewe@employee1.com" },
