@@ -94,7 +94,7 @@ namespace P3Backend.Controllers {
 					nameParts.ForEach(part => {
 						lastname += " " + part.Trim();
 					});
-					string email = firstname + "." + lastname.Replace(" ", "") + "@" + dto.Name + "." + "essentials.com";
+					string email = firstname + "." + lastname.Replace(" ", "") + "@" + dto.Name + ".com";
 
 					Employee newEmpl = new Employee(firstname, lastname, email.ToLower());
 
