@@ -61,7 +61,10 @@ namespace P3Backend.Controllers
 
 			foreach(var s in surveys)
             {
-				questions.AddRange(s.Questions);
+				if (s != null)
+				{
+					questions.AddRange(s.Questions);
+				}
             }
 
 			foreach(var q in questions)
@@ -111,14 +114,21 @@ namespace P3Backend.Controllers
 
 			foreach (var s in surveys)
 			{
-				feedback.Add(s.Feedback);
+				if (s != null)
+                {
+					feedback.Add(s.Feedback);
+                }
+					
 			}
 
 			foreach(var f in feedback)
             {
 				foreach (var k in moods.Keys)
 				{
-					moods[k] = f.PossibleAnswers[k];
+					if (f != null)
+                    {
+						moods[k] = f.PossibleAnswers[k];
+					}
 				}
             }
 
