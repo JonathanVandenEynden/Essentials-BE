@@ -52,6 +52,27 @@ namespace P3Backend.Controllers {
 			return o;
 		}
 
+		/// <summary>
+		/// Get all organizations for an admin
+		/// </summary>
+		/// <param name="adminId"></param>
+		/// <returns></returns>
+		[HttpGet("[action]/{adminId}")]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public ActionResult<List<Organization>> GetOrganizationsByAdminId(int adminId) {
+			Admin loggedInAdmin = _adminRepository.GetBy(adminId);
+
+			if (loggedInAdmin == null) {
+				return NotFound("admin not found");
+			}
+
+			var orglist = new List<Organization>();
+
+			loggedInAdmin.Organizations.ForEach(o => orglist.Add(_organizationRepository.GetBy(o.Id)));
+
+			return orglist;
+		}
+
 		[HttpPost("{adminId}")]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
