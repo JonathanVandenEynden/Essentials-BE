@@ -137,35 +137,21 @@ namespace P3Backend.Data {
 				RoadMapItem roadMapItemResto2 = new RoadMapItem("Make contract with new catering service", DateTime.Now.AddDays(2), DateTime.Now.AddDays(2).AddHours(1)) { Done = true };
 				RoadMapItem roadMapItemResto3 = new RoadMapItem("Rennovate Restaurants", DateTime.Now.AddDays(3), DateTime.Now.AddDays(3).AddHours(1));
 				RoadMapItem roadMapItemResto4 = new RoadMapItem("Open new restaurant", DateTime.Now.AddDays(4), DateTime.Now.AddDays(4).AddHours(1));
-				RoadMapItem roadMapItemResto5 = new RoadMapItem("Stop contract with old catering service", DateTime.Now.AddDays(1), DateTime.Now.AddDays(1).AddHours(1)) { Done = true };
-				RoadMapItem roadMapItemResto6 = new RoadMapItem("Make contract with new catering service", DateTime.Now.AddDays(2), DateTime.Now.AddDays(2).AddHours(1));
-				RoadMapItem roadMapItemResto7 = new RoadMapItem("Rennovate Restaurants", DateTime.Now.AddDays(3), DateTime.Now.AddDays(3).AddHours(1));
-				RoadMapItem roadMapItemResto8 = new RoadMapItem("Open new restaurant", DateTime.Now.AddDays(4), DateTime.Now.AddDays(4).AddHours(1));
+
 				ciNewCatering.RoadMap.Add(roadMapItemResto1);
 				ciNewCatering.RoadMap.Add(roadMapItemResto2);
 				ciNewCatering.RoadMap.Add(roadMapItemResto3);
 				ciNewCatering.RoadMap.Add(roadMapItemResto4);
-				ciNewCatering.RoadMap.Add(roadMapItemResto5);
-				ciNewCatering.RoadMap.Add(roadMapItemResto6);
-				ciNewCatering.RoadMap.Add(roadMapItemResto7);
-				ciNewCatering.RoadMap.Add(roadMapItemResto8);
 
 				RoadMapItem roadMapItemExpansion1 = new RoadMapItem("Prepare Expansion", DateTime.Now.AddDays(1), DateTime.Now.AddDays(1).AddHours(1)) { Done = true };
 				RoadMapItem roadMapItemExpansion2 = new RoadMapItem("Risk Managemant", DateTime.Now.AddDays(2), DateTime.Now.AddDays(2).AddHours(1)) { Done = true };
 				RoadMapItem roadMapItemExpansion3 = new RoadMapItem("Excecute Expansion", DateTime.Now.AddDays(3), DateTime.Now.AddDays(3).AddHours(1)) { Done = true };
 				RoadMapItem roadMapItemExpansion4 = new RoadMapItem("Review Expansion", DateTime.Now.AddDays(4), DateTime.Now.AddDays(4).AddHours(1)) { Done = true };
-				RoadMapItem roadMapItemExpansion5 = new RoadMapItem("Prepare Expansion", DateTime.Now.AddDays(1), DateTime.Now.AddDays(1).AddHours(1)) { Done = true };
-				RoadMapItem roadMapItemExpansion6 = new RoadMapItem("Risk Managemant", DateTime.Now.AddDays(2), DateTime.Now.AddDays(2).AddHours(1));
-				RoadMapItem roadMapItemExpansion7 = new RoadMapItem("Excecute Expansion", DateTime.Now.AddDays(3), DateTime.Now.AddDays(3).AddHours(1));
-				RoadMapItem roadMapItemExpansion8 = new RoadMapItem("Review Expansion", DateTime.Now.AddDays(4), DateTime.Now.AddDays(4).AddHours(1));
+
 				ciExpansion.RoadMap.Add(roadMapItemExpansion1);
 				ciExpansion.RoadMap.Add(roadMapItemExpansion2);
 				ciExpansion.RoadMap.Add(roadMapItemExpansion3);
 				ciExpansion.RoadMap.Add(roadMapItemExpansion4);
-				ciExpansion.RoadMap.Add(roadMapItemExpansion5);
-				ciExpansion.RoadMap.Add(roadMapItemExpansion6);
-				ciExpansion.RoadMap.Add(roadMapItemExpansion7);
-				ciExpansion.RoadMap.Add(roadMapItemExpansion8);
 
 
 				IList<RoadMapItem> rmis = new List<RoadMapItem>() {
@@ -173,18 +159,12 @@ namespace P3Backend.Data {
 					roadMapItemExpansion2,
 					roadMapItemExpansion3,
 					roadMapItemExpansion4,
-					roadMapItemExpansion5,
-					roadMapItemExpansion6,
-					roadMapItemExpansion7,
-					roadMapItemExpansion8,
+
 					roadMapItemResto1,
 					roadMapItemResto2,
 					roadMapItemResto3,
 					roadMapItemResto4,
-					roadMapItemResto5,
-					roadMapItemResto6,
-					roadMapItemResto7,
-					roadMapItemResto8
+
 				};
 				_dbContext.RoadMapItems.AddRange(rmis);
 
@@ -215,10 +195,7 @@ namespace P3Backend.Data {
 				roadMapItemResto2.Assessment = surveyResto2;
 				roadMapItemResto3.Assessment = surveyResto3;
 				roadMapItemResto4.Assessment = surveyResto4;
-				roadMapItemResto5.Assessment = surveyResto1;
-				roadMapItemResto6.Assessment = surveyResto2;
-				roadMapItemResto7.Assessment = surveyResto3;
-				roadMapItemResto8.Assessment = surveyResto4;
+
 				/////////////
 				Survey surveyExpansion1 = new Survey(roadMapItemExpansion1);
 				Survey surveyExpansion2 = new Survey(roadMapItemExpansion2);
@@ -252,10 +229,7 @@ namespace P3Backend.Data {
 				roadMapItemExpansion2.Assessment = surveyExpansion2;
 				roadMapItemExpansion3.Assessment = surveyExpansion3;
 				roadMapItemExpansion4.Assessment = surveyExpansion4;
-				roadMapItemExpansion5.Assessment = surveyExpansion1;
-				roadMapItemExpansion6.Assessment = surveyExpansion2;
-				roadMapItemExpansion7.Assessment = surveyExpansion3;
-				roadMapItemExpansion8.Assessment = surveyExpansion4;
+
 
 				IList<Survey> s = new List<Survey>() {
 					surveyExpansion1,
