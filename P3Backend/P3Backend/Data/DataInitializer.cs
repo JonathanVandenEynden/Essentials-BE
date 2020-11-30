@@ -31,20 +31,20 @@ namespace P3Backend.Data {
 			if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
-				Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@student.hogent.be");
-				Admin admin2 = new Admin("Jonatan", "Vanden Eynden Van Lysebeth", "Jonathan.vandeneyndenvanlysebeth@student.hogent.be");
+				Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@essentials.com");
+				Admin admin2 = new Admin("Jonatan", "Vanden Eynden Van Lysebeth", "Jonathan.vandeneyndenvanlysebeth@essentials.com");
 				_dbContext.Admins.AddRange(new List<Admin>() { admin1, admin2 });
 				#endregion
 
 				#region Employees
-				Employee sponsor = new Employee("Sponser", "Sponser", "sponser@essentials.com");
-				Employee ziggy = new Employee("Ziggy", "Moens", "ziggy@essentials.com");
-				Employee marbod = new Employee("Marbod", "Naassens", "marbod@essentials.com");
+				Employee sponsor = new Employee("Sponser", "Sponser", "sponser@hogent.com");
+				Employee ziggy = new Employee("Ziggy", "Moens", "ziggy@hogent.com");
+				Employee marbod = new Employee("Marbod", "Naassens", "marbod@hogent.com");
 				_dbContext.Employees.AddRange(new List<Employee>() { sponsor, ziggy, marbod });
 				#endregion
 
 				#region Changemananger
-				ChangeManager changeManagerSuktrit = new ChangeManager("Sukrit", "Bhattacharya", "Sukrit.bhattacharya@essentials.com");
+				ChangeManager changeManagerSuktrit = new ChangeManager("Sukrit", "Bhattacharya", "Sukrit.bhattacharya@hogent.com");
 				_dbContext.ChangeManagers.Add(changeManagerSuktrit);
 				#endregion
 
