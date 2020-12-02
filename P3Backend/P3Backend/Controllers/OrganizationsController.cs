@@ -59,12 +59,11 @@ namespace P3Backend.Controllers {
 		/// <summary>
 		/// Get all organizations for an admin
 		/// </summary>
-		/// <param name="adminId"></param>
 		/// <returns></returns>
-		[HttpGet("[action]"]
+		[HttpGet("[action]")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public ActionResult<List<Organization>> GetOrganizationsForAdmin() {
-			Admin loggedInAdmin = _adminRepository.GetBy(adminId);
+			Admin loggedInAdmin = _adminRepository.GetByEmail(User.Identity.Name);
 
 			if (loggedInAdmin == null) {
 				return NotFound("admin not found");
@@ -81,7 +80,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[Authorize(Policy = "AdminAccess")]
-		public IActionResult PostOrganization(OrganizationDTO dto) {
+		public async Task<IActionResult> PostOrganization(OrganizationDTO dto) {
 			try {
 
 				Admin a = _adminRepository.GetByEmail(User.Identity.Name);
