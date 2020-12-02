@@ -8,7 +8,7 @@ namespace P3Backend.Model {
 	public abstract class IAssessment {
 		public int Id { get; set; }
 		public List<Question> Questions { get; set; }
-		public MultipleChoiceQuestion Feedback { get; set; }
+		public RangedQuestion Feedback { get; set; }
 
 		[ForeignKey("RoadMapItemId")]
 		public int RoadMapItemId { get; set; }
@@ -20,8 +20,7 @@ namespace P3Backend.Model {
 
 			Questions = new List<Question>();
 
-			Feedback = new MultipleChoiceQuestion("How is your mood about this change initiative?");
-			Feedback.AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" }, true);
+			Feedback = new RangedQuestion("How is your mood about this change initiative?");
 		}
 
 		protected IAssessment() {

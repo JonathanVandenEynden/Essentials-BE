@@ -54,7 +54,8 @@ namespace P3Backend.Controllers {
 				if (user != null) {
 					var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
 					if (result.Succeeded) {
-						string token = await GetToken(user);
+						IUser dbUser = _userRepo.GetByEmail(user.UserName);
+						string token = await GetToken(user, dbUser.Id);
 						return Ok(token);
 					}
 				}
@@ -86,7 +87,7 @@ namespace P3Backend.Controllers {
 				if (result.Succeeded) {
 					_userRepo.Add(checkedUser);
 					_userRepo.SaveChanges();
-					string token = await GetToken(user);
+					string token = await GetToken(user, checkedUser.Id);
 					return Created("", token);
 				}
 				else
@@ -117,11 +118,12 @@ namespace P3Backend.Controllers {
 		}
 
 
-		private async Task<string> GetToken(IdentityUser user) {
+		private async Task<string> GetToken(IdentityUser user, int id) {
 			var roleClaims = await _userManager.GetClaimsAsync(user);
 			var claims = new List<Claim> {
 				new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-				new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+				new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+				new Claim(JwtRegisteredClaimNames.NameId, id.ToString())
 			};
 			claims.AddRange(roleClaims);
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
