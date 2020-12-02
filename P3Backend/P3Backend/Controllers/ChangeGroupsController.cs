@@ -37,7 +37,7 @@ namespace P3Backend.Controllers {
 		}
 
 		// TODO Testen toevoegen
-		[HttpGet("[action]/{userId}")]
+		[HttpGet("[action]")]
 		[Authorize(Policy = "EmployeeAccess")]
 		public ActionResult<List<ChangeGroup>> GetChangeGroupForUser() {
 			try {

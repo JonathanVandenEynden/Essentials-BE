@@ -58,9 +58,8 @@ namespace P3Backend.Controllers {
 		/// <summary>
 		/// Get the change initiatives applicable for a user
 		/// </summary>
-		/// <param name="employeeId"></param>
 		/// <returns></returns>
-		[Route("[action]/{employeeId}")]
+		[Route("[action]")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[Authorize(Policy = "EmployeeAccess")]
@@ -81,11 +80,10 @@ namespace P3Backend.Controllers {
 		/// <summary>
 		/// Get the change initiatives from a change manager, filters are possible
 		/// </summary>
-		/// <param name="changeManagerId"></param>
 		/// <param name="group"></param>
 		/// <param name="progress"></param>
 		/// <returns></returns>
-		[Route("[action]/{changeManagerId}")]
+		[Route("[action]")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(string group = null, string progress = null) {
