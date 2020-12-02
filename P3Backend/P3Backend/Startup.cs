@@ -77,14 +77,12 @@ namespace P3Backend {
 				.AddJwtBearer(options => {
 					options.SaveToken = true;
 					options.TokenValidationParameters = new TokenValidationParameters {
-						ValidateIssuer = false, // true for release
-						ValidateAudience = false, // true for release
+						ValidateIssuer = false,
+						ValidateAudience = false,
 						ValidateLifetime = true,
 						RequireExpirationTime = true,
 						ValidateIssuerSigningKey = true,
-						// Use for release (specify Jwt:Issuer in appsettings.json)
-						//ValidIssuer = Configuration["Jwt:Issuer"],
-						//ValidAudience = Configuration["Jwt:Issuer"],
+
 						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
 					};
 				});

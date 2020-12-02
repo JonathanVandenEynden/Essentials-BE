@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
@@ -13,7 +16,7 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
-
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class EmployeesController : ControllerBase {
 		private readonly IEmployeeRepository _employeeRepo;
 		private readonly IOrganizationRepository _organizationRepo;
@@ -31,6 +34,7 @@ namespace P3Backend.Controllers {
 		[Route("[action]/{organizationId}")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
 		public ActionResult<IEnumerable<Employee>> GetAllEmployeesFromOrganization(int organizationId) {
 			try {
 				return _organizationRepo.GetBy(organizationId).Employees;
@@ -46,6 +50,7 @@ namespace P3Backend.Controllers {
 		/// <returns>employee obj</returns>
 		[HttpGet("{employeeId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
 		public ActionResult<Employee> GetEmployeeById(int employeeId) {
 			Employee e = _employeeRepo.GetBy(employeeId);
 
@@ -63,12 +68,11 @@ namespace P3Backend.Controllers {
 		/// <returns>employee obj</returns>
 		[HttpGet("[action]/{email}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult<Employee> GetEmployeeByEmail(string email)
-		{
+		[Authorize(Policy = "EmployeeAccess")]
+		public ActionResult<Employee> GetEmployeeByEmail(string email) {
 			Employee e = _employeeRepo.GetByEmail(email);
 
-			if (e == null)
-			{
+			if (e == null) {
 				return NotFound("Employee not found");
 			}
 
@@ -83,6 +87,7 @@ namespace P3Backend.Controllers {
 		[HttpPost("{organizationId}")]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status201Created)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult PostEmployee(int organizationId, EmployeeDTO dto) {
 			try {
 				Organization o = _organizationRepo.GetBy(organizationId);
@@ -112,6 +117,7 @@ namespace P3Backend.Controllers {
 		[HttpDelete("{employeeId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult DeleteEmployee(int employeeId) {
 			Employee e = _employeeRepo.GetBy(employeeId);
 

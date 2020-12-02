@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
@@ -12,6 +15,7 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class RoadMapItemsController : ControllerBase {
 
 		private readonly IRoadmapItemRepository _roadmapItemRepository;
@@ -28,6 +32,7 @@ namespace P3Backend.Controllers {
 		[HttpGet("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
 		public ActionResult<RoadMapItem> GetRoadMapItem(int id) {
 			RoadMapItem rmi = _roadmapItemRepository.GetBy(id);
 
@@ -49,6 +54,7 @@ namespace P3Backend.Controllers {
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
 		public ActionResult<IEnumerable<RoadMapItem>> GetRoadMapItemsForChangeInitiative(int changeInitiativeId) {
 			ChangeInitiative ci = _changeInitiativeRepo.GetBy(changeInitiativeId);
 
@@ -65,6 +71,7 @@ namespace P3Backend.Controllers {
 		/// <param name="dto"></param>
 		/// <returns></returns>
 		[HttpPost("{changeInitiativeId}")]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult PostRoadMapItem(int changeInitiativeId, RoadMapItemDTO dto) {
 			try {
 
@@ -90,6 +97,7 @@ namespace P3Backend.Controllers {
 		}
 
 		[HttpPut("{roadmapItemId}")]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult PutRoadMapItem(int roadmapItemId, RoadMapItemDTO dto) {
 			try {
 				RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);
@@ -111,6 +119,7 @@ namespace P3Backend.Controllers {
 		}
 
 		[HttpDelete("{roadmapItemId}")]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult DeleteRoadMapItem(int roadmapItemId) {
 			try {
 				RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);

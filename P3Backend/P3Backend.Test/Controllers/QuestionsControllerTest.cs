@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using P3Backend.Controllers;
 using P3Backend.Model;
@@ -8,6 +9,7 @@ using P3Backend.Model.RepoInterfaces;
 using P3Backend.Test.Data;
 using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Text;
 using Xunit;
 
@@ -19,13 +21,15 @@ namespace P3Backend.Test.Controllers {
 		private readonly QuestionsController _controller;
 
 		private readonly Mock<ISurveyRepository> _surveyRepo;
+		private readonly Mock<IEmployeeRepository> _employeeRepo;
 
 		public QuestionsControllerTest() {
 			_dummyData = new DummyData();
 
 			_surveyRepo = new Mock<ISurveyRepository>();
+			_employeeRepo = new Mock<IEmployeeRepository>();
 
-			_controller = new QuestionsController(_surveyRepo.Object);
+			_controller = new QuestionsController(_surveyRepo.Object, _employeeRepo.Object);
 		}
 
 		[Fact]
@@ -118,7 +122,16 @@ namespace P3Backend.Test.Controllers {
 
 		[Fact]
 		public void PostAnswerToQuestion_INITIAL_SuccessfullPost_resturnsNoContent() {
+
+			var fakeIdentity = new GenericIdentity("email");
+			var fakePrincipal = new GenericPrincipal(fakeIdentity, null);
+
+			_controller.ControllerContext = new ControllerContext() {
+				HttpContext = new DefaultHttpContext() { User = fakePrincipal }
+			};
+
 			_surveyRepo.Setup(m => m.GetQuestion(1)).Returns(_dummyData.questionExpansion1);
+			_employeeRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.marbod);
 
 			List<String> answers = new List<String>() { "azer", "qsdf", "wxcv" };
 
@@ -132,7 +145,15 @@ namespace P3Backend.Test.Controllers {
 
 		[Fact]
 		public void PostAnswerToQuestion_SuccessfullPost_resturnsNoContent() {
+			var fakeIdentity = new GenericIdentity("email");
+			var fakePrincipal = new GenericPrincipal(fakeIdentity, null);
+
+			_controller.ControllerContext = new ControllerContext() {
+				HttpContext = new DefaultHttpContext() { User = fakePrincipal }
+			};
+
 			_surveyRepo.Setup(m => m.GetQuestion(1)).Returns(_dummyData.questionExpansion1);
+			_employeeRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.marbod);
 
 			List<String> answers = new List<String>() { "azer", "qsdf", "wxcv" };
 

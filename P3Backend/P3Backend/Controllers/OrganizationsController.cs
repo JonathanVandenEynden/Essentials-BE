@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +22,7 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class OrganizationsController : ControllerBase {
 
 		private readonly IOrganizationRepository _organizationRepository;
@@ -42,6 +45,7 @@ namespace P3Backend.Controllers {
 
 		[HttpGet("{organizationId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<Organization> GetOrganizationById(int organizationId) {
 			Organization o = _organizationRepository.GetBy(organizationId);
 
@@ -57,9 +61,9 @@ namespace P3Backend.Controllers {
 		/// </summary>
 		/// <param name="adminId"></param>
 		/// <returns></returns>
-		[HttpGet("[action]/{adminId}")]
+		[HttpGet("[action]"]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult<List<Organization>> GetOrganizationsByAdminId(int adminId) {
+		public ActionResult<List<Organization>> GetOrganizationsForAdmin() {
 			Admin loggedInAdmin = _adminRepository.GetBy(adminId);
 
 			if (loggedInAdmin == null) {
@@ -73,13 +77,14 @@ namespace P3Backend.Controllers {
 			return orglist;
 		}
 
-		[HttpPost("{adminId}")]
+		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public async Task<IActionResult> PostOrganization(int adminId, OrganizationDTO dto) {
+		[Authorize(Policy = "AdminAccess")]
+		public IActionResult PostOrganization(OrganizationDTO dto) {
 			try {
-				// search admin
-				Admin a = _adminRepository.GetBy(adminId);
+
+				Admin a = _adminRepository.GetByEmail(User.Identity.Name);
 
 				if (a == null) {
 					return NotFound("Admin not found");
@@ -202,6 +207,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(Policy = "AdminAccess")]
 		public IActionResult Delete(int organizationId) {
 			try {
 				Organization oldO = _organizationRepository.GetBy(organizationId);

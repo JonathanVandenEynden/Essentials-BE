@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
@@ -15,6 +18,8 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[Authorize(Policy = "ChangeManagerAccess")]
 	public class ChangeInitiativesController : ControllerBase {
 
 		private readonly IChangeInitiativeRepository _changeRepo;
@@ -53,16 +58,17 @@ namespace P3Backend.Controllers {
 		/// <summary>
 		/// Get the change initiatives applicable for a user
 		/// </summary>
-		/// <param name="employeeId"></param>
 		/// <returns></returns>
-		[Route("[action]/{employeeId}")]
+		[Route("[action]")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForEmployee(int employeeId = 3) {
-			// TODO niet meer hardcoded maken
-			//IUser user = _userRepo.GetByEmail("Sukrit.bhattacharya@essentials.com");
+		[Authorize(Policy = "EmployeeAccess")]
+		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForEmployee() {
+
+			Employee loggedInEmployee = _employeeRepo.GetByEmail(User.Identity.Name);
+
 			try {
-				IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(employeeId);
+				IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(loggedInEmployee.Id);
 
 				return changes.ToList();
 			}
@@ -72,31 +78,28 @@ namespace P3Backend.Controllers {
 		}
 
 		/// <summary>
-		/// Get the change initiatives from a change manager
+		/// Get the change initiatives from a change manager, filters are possible
 		/// </summary>
-		/// <param name="changeManagerId"></param>
 		/// <param name="group"></param>
 		/// <param name="progress"></param>
 		/// <returns></returns>
-		[Route("[action]/{changeManagerId}")]
+		[Route("[action]")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(int changeManagerId = 6, string group = null, string progress = null) {
+		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(string group = null, string progress = null) {
 			try {
-				// TODO niet meer hardcoded maken
-				ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
+
+				ChangeManager loggedInCm = _changeManagerRepo.GetByEmail(User.Identity.Name);
 
 				if (string.IsNullOrEmpty(group) && string.IsNullOrEmpty(progress))
-					return cm.CreatedChangeInitiatives.ToList();
+					return loggedInCm.CreatedChangeInitiatives.ToList();
 
-				var changes = cm.CreatedChangeInitiatives.AsEnumerable();
+				var changes = loggedInCm.CreatedChangeInitiatives.AsQueryable();
 
 				if (!string.IsNullOrEmpty(group))
 					changes = changes.Where(r => r.ChangeGroup.Name.Equals(group));
-				if (!string.IsNullOrEmpty(progress))
-                {
-					foreach (var change in changes)
-					{
+				if (!string.IsNullOrEmpty(progress)) {
+					foreach (var change in changes) {
 						Console.WriteLine(change.Progress);
 					}
 					Console.WriteLine(double.Parse(progress));
@@ -137,9 +140,8 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public IActionResult PostChangeInitiative(int projectId, int changeManagerId, ChangeInitiativeDTO dto) {
-			projectId = 1;
-			changeManagerId = 2;
+		public IActionResult PostChangeInitiative(int projectId, ChangeInitiativeDTO dto) {
+
 			Employee sponsor = _employeeRepo.GetByEmail(dto.Sponsor.Email);
 
 			if (sponsor == null) {
@@ -158,14 +160,14 @@ namespace P3Backend.Controllers {
 			try {
 
 				Project p = _projectRepo.GetBy(projectId);
-				ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
+				ChangeManager loggedInCm = _changeManagerRepo.GetByEmail(User.Identity.Name);
 
 
 				ChangeInitiative newCi = new ChangeInitiative(dto.Name, dto.Description, dto.StartDate, dto.EndDate, sponsor, type);
 
 				_changeRepo.Add(newCi);
 				p.ChangeInitiatives.Add(newCi);
-				cm.CreatedChangeInitiatives.Add(newCi);
+				loggedInCm.CreatedChangeInitiatives.Add(newCi);
 
 				_changeRepo.SaveChanges();
 
@@ -215,7 +217,7 @@ namespace P3Backend.Controllers {
 				ChangeInitiative changeInitiative = _changeRepo.GetBy(id);
 
 				if (changeInitiative == null) {
-					return NotFound("ChangeInitiative does not exist or is allready deleted");
+					return NotFound("ChangeInitiative does not exist or is already deleted");
 				}
 
 				_changeRepo.Delete(changeInitiative);

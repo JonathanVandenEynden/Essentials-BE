@@ -19,6 +19,7 @@ namespace P3Backend.Test.Controllers {
 		private readonly Mock<IOrganizationRepository> _organizationRepo;
 		private readonly Mock<IChangeInitiativeRepository> _changeRepo;
 		private readonly Mock<IChangeGroupRepository> _changeGroupRepo;
+		private readonly Mock<IUserRepository> _userRepo;
 
 		public ChangeGroupsControllerTest() {
 			_dummyData = new DummyData();
@@ -26,8 +27,9 @@ namespace P3Backend.Test.Controllers {
 			_organizationRepo = new Mock<IOrganizationRepository>();
 			_changeRepo = new Mock<IChangeInitiativeRepository>();
 			_changeGroupRepo = new Mock<IChangeGroupRepository>();
+			_userRepo = new Mock<IUserRepository>();
 
-			_controller = new ChangeGroupsController(_organizationRepo.Object, _changeRepo.Object, _changeGroupRepo.Object);
+			_controller = new ChangeGroupsController(_organizationRepo.Object, _changeRepo.Object, _changeGroupRepo.Object, _userRepo.Object);
 
 		}
 

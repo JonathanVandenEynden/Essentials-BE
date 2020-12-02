@@ -1,37 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Data;
 using P3Backend.Model;
 using P3Backend.Model.RepoInterfaces;
+using P3Backend.Model.Users;
 
 namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class ChangeGroupsController : ControllerBase {
 
 		private readonly IOrganizationRepository _organizationRepository;
 		private readonly IChangeInitiativeRepository _changeInitiativeRepo;
 		private readonly IChangeGroupRepository _changeGroupRepo;
+		private readonly IUserRepository _userRepo;
 
 
 		public ChangeGroupsController(
 			IOrganizationRepository organizationRepository,
 			IChangeInitiativeRepository changeInitiativeRepo,
-			IChangeGroupRepository changeGroupRepo) {
+			IChangeGroupRepository changeGroupRepo,
+			IUserRepository userRepo) {
 			_organizationRepository = organizationRepository;
 			_changeInitiativeRepo = changeInitiativeRepo;
 			_changeGroupRepo = changeGroupRepo;
+			_userRepo = userRepo;
 		}
 
 		// TODO Testen toevoegen
-		[HttpGet("[action]/{userId}")]
-		public ActionResult<List<ChangeGroup>> GetChangeGroupForUser(int userId) {
-			return _changeGroupRepo.GetForUserId(userId);
+		[HttpGet("[action]")]
+		[Authorize(Policy = "EmployeeAccess")]
+		public ActionResult<List<ChangeGroup>> GetChangeGroupForUser() {
+			try {
+				Employee loggedInUser = (Employee)_userRepo.GetByEmail(User.Identity.Name);
+
+				return _changeGroupRepo.GetForUserId(loggedInUser.Id);
+			}
+			catch {
+				return BadRequest("User not logged in or was an admin");
+			}
 		}
 
 		/// <summary>
@@ -43,6 +59,7 @@ namespace P3Backend.Controllers {
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<IList<ChangeGroup>> GetAllGhangeGroupsOfOrganization(int organizationId = 1) {
 
 			try {

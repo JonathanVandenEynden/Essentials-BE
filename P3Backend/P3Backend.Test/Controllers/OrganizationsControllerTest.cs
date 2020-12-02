@@ -72,7 +72,8 @@ namespace P3Backend.Test.Controllers {
 				}
 			};
 
-			var result = _controller.PostOrganization(1, newDTO);
+			// TODO user definieren
+			var result = _controller.PostOrganization(newDTO);
 
 			Assert.IsType<Task<IActionResult>>(result);
 			Assert.IsType<NoContentResult>(result.Result);
@@ -94,7 +95,8 @@ namespace P3Backend.Test.Controllers {
 				}
 			};
 
-			var result = _controller.PostOrganization(1, newDTO);
+			// TODO user definieren
+			var result = _controller.PostOrganization(newDTO);
 
 			Assert.IsType<Task<IActionResult>>(result);
 
@@ -141,7 +143,8 @@ namespace P3Backend.Test.Controllers {
 				//}
 			};
 
-			var result = _controller.PostOrganization(1, newDTO);
+			// TODO user definieren
+			var result = _controller.PostOrganization(newDTO);
 
 			Assert.IsType<Task<IActionResult>>(result);
 			Assert.IsType<BadRequestObjectResult>(result.Result);
@@ -163,7 +166,8 @@ namespace P3Backend.Test.Controllers {
 				}
 			};
 
-			var result = _controller.PostOrganization(1, newDTO);
+			// TODO user definieren
+			var result = _controller.PostOrganization(newDTO);
 
 			Assert.IsType<Task<IActionResult>>(result);
 			Assert.IsType<BadRequestObjectResult>(result.Result);
