@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
@@ -15,6 +17,7 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class OrganizationsController : ControllerBase {
 
 		private readonly IOrganizationRepository _organizationRepository;
@@ -31,6 +34,7 @@ namespace P3Backend.Controllers {
 
 		[HttpGet("{organizationId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<Organization> GetOrganizationById(int organizationId) {
 			Organization o = _organizationRepository.GetBy(organizationId);
 
@@ -44,10 +48,11 @@ namespace P3Backend.Controllers {
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public IActionResult PostOrganization(int AdminId, OrganizationDTO dto) {
+		[Authorize(Policy = "AdminAccess")]
+		public IActionResult PostOrganization(OrganizationDTO dto) {
 			try {
 
-				Admin a = _adminRepository.GetBy(AdminId);
+				Admin a = _adminRepository.GetByEmail(User.Identity.Name);
 
 				if (a == null) {
 					return NotFound("Admin not found");
@@ -55,14 +60,17 @@ namespace P3Backend.Controllers {
 
 				List<Employee> employees = new List<Employee>();
 
+
+
 				dto.EmployeeDTOs.ForEach(dto => {
 					Employee newEmpl = new Employee(dto.FirstName, dto.LastName, dto.Email);
 					employees.Add(newEmpl);
 				});
 
+
 				ChangeManager changeManager = new ChangeManager(dto.ChangeManager.FirstName, dto.ChangeManager.LastName, dto.ChangeManager.Email);
 
-				Organization newO = new Organization(dto.Name, employees, changeManager);
+				Organization newO = new Organization(dto.Name, employees, null);
 
 				a.Organizations.Add(newO);
 
@@ -70,7 +78,9 @@ namespace P3Backend.Controllers {
 
 				_organizationRepository.SaveChanges();
 
-				return CreatedAtAction(nameof(GetOrganizationById), new { organizationId = newO.Id }, newO);
+				return CreatedAtAction(nameof(GetOrganizationById), new {
+					organizationId = newO.Id
+				}, newO);
 			}
 			catch (Exception e) {
 				return BadRequest(e.Message);
@@ -82,6 +92,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(Policy = "AdminAccess")]
 		public IActionResult Delete(int organizationId) {
 			try {
 				Organization oldO = _organizationRepository.GetBy(organizationId);

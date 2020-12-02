@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
@@ -12,6 +15,8 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[Authorize(Policy = "AdminAccess")]
 	public class ChangeManagersController : ControllerBase {
 
 		private readonly IChangeManagerRepository _changeManagerRepo;
@@ -68,12 +73,10 @@ namespace P3Backend.Controllers {
 		/// <returns>changemanager obj</returns>
 		[HttpGet("[action]/{email}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult<ChangeManager> GetChangeManagerByEmail(string email)
-		{
+		public ActionResult<ChangeManager> GetChangeManagerByEmail(string email) {
 			ChangeManager e = _changeManagerRepo.GetByEmail(email);
 
-			if (e == null)
-			{
+			if (e == null) {
 				return NotFound("Employee not found");
 			}
 
@@ -88,6 +91,7 @@ namespace P3Backend.Controllers {
 		[HttpPost("{employeeId}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult UpgradeEmployeeToChangeManager(int employeeId) {
 			try {
 

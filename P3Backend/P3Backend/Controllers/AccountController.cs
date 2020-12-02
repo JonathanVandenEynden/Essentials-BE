@@ -128,7 +128,6 @@ namespace P3Backend.Controllers {
 			claims.AddRange(roleClaims);
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
 			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-			// RELEASE first two (null, null) parameters should be _config["Jwt:Issuer"]
 			var token = new JwtSecurityToken(null, null, claims, expires: DateTime.Now.AddMinutes(30), signingCredentials: creds);
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
