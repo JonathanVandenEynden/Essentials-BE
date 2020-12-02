@@ -16,6 +16,7 @@ namespace P3Backend.Controllers {
 	[ApiController]
 	[Produces("application/json")]
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[Authorize(Policy = "AdminAccess")]
 	public class ChangeManagersController : ControllerBase {
 
 		private readonly IChangeManagerRepository _changeManagerRepo;
@@ -38,7 +39,6 @@ namespace P3Backend.Controllers {
 		[Route("[action]/{organizationId}")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[Authorize(Policy = "AdminAccess")]
 		public ActionResult<IEnumerable<ChangeManager>> GetChangeManagersFromOrganization(int organizationId) {
 			Organization o = _organizationRepo.GetBy(organizationId);
 
@@ -56,7 +56,6 @@ namespace P3Backend.Controllers {
 		/// <returns></returns>
 		[HttpGet("{changeManagerId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[Authorize(Policy = "AdminAccess")]
 		public ActionResult<ChangeManager> GetChangeManagerById(int changeManagerId) {
 			ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
 
@@ -74,12 +73,10 @@ namespace P3Backend.Controllers {
 		/// <returns>changemanager obj</returns>
 		[HttpGet("[action]/{email}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult<ChangeManager> GetChangeManagerByEmail(string email)
-		{
+		public ActionResult<ChangeManager> GetChangeManagerByEmail(string email) {
 			ChangeManager e = _changeManagerRepo.GetByEmail(email);
 
-			if (e == null)
-			{
+			if (e == null) {
 				return NotFound("Employee not found");
 			}
 

@@ -68,12 +68,11 @@ namespace P3Backend.Controllers {
 		/// <returns>employee obj</returns>
 		[HttpGet("[action]/{email}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult<Employee> GetEmployeeByEmail(string email)
-		{
+		[Authorize(Policy = "EmployeeAccess")]
+		public ActionResult<Employee> GetEmployeeByEmail(string email) {
 			Employee e = _employeeRepo.GetByEmail(email);
 
-			if (e == null)
-			{
+			if (e == null) {
 				return NotFound("Employee not found");
 			}
 
