@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
-	[Authorize(Policy = "ChangeManagerAccess")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class DashboardController : ControllerBase {
 		private readonly IRoadmapItemRepository _roadmapItemRepository;
 		private readonly IChangeInitiativeRepository _changeInitiativeRepository;
@@ -38,6 +39,7 @@ namespace P3Backend.Controllers {
 		[HttpGet("[action]/{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<double> GetFilledInSurveysOfChangeInitiative(int id) {
 			ChangeInitiative ci = _changeInitiativeRepository.GetBy(id);
 
@@ -80,6 +82,7 @@ namespace P3Backend.Controllers {
 		[HttpGet("[action]/{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<Dictionary<int, int>> GetMoodFromChangeInitiative(int id) {
 			ChangeInitiative ci = _changeInitiativeRepository.GetBy(id);
 
