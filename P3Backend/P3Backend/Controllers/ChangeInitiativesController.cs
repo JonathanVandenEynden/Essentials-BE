@@ -19,7 +19,6 @@ namespace P3Backend.Controllers {
 	[ApiController]
 	[Produces("application/json")]
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[Authorize(Policy = "ChangeManagerAccess")]
 	public class ChangeInitiativesController : ControllerBase {
 
 		private readonly IChangeInitiativeRepository _changeRepo;
@@ -86,6 +85,7 @@ namespace P3Backend.Controllers {
 		[Route("[action]")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(string group = null, string progress = null) {
 			try {
 
@@ -120,6 +120,7 @@ namespace P3Backend.Controllers {
 		[HttpGet("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public ActionResult<ChangeInitiative> GetChangeInitiative(int id) {
 			ChangeInitiative ci = _changeRepo.GetBy(id);
 
@@ -140,6 +141,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult PostChangeInitiative(int projectId, ChangeInitiativeDTO dto) {
 
 			Employee sponsor = _employeeRepo.GetByEmail(dto.Sponsor.Email);
@@ -187,6 +189,7 @@ namespace P3Backend.Controllers {
 		/// <param name="dto"></param>
 		/// <returns></returns>
 		[HttpPut("{id}")]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult UpdateChangeInitiative(int id, ChangeInitiativeDTO dto) {
 
 			try {
@@ -212,6 +215,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IActionResult DeleteChangeInitiative(int id) {
 			try {
 				ChangeInitiative changeInitiative = _changeRepo.GetBy(id);
