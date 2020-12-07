@@ -26,7 +26,7 @@ using System.Security.Claims;
 namespace P3Backend {
 	public class Startup {
 
-		readonly string EssentialsAllowAllOrigin = "_essentialsAllowAllOrigin";
+		readonly string EssentialsAllowOrigin = "_essentialsAllowOrigin";
 
 		public Startup(IConfiguration configuration) {
 			Configuration = configuration;
@@ -60,20 +60,20 @@ namespace P3Backend {
 
 
 
-            services.AddCors(options => {
-                options.AddPolicy(name: EssentialsAllowAllOrigin,
-                                  builder => {
-									  builder.AllowAnyOrigin();
+			services.AddCors(options => {
+				options.AddPolicy(name: EssentialsAllowOrigin,
+								  builder => {
+									  //builder.AllowAnyOrigin();
 
-                                      //WithOrigins("https://essentialstoolkit.netlify.app",
-                                      //                                                 "https://essentials-angular.azurewebsites.net")
-                                      //                             .AllowAnyHeader()
-                                      //                             .AllowAnyMethod();
+									  builder.WithOrigins("https://essentialstoolkit.netlify.app",
+															"https://essentials-angular.azurewebsites.net")
+											.AllowAnyHeader()
+										   .AllowAnyMethod();
 
-                                  });
-            });
+								  });
+			});
 
-            services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ApplicationDbContext>();
+			services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				.AddJwtBearer(options => {
@@ -140,7 +140,7 @@ namespace P3Backend {
 
 			app.UseAuthentication();
 
-			app.UseCors(EssentialsAllowAllOrigin);
+			app.UseCors(EssentialsAllowOrigin);
 
 			app.UseOpenApi();
 			app.UseSwaggerUi3();
