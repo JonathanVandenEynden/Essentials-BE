@@ -54,7 +54,7 @@ namespace P3Backend.Controllers {
 		/// Create a new admin
 		/// </summary>
 		/// <param name="dto"></param>
-		/// <returns></returns>
+		// /// <returns></returns>
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[Authorize(Policy = "AdminAccess")]

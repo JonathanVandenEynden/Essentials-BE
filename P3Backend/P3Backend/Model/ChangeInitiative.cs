@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using P3Backend.Model.Questions;
 
 namespace P3Backend.Model {
 	public class ChangeInitiative {

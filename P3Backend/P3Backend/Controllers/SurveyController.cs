@@ -111,7 +111,7 @@ namespace P3Backend.Controllers {
 					return (Survey)_roadmapItemRepository.GetBy(roadmapItemId).Assessment;
 				}
 				else {
-					return BadRequest("The assesment was not a survey");
+					return BadRequest("The assessment was not a survey");
 				}
 			}
 			catch (Exception e) {

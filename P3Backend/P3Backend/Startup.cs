@@ -53,6 +53,7 @@ namespace P3Backend {
 			services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 			services.AddScoped<IProjectRepository, ProjectRepository>();
 			services.AddScoped<IRoadmapItemRepository, RoadMapItemRepository>();
+			services.AddScoped<IPresetRepository, PresetRepository>();
 
 			services.AddControllers().AddNewtonsoftJson(options =>
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

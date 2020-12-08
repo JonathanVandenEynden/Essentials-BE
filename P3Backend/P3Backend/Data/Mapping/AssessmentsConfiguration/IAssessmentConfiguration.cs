@@ -18,7 +18,6 @@ namespace P3Backend.Data.Mapping.AssesmentConfiguration {
 			// see FK in IAssesment class
 			//builder.HasOne(a => a.RoadMapItem);
 
-
 		}
 	}
 }

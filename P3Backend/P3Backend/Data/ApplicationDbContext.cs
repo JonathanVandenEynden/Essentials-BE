@@ -53,6 +53,11 @@ namespace P3Backend.Data {
 			get; set;
         }
 
+		public DbSet<PresetSurvey> PresetSurveys
+		{
+			get; set;
+		}
+
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
 		}
@@ -68,6 +73,7 @@ namespace P3Backend.Data {
 
 			// Assesments
 			modelBuilder.Entity<Survey>();
+			modelBuilder.Entity<PresetSurvey>();
 
 			// Questions
 			modelBuilder.Entity<Question>();
@@ -117,6 +123,7 @@ namespace P3Backend.Data {
 			// Assesments
 			modelBuilder.ApplyConfiguration(new IAssessmentConfiguration());
 			modelBuilder.ApplyConfiguration(new SurveyConfiguration());
+			modelBuilder.ApplyConfiguration(new PresetSurveyConfiguration());
 
 			// OrganizationalParts
 			modelBuilder.ApplyConfiguration(new OrganizationalPartConfiguration());

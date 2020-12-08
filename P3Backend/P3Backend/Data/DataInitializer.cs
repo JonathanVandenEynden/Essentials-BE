@@ -26,9 +26,9 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			//_dbContext.Database.EnsureDeleted();
-			//if (_dbContext.Database.EnsureCreated()){
-			if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+			_dbContext.Database.EnsureDeleted();
+			if (_dbContext.Database.EnsureCreated()){
+			// if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
 				Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@essentials.com");
@@ -252,6 +252,40 @@ namespace P3Backend.Data {
 				await CreateUser(marbod.Email, "P@ssword1", "employee");
 				await CreateUser(changeManagerSuktrit.Email, "P@ssword1", "changeManager");
 				#endregion
+				
+				#region predefined
+
+                    string[] questionez = {"The transformation sponsor has knowledge of change management techniques and principles",
+                        "The transformation sponsor actively supports and understands the change management initiatives", "The sponsor is active and visible to represent the change", 
+                        "The sponsor was successful in this role in previous change projects",
+                        "The sponsor is a gifted speaker or is charismatic to motivate people",
+                        "The sponsor can communicate the vision and strategy, including the need for change to executives and senior management",
+                        "The sponsor can communicate the vision and strategy, including the need for change to employees and customers",
+                        "The organization will listen to and follow the messages of this sponsor",
+                        "The sponsor is empowered by the executives to deliver the change",
+                        "The sponsor is an effective influencer",
+                        "The sponsor is able to provide for the resources and funding for the project",
+                        "The sponsor has direct control over the persons and processes impacted by the change",
+                        "The sponsor has knowledge of the systems, tools and processes impacted by the change",
+                        "The change is known and supported by the organization's executives",
+                        "The necessary funding for the change is made available",
+                        "People managers are (will be) instructed to assign the needed resources for the change",
+                        "Organization's executives want to receive progress report on the change",
+                        "The change project is prioritised formally",
+                        "The organization has had success stories with previous change projects",
+                        "Employees will be rewarded for embracing the change",
+                        "People are (will be) appointed to lead the change management project",
+                        "The change lead reports to the sponsor and/or has regular direct access",
+                        "The sponsor has successfully created a burning platform around the change"};
+
+                    PresetSurvey ps = null;
+                    foreach (var q in questionez)
+                    {
+                        ps = new PresetSurvey("Leadership", new RangedQuestion(q));
+                        _dbContext.PresetSurveys.AddRange(ps);
+                    }
+
+                    #endregion
 
 
 
