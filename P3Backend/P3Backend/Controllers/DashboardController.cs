@@ -17,19 +17,70 @@ namespace P3Backend.Controllers {
 	[ApiController]
 	[Produces("application/json")]
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[Authorize(Policy = "ChangeManagerAccess")]
 	public class DashboardController : ControllerBase {
 		private readonly IRoadmapItemRepository _roadmapItemRepository;
 		private readonly IChangeInitiativeRepository _changeInitiativeRepository;
 		private readonly ISurveyRepository _surveyRepository;
 		private readonly IChangeManagerRepository _changeManagerRepository;
+		private readonly IProjectRepository _projectRepository;
+		private readonly IUserRepository _userRepository;
+		
 
-		public DashboardController(IRoadmapItemRepository roadMapItemsRepository, IChangeInitiativeRepository changeInitiativeRepository, ISurveyRepository surveyRepository, IChangeManagerRepository changeManagerRepository) {
+		public DashboardController(IRoadmapItemRepository roadMapItemsRepository, IChangeInitiativeRepository changeInitiativeRepository, ISurveyRepository surveyRepository, IChangeManagerRepository changeManagerRepository, IProjectRepository projectRepository, IUserRepository userRepository) {
 			_roadmapItemRepository = roadMapItemsRepository;
 			_changeInitiativeRepository = changeInitiativeRepository;
 			_surveyRepository = surveyRepository;
 			_changeManagerRepository = changeManagerRepository;
+			_projectRepository = projectRepository;
+			_userRepository = userRepository;
+		}
+		
+		/// <summary>
+		///	get the projects of an organization
+		/// </summary>
+		/// <returns></returns>
+		[Route("[action]")]
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "ChangeManagerAccess")]
+		public ActionResult<IEnumerable<Project>> GetProjectsChangeManager()
+		{
+			try
+			{
+				ChangeManager cm = _changeManagerRepository.GetByEmail(User.Identity.Name);
+				IEnumerable<Project> projects = _projectRepository.GetByChangeManager(cm);
+				if (projects == null)
+				{
+					return NotFound("Project not found");
+				}
+				return new ActionResult<IEnumerable<Project>>(projects);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
 		}
 
+		/// <summary>
+		/// Get the change initiatives from a change manager, filters are possible
+		/// </summary>
+		/// <returns></returns>
+		[Route("[action]")]
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager() {
+			try {
+				ChangeManager loggedInCm = _changeManagerRepository.GetByEmail(User.Identity.Name);
+				return loggedInCm.CreatedChangeInitiatives.AsQueryable().ToList();
+			}
+			catch (Exception e) {
+				return NotFound(e.Message);
+			}
+		}
+
+		
 
 		/// <summary>
 		/// Get amount of Survey's filled in from ChangeInitiative by id

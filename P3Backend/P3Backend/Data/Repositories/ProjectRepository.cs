@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using P3Backend.Model.Users;
 
 namespace P3Backend.Data.Repositories {
 	public class ProjectRepository : IProjectRepository {
@@ -16,6 +17,19 @@ namespace P3Backend.Data.Repositories {
 			_context = context;
 			_projects = _context.Projects;
 		}
+
+		public IEnumerable<Project> GetByChangeManager(ChangeManager user)
+		{
+			List<Project> list = new List<Project>();
+			for (var i = 0; i < user.CreatedChangeInitiatives.Count; i++)
+			{
+				list.Add(_projects.FirstOrDefault(e =>
+					e.ChangeInitiatives.Contains(user.CreatedChangeInitiatives[i]))
+				);
+			}
+			return list;
+		}
+
 		public void Add(Project p) {
 			_projects.Add(p);
 		}

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using P3Backend.Model.Users;
 
 namespace P3Backend.Data.Repositories {
 	public class ChangeInitiativeRepository : IChangeInitiativeRepository {
