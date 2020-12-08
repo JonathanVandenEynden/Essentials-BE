@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,11 @@ namespace P3Backend.Data.Repositories
         public PresetSurvey GetBy(int id)
         {
             return _presetSurveys.Include(ps => ps.PresetQuestion).SingleOrDefault(ps => id == ps.Id);
+        }
+
+        public IEnumerable<PresetSurvey> GetBy(string theme)
+        {
+            return _presetSurveys.Where(ps => String.Equals(theme, ps.Theme)).Include(ps => ps.PresetQuestion);
         }
 
         public void Add(PresetSurvey ps)
