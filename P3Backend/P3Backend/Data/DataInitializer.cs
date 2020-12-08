@@ -26,9 +26,9 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			_dbContext.Database.EnsureDeleted();
-			if (_dbContext.Database.EnsureCreated()){
-			// if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+			// _dbContext.Database.EnsureDeleted();
+			// if (_dbContext.Database.EnsureCreated()){
+			if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Admin
 				Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@essentials.com");
