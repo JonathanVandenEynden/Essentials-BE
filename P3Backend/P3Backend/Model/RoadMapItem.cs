@@ -3,10 +3,11 @@ using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace P3Backend.Model {
-    public class RoadMapItem {
-        private string _title;
-        private DateTime _startDate;
-        private DateTime _endDate;
+	public class RoadMapItem {
+		private string _title;
+		private DateTime _startDate;
+		private DateTime _endDate;
+		private RoadmapItemPhase _phase;
 
         public int Id { get; set; }
         [Required]
@@ -37,32 +38,51 @@ namespace P3Backend.Model {
             }
         }
 
-        [Required]
-        public DateTime EndDate {
-            get { return _endDate; }
-            set {
-                if (value <= StartDate)
-                    throw new ArgumentException("End must be after start");
-                else
-                    _endDate = value;
-            }
-        }
+		[Required]
+		public DateTime EndDate {
+			get { return _endDate; }
+			set {
+				if (value <= StartDate)
+					throw new ArgumentException("End must be after start");
+				else
+					_endDate = value;
+			}
+		}
+		
+		public RoadmapItemPhase Phase {
+			get {
+				return _phase;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_phase = value;
+				}
+				else
+				{
+					_phase = RoadmapItemPhase.Preparationphase;
+				}
+			}
+		}
 
-        public RoadMapItem(string title, DateTime start, DateTime end) {
-            Title = title;
-            StartDate = start;
-            EndDate = end;
-            _done = false;
-        }
+		public RoadMapItem(string title, DateTime start, DateTime end) {
+			Title = title;
+			StartDate = start;
+			EndDate = end;
+			_done = false;
+			Phase = RoadmapItemPhase.Preparationphase;
+		}
 
         protected RoadMapItem() {
             // EF
         }
 
-        public void Update(RoadMapItemDTO dto) {
-            Title = dto.Title;
-            _startDate = dto.StartDate;
-            EndDate = dto.EndDate;
-        }
-    }
+		public void Update(RoadMapItemDTO dto) {
+			Title = dto.Title;
+			_startDate = dto.StartDate;
+			EndDate = dto.EndDate;
+			Phase = dto.Phase;
+		}
+	}
 }
