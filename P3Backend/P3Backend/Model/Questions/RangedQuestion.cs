@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace P3Backend.Model.Questions {
     public class RangedQuestion : Question {
@@ -25,7 +23,7 @@ namespace P3Backend.Model.Questions {
             foreach (string a in answers) {
                 if (PossibleAnswers.ContainsKey(Convert.ToDouble(a))) {
                     PossibleAnswers[Convert.ToDouble(a)]++;
-                }else {
+                } else {
                     PossibleAnswers.Add(Convert.ToDouble(a), 1);
                 }
             }

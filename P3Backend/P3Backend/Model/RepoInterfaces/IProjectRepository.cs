@@ -1,25 +1,22 @@
-﻿using System;
+﻿using P3Backend.Model.Users;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using P3Backend.Model.Users;
 
 namespace P3Backend.Model.RepoInterfaces {
-	public interface IProjectRepository {
-		IEnumerable<Project> GetAll();
+    public interface IProjectRepository {
+        IEnumerable<Project> GetAll();
 
-		Project GetBy(int id);
-		
-		IEnumerable<Project> GetByChangeManager(ChangeManager cm);
+        Project GetBy(int id);
 
-		void Add(Project p);
+        IEnumerable<Project> GetByChangeManager(ChangeManager cm);
 
-		void Update(Project p);
+        void Add(Project p);
 
-		void Delete(Project p);
+        void Update(Project p);
 
-		void SaveChanges();
+        void Delete(Project p);
 
-		Project GetByName(string name);
-	}
+        void SaveChanges();
+
+        Project GetByName(string name);
+    }
 }

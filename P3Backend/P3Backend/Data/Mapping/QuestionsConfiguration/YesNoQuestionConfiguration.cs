@@ -2,10 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;
 using P3Backend.Model.Questions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace P3Backend.Data.Mapping.QuestionsConfiguration {
     public class YesNoQuestionConfiguration : IEntityTypeConfiguration<YesNoQuestion> {

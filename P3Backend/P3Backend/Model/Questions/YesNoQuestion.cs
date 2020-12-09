@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace P3Backend.Model.Questions {
-    public class YesNoQuestion: Question {
+    public class YesNoQuestion : Question {
 
 
         public Dictionary<bool, int> PossibleAnswers { get; set; }

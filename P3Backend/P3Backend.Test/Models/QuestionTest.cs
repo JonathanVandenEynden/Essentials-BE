@@ -1,18 +1,14 @@
-using System;
 using NUnit.Framework;
 using P3Backend.Model.Questions;
-using P3Backend.Model.Users;
+using System;
 
-namespace P3Backend.Test.Models
-{
-    public class QuestionTest
-    {
+namespace P3Backend.Test.Models {
+    public class QuestionTest {
         [Test]
         [TestCase("")]
         [TestCase(" ")]
         [TestCase(null)]
-        public void InitializeConstructorYesNoWithInvalidParamsThrowsException(string questionString)
-        {
+        public void InitializeConstructorYesNoWithInvalidParamsThrowsException(string questionString) {
             Assert.Throws<ArgumentException>(() => { new YesNoQuestion(questionString); });
         }
 
@@ -20,8 +16,7 @@ namespace P3Backend.Test.Models
         [TestCase("test vraag")]
         [TestCase("test")]
         [TestCase("Yes or no, that's the question")]
-        public void CheckQuestionStringWasCreatedSuccessfullyPasses(string questionString)
-        {
+        public void CheckQuestionStringWasCreatedSuccessfullyPasses(string questionString) {
             YesNoQuestion yesNo = new YesNoQuestion(questionString);
             Assert.AreEqual(yesNo.QuestionString, questionString);
         }

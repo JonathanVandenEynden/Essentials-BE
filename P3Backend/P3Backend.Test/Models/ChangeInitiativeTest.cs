@@ -1,28 +1,23 @@
-using System;
-using System.Diagnostics;
 using NUnit.Framework;
 using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
 using P3Backend.Model.Users;
-using Xunit;
-using Xunit.Sdk;
+using System;
+using System.Diagnostics;
 using Assert = Xunit.Assert;
 
-namespace P3Backend.Test.Models
-{
-    public class ChangeInitiativeTest
-    {
+namespace P3Backend.Test.Models {
+    public class ChangeInitiativeTest {
         static DateTime validStart = DateTime.Now.AddDays(2);
         static DateTime invalidStart = DateTime.Now.AddDays(-1);
         static DateTime validEnd = DateTime.Now.AddDays(5);
         static DateTime invalidEnd = DateTime.Now.AddDays(-1);
-        static Employee validEmployee = new Employee("firstNameTest", 
+        static Employee validEmployee = new Employee("firstNameTest",
             "lastNameTest", "email@test.com");
         static IChangeType validChangeType = new PersonalChangeType();
-        
+
         [Test]
-        public void InitializeConstructorWithValidParamsSucceeds()
-        {
+        public void InitializeConstructorWithValidParamsSucceeds() {
             //Arrange
             DateTime start = DateTime.Now.AddDays(1);
             Trace.WriteLine(start);
@@ -34,17 +29,16 @@ namespace P3Backend.Test.Models
             string email = "test@testing.com";
             Employee sponsor = new Employee(firstName, lastName, email);
             IChangeType changeType = new PersonalChangeType();
-            
+
             //Act
             ChangeInitiative changeInitiative = new ChangeInitiative(name, desc, start, end, sponsor, changeType);
         }
 
         [Test]
         [TestCase("")]
-        [TestCase(" ")]        
+        [TestCase(" ")]
         [TestCase(null)]
-        public void InitializeConstructorWithInvalidNameThrowsException(string name)
-        {
+        public void InitializeConstructorWithInvalidNameThrowsException(string name) {
             Assert.Throws<ArgumentException>(() => new ChangeInitiative(name,
                 "desc",
                 validStart,
@@ -58,8 +52,7 @@ namespace P3Backend.Test.Models
         [TestCase(" ")]
         [TestCase("1234")]
         [TestCase(null)]
-        public void InitializeConstructorWithInvalidDescriptionThrowsException(string desc)
-        {
+        public void InitializeConstructorWithInvalidDescriptionThrowsException(string desc) {
             Assert.Throws<ArgumentException>(() => new ChangeInitiative("validName",
                 desc,
                 validStart,
@@ -67,10 +60,9 @@ namespace P3Backend.Test.Models
                 validEmployee,
                 validChangeType));
         }
-        
+
         [Test]
-        public void InitializeConstructorWithInvalidStartThrowsException()
-        {
+        public void InitializeConstructorWithInvalidStartThrowsException() {
             Assert.Throws<ArgumentException>(() => new ChangeInitiative("test",
                 "desc",
                 invalidStart,
@@ -80,8 +72,7 @@ namespace P3Backend.Test.Models
         }
 
         [Test]
-        public void InitializeConstructorWithInvalidEndThrowsException()
-        {
+        public void InitializeConstructorWithInvalidEndThrowsException() {
             Assert.Throws<ArgumentException>(() => new ChangeInitiative("test",
                 "desc",
                 validStart,
@@ -91,8 +82,7 @@ namespace P3Backend.Test.Models
         }
 
         [Test]
-        public void InitializeConstructorWithInvalidEmployeeThrowsException()
-        {
+        public void InitializeConstructorWithInvalidEmployeeThrowsException() {
             Assert.Throws<ArgumentException>(() => new ChangeInitiative("test",
                 "desc",
                 validStart,
@@ -102,8 +92,7 @@ namespace P3Backend.Test.Models
         }
 
         [Test]
-        public void InitializeConstructorWithInvalidChangeTypeThrowsException()
-        {
+        public void InitializeConstructorWithInvalidChangeTypeThrowsException() {
             Assert.Throws<ArgumentException>(() => new ChangeInitiative("test",
                 "desc",
                 validStart,
