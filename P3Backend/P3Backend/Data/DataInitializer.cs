@@ -278,12 +278,15 @@ namespace P3Backend.Data {
                         "The change lead reports to the sponsor and/or has regular direct access",
                         "The sponsor has successfully created a burning platform around the change"};
 
-                    PresetSurvey ps = null;
+                    PresetSurvey ps;
                     foreach (var q in questionez)
                     {
                         ps = new PresetSurvey("Leadership", new RangedQuestion(q));
                         _dbContext.PresetSurveys.AddRange(ps);
                     }
+                    
+                    //TODO Add other pre defined surveys from excel (chamilo
+                    //Some of those surveys include multiplechoice questions, add answers!
 
                     #endregion
 

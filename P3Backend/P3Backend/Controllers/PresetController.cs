@@ -13,7 +13,7 @@ namespace P3Backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    //TODO authorization for admins only
+    //TODO authorization for admins & change managers only
     public class PresetController : ControllerBase
     {
         private readonly IPresetRepository _presetRepo;
@@ -27,7 +27,7 @@ namespace P3Backend.Controllers
         /// Return all possible preset surveys
         /// </summary>
         /// <returns>IEnumerable of PresetSurvey</returns>
-        //TODO authorization
+        //TODO authorization admin & change manager
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -42,7 +42,7 @@ namespace P3Backend.Controllers
         /// </summary>
         /// <param name="id">Id of the wanted PresetSurvey</param>
         /// <returns>PresetSurvey</returns>
-        //TODO authorization
+        //TODO authorization admin & change manager
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -64,7 +64,7 @@ namespace P3Backend.Controllers
         /// </summary>
         /// <param name="theme">Theme of PresetSurvey</param>
         /// <returns>IEnumerable of PresetSurvey</returns>
-        //TODO authorization
+        //TODO authorization admin & change manager
         [HttpGet("GetPresetSurveyBy/{theme}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -79,7 +79,7 @@ namespace P3Backend.Controllers
         /// </summary>
         /// <param name="id">Id of PresetSurvey</param>
         /// <returns></returns>
-        //TODO authorization
+        //TODO authorization admin only
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -104,7 +104,7 @@ namespace P3Backend.Controllers
         /// <param name="dto">DTO for making the PresetSurvey</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        //TODO authorization
+        //TODO authorization admin only
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
