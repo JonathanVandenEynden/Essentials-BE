@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace P3Backend.Model.RepoInterfaces {
-	public interface IUserRepository {
+    public interface IUserRepository {
 
-		IEnumerable<IUser> GetAll();
+        IEnumerable<IUser> GetAll();
 
-		IUser GetBy(int id);
+        IUser GetBy(int id);
 
-		void Add(IUser u);
+        void Add(IUser u);
 
-		void Update(IUser u);
+        void Update(IUser u);
 
-		void Delete(IUser u);
+        void Delete(IUser u);
 
-		void SaveChanges();
+        void SaveChanges();
 
-		IUser GetByEmail(string email);
-	}
+        IUser GetByEmail(string email);
+    }
 }

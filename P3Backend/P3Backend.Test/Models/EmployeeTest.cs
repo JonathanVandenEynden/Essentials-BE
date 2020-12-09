@@ -1,14 +1,11 @@
-using System;
 using NUnit.Framework;
 using P3Backend.Model.Users;
+using System;
 
-namespace P3Backend.Test.Models
-{
-    public class EmployeeTest
-    {
+namespace P3Backend.Test.Models {
+    public class EmployeeTest {
         [Test]
-        public void InitializeConstructorWithValidParamsSucceeds()
-        {
+        public void InitializeConstructorWithValidParamsSucceeds() {
             new Employee("firstName", "lastName", "email@test");
         }
 
@@ -22,10 +19,8 @@ namespace P3Backend.Test.Models
         [TestCase("firstName", "lastName", "")]
         [TestCase("firstName", "lastName", " ")]
         [TestCase("firstName", "lastName", null)]
-        public void InitializeConstructorWithInvalidParamsThrowsException(string firstName, string lastName, string email)
-        {
-            Assert.Throws<ArgumentException>((() =>
-            {
+        public void InitializeConstructorWithInvalidParamsThrowsException(string firstName, string lastName, string email) {
+            Assert.Throws<ArgumentException>((() => {
                 new Employee(firstName, lastName, email);
             }));
         }

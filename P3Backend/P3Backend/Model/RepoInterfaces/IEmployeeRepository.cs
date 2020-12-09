@@ -1,23 +1,20 @@
 ﻿using P3Backend.Model.Users;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace P3Backend.Model.RepoInterfaces {
-	public interface IEmployeeRepository {
-		IEnumerable<Employee> GetAll();
+    public interface IEmployeeRepository {
+        IEnumerable<Employee> GetAll();
 
-		Employee GetBy(int id);
+        Employee GetBy(int id);
 
-		void Add(Employee e);
+        void Add(Employee e);
 
-		void Update(Employee e);
+        void Update(Employee e);
 
-		void Delete(Employee e);
+        void Delete(Employee e);
 
-		void SaveChanges();
+        void SaveChanges();
 
-		Employee GetByEmail(string email);
-	}
+        Employee GetByEmail(string email);
+    }
 }
