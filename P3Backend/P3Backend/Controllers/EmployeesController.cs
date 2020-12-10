@@ -78,7 +78,8 @@ namespace P3Backend.Controllers {
         /// <summary>
         /// Create a new employee
         /// </summary>
-        /// <param name="dto"></param>
+        /// <param name="organizationId">id of the organization</param>
+        /// <param name="dto">Information of the employee</param>
         /// <returns></returns>
         [HttpPost("{organizationId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

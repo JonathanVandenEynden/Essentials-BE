@@ -122,7 +122,7 @@ namespace P3Backend.Controllers {
                 // Make a list of the tasks to create the users
                 List<Task> listOfTasks = new List<Task>();
 
-                dto.EmployeeRecordDTOs.ForEach(async e => {
+                dto.EmployeeRecordDTOs.ForEach(e => {
                     List<string> nameParts = e.Name.Split(" ").ToList();
 
                     string firstname = nameParts.ElementAt(0).Trim();
