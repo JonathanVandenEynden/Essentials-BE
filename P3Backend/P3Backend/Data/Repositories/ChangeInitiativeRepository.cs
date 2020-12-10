@@ -30,33 +30,33 @@ namespace P3Backend.Data.Repositories {
                 .Include(ci => ci.ChangeSponsor);
         }
 
-        public ChangeInitiative GetBy(int id) {
-            return _changeInitiatives
-                .Include(ci => ci.ChangeGroup)
-                .Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
-                .Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
-                .Include(ci => ci.ChangeSponsor)
-                .FirstOrDefault(ci => ci.Id == id);
-            ;
-        }
+		public ChangeInitiative GetBy(int id) {
+			return _changeInitiatives
+				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.Users)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
+				.Include(ci => ci.ChangeSponsor)
+				.FirstOrDefault(ci => ci.Id == id);
+			;
+		}
 
-        public ChangeInitiative GetByName(string name) {
-            return _changeInitiatives
-                .Include(ci => ci.ChangeGroup)
-                .Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
-                .Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
-                .Include(ci => ci.ChangeSponsor)
-                .FirstOrDefault(ci => ci.Name == name);
-        }
+		public ChangeInitiative GetByName(string name) {
+			return _changeInitiatives
+				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.Users)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
+				.Include(ci => ci.ChangeSponsor)
+				.FirstOrDefault(ci => ci.Name == name);
+		}
 
-        public IEnumerable<ChangeInitiative> GetForUserId(int userId) {
-            return _changeInitiatives
-                .Include(ci => ci.ChangeGroup)
-                .Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
-                .Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
-                .Include(ci => ci.ChangeSponsor)
-                .Where(c => c.ChangeGroup.Users.Any(u => u.Id == userId));
-        }
+		public IEnumerable<ChangeInitiative> GetForUserId(int userId) {
+			return _changeInitiatives
+				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.Users)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
+				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
+				.Include(ci => ci.ChangeSponsor)
+				.Where(c => c.ChangeGroup.Users.Any(u => u.Id == userId));
+		}
 
         public void SaveChanges() {
             _context.SaveChanges();

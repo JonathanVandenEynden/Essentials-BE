@@ -10,8 +10,12 @@ namespace P3Backend.Model.DTO_s {
             get; set;
         }
 
-        public DateTime EndDate {
-            get; set;
-        }
-    }
+		public DateTime EndDate {
+			get; set;
+		}
+		
+		public RoadmapItemPhase Phase {
+			get; set;
+		}
+	}
 }
