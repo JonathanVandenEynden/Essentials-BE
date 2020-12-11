@@ -9,129 +9,127 @@ using System.Threading;
 using System.Threading.Tasks;
 using P3Backend.Model.Questions;
 
+
 namespace P3Backend.Model {
-	public class ChangeInitiative {
+    public class ChangeInitiative {
 
-		private string _name;
-		private string _desc;
-		private DateTime _endDate;
-		private DateTime _startDate;
-		private Employee _changeSponsor;
-		private IChangeType _changeType;
+        private string _name;
+        private string _desc;
+        private DateTime _endDate;
+        private DateTime _startDate;
+        private Employee _changeSponsor;
+        private IChangeType _changeType;
 
-		public int Id {
-			get; set;
-		}
-		[Required]
-		public string Name {
-			get {
-				return _name;
-			}
-			set {
-				if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value)) {
-					throw new ArgumentException("Name cannot be null or empty");
-				}
-				else {
-					_name = value;
-				}
-			}
-		}
-		[Required]
-		public String Description {
-			get {
-				return _desc;
-			}
-			set {
-				if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value) || value.Length < 5) {
-					throw new ArgumentException(
-						"Description cannot be null or empty and must be at least 5 characters long");
-				}
-				else {
-					_desc = value;
-				}
-			}
-		}
-		[Required]
-		public DateTime StartDate {
-			get {
-				return _startDate;
-			}
-			set {
-				if (value <= DateTime.Now)
-					throw new ArgumentException("Start must be in the future");
-				else
-					_startDate = value;
-			}
-		}
-		[Required]
-		public DateTime EndDate {
-			get {
-				return _endDate;
-			}
-			set {
-				if (value <= StartDate)
-					throw new ArgumentException("End must be after start");
-				else
-					_endDate = value;
-			}
-		}
+        public int Id {
+            get; set;
+        }
+        [Required]
+        public string Name {
+            get {
+                return _name;
+            }
+            set {
+                if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value)) {
+                    throw new ArgumentException("Name cannot be null or empty");
+                } else {
+                    _name = value;
+                }
+            }
+        }
+        [Required]
+        public String Description {
+            get {
+                return _desc;
+            }
+            set {
+                if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value) || value.Length < 5) {
+                    throw new ArgumentException(
+                        "Description cannot be null or empty and must be at least 5 characters long");
+                } else {
+                    _desc = value;
+                }
+            }
+        }
+        [Required]
+        public DateTime StartDate {
+            get {
+                return _startDate;
+            }
+            set {
+                if (value <= DateTime.Now)
+                    throw new ArgumentException("Start must be in the future");
+                else
+                    _startDate = value;
+            }
+        }
+        [Required]
+        public DateTime EndDate {
+            get {
+                return _endDate;
+            }
+            set {
+                if (value <= StartDate)
+                    throw new ArgumentException("End must be after start");
+                else
+                    _endDate = value;
+            }
+        }
 
-		public ChangeGroup ChangeGroup {
-			get; set;
-		}
+        public ChangeGroup ChangeGroup {
+            get; set;
+        }
 
-		public Employee ChangeSponsor {
-			get => _changeSponsor;
-			set {
-				if (value == null) {
-					throw new ArgumentException("Change Sponsor is required and cannot be null");
-				}
-				_changeSponsor = value;
-			}
-		} // could also be another CM
+        public Employee ChangeSponsor {
+            get => _changeSponsor;
+            set {
+                if (value == null) {
+                    throw new ArgumentException("Change Sponsor is required and cannot be null");
+                }
+                _changeSponsor = value;
+            }
+        } // could also be another CM
 
-		public IChangeType ChangeType {
-			get => _changeType;
-			set {
-				if (value == null)
-					throw new ArgumentException("ChangeType is required and cannot be null");
-				_changeType = value;
-			}
-		}
+        public IChangeType ChangeType {
+            get => _changeType;
+            set {
+                if (value == null)
+                    throw new ArgumentException("ChangeType is required and cannot be null");
+                _changeType = value;
+            }
+        }
 
-		public IList<RoadMapItem> RoadMap {
-			get; set;
-		}
+        public IList<RoadMapItem> RoadMap {
+            get; set;
+        }
 
-		public double Progress => (Convert.ToDouble(RoadMap.Count(e => e.Done)) / RoadMap.Count()) * 100;
+        public double Progress => (Convert.ToDouble(RoadMap.Count(e => e.Done)) / RoadMap.Count()) * 100;
 
-		public ChangeInitiative(string name, string desc, DateTime start, DateTime end, Employee sponsor, IChangeType changeType) {
-			Name = name;
-			Description = desc;
-			StartDate = start;
-			EndDate = end;
-			ChangeSponsor = sponsor;
-			ChangeType = changeType;
-			ChangeGroup = new ChangeGroup("All Employees");
-			RoadMap = new List<RoadMapItem>();
-			// TODO standaard voorbereiding item toevoegen aan roadmap
-			// TODO Changegroup
-		}
+        public ChangeInitiative(string name, string desc, DateTime start, DateTime end, Employee sponsor, IChangeType changeType) {
+            Name = name;
+            Description = desc;
+            StartDate = start;
+            EndDate = end;
+            ChangeSponsor = sponsor;
+            ChangeType = changeType;
+            ChangeGroup = new ChangeGroup("All Employees");
+            RoadMap = new List<RoadMapItem>();
+            // TODO standaard voorbereiding item toevoegen aan roadmap
+            // TODO Changegroup
+        }
 
-		protected ChangeInitiative() {
-			// EF
-		}
+        protected ChangeInitiative() {
+            // EF
+        }
 
-		internal void Update(ChangeInitiativeDTO dto) {
-			Name = dto.Name;
-			Description = dto.Description;
-			_startDate = dto.StartDate;
-			EndDate = dto.EndDate;
-		}
+        internal void Update(ChangeInitiativeDTO dto) {
+            Name = dto.Name;
+            Description = dto.Description;
+            _startDate = dto.StartDate;
+            EndDate = dto.EndDate;
+        }
 
-		public void filter(string? group = null, int? progress = null)
-        {
+        public void filter(string? group = null, int? progress = null) {
 
         }
-	}
+    }
 }

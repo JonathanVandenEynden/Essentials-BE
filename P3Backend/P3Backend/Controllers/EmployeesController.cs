@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +6,9 @@ using P3Backend.Model;
 using P3Backend.Model.DTO_s;
 using P3Backend.Model.RepoInterfaces;
 using P3Backend.Model.Users;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
@@ -31,13 +29,17 @@ namespace P3Backend.Controllers {
 		/// Get all employees of an organization
 		/// </summary>
 		/// <returns></returns>
-		[Route("[action]/{organizationId}")]
+		[Route("[action]")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[Authorize(Policy = "EmployeeAccess")]
-		public ActionResult<IEnumerable<Employee>> GetAllEmployeesFromOrganization(int organizationId) {
+		public ActionResult<IEnumerable<Employee>> GetAllEmployeesFromOrganization() {
 			try {
-				return _organizationRepo.GetBy(organizationId).Employees;
+				Employee loggedInEmployee = _employeeRepo.GetByEmail(User.Identity.Name);
+
+				Organization o = _organizationRepo.GetAll().FirstOrDefault(o => o.ChangeManagers.Any(cm => cm.Id == loggedInEmployee.Id) || o.Employees.Any(e => e.Id == loggedInEmployee.Id));
+
+				return o.Employees;
 			}
 			catch {
 				return NotFound("Organization not found");
@@ -82,7 +84,8 @@ namespace P3Backend.Controllers {
 		/// <summary>
 		/// Create a new employee
 		/// </summary>
-		/// <param name="dto"></param>
+		/// <param name="organizationId">id of the organization</param>
+		/// <param name="dto">Information of the employee</param>
 		/// <returns></returns>
 		[HttpPost("{organizationId}")]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]

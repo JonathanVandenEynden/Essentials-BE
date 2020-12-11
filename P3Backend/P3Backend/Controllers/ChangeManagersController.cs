@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
 using P3Backend.Model.RepoInterfaces;
 using P3Backend.Model.Users;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
 	[Produces("application/json")]
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[Authorize(Policy = "AdminAccess")]
 	public class ChangeManagersController : ControllerBase {
 
 		private readonly IChangeManagerRepository _changeManagerRepo;
@@ -34,19 +31,22 @@ namespace P3Backend.Controllers {
 		/// <summary>
 		/// Get the changeManagers of an organization
 		/// </summary>
-		/// <param name="organizationId"></param>
 		/// <returns></returns>
-		[Route("[action]/{organizationId}")]
+		[Route("[action]")]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public ActionResult<IEnumerable<ChangeManager>> GetChangeManagersFromOrganization(int organizationId) {
-			Organization o = _organizationRepo.GetBy(organizationId);
+		[Authorize(Policy = "ChangeManagerAccess")]
+		public ActionResult<IEnumerable<ChangeManager>> GetChangeManagersFromOrganization() {
+			try {
+				Employee loggedInEmployee = _employeeRepo.GetByEmail(User.Identity.Name);
 
-			if (o == null) {
-				return NotFound("organization not found");
+				Organization o = _organizationRepo.GetAll().FirstOrDefault(o => o.ChangeManagers.Any(cm => cm.Id == loggedInEmployee.Id) || o.Employees.Any(e => e.Id == loggedInEmployee.Id));
+
+				return o.ChangeManagers;
 			}
-
-			return o.ChangeManagers;
+			catch {
+				return NotFound("Organization not found");
+			}
 		}
 
 		/// <summary>
@@ -56,6 +56,7 @@ namespace P3Backend.Controllers {
 		/// <returns></returns>
 		[HttpGet("{changeManagerId}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "AdminAccess")]
 		public ActionResult<ChangeManager> GetChangeManagerById(int changeManagerId) {
 			ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
 
@@ -73,6 +74,7 @@ namespace P3Backend.Controllers {
 		/// <returns>changemanager obj</returns>
 		[HttpGet("[action]/{email}")]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "AdminAccess")]
 		public ActionResult<ChangeManager> GetChangeManagerByEmail(string email) {
 			ChangeManager e = _changeManagerRepo.GetByEmail(email);
 
@@ -109,13 +111,10 @@ namespace P3Backend.Controllers {
 
 				ChangeManager newCm = new ChangeManager(empl);
 
-				o.Employees.Remove(empl);
-				_changeManagerRepo.SaveChanges();
-
+				_employeeRepo.Delete(empl);
+				_changeManagerRepo.Update(newCm);
 				o.ChangeManagers.Add(newCm);
-				_changeManagerRepo.SaveChanges();
-
-
+				_organizationRepo.SaveChanges();
 
 				return NoContent();
 			}

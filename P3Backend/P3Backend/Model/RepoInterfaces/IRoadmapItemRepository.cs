@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace P3Backend.Model.RepoInterfaces {
-	public interface IRoadmapItemRepository {
-		IEnumerable<RoadMapItem> GetAll();
+    public interface IRoadmapItemRepository {
+        IEnumerable<RoadMapItem> GetAll();
 
-		RoadMapItem GetBy(int id);
+        RoadMapItem GetBy(int id);
 
-		void Add(RoadMapItem rmi);
+        void Add(RoadMapItem rmi);
 
-		void Update(RoadMapItem rmi);
+        void Update(RoadMapItem rmi);
 
-		void Delete(RoadMapItem rmi);
+        void Delete(RoadMapItem rmi);
 
-		void SaveChanges();
+        void SaveChanges();
 
-		RoadMapItem GetByTitle(string title);
-	}
+        RoadMapItem GetByTitle(string title);
+    }
 }

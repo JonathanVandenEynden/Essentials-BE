@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.VisualBasic;
 using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
 using P3Backend.Model.OrganizationParts;
 using P3Backend.Model.Questions;
 using P3Backend.Model.TussenTabellen;
 using P3Backend.Model.Users;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace P3Backend.Data {
 	public class DataInitializer {
