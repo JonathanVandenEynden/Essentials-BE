@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
@@ -13,7 +15,7 @@ namespace P3Backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    //TODO authorization for admins & change managers only
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PresetController : ControllerBase
     {
         private readonly IPresetRepository _presetRepo;
@@ -27,11 +29,11 @@ namespace P3Backend.Controllers
         /// Return all possible preset surveys
         /// </summary>
         /// <returns>IEnumerable of PresetSurvey</returns>
-        //TODO authorization admin & change manager
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "ChangeManagerAccess")]
         public IEnumerable<PresetSurvey> GetAll()
         {
             return _presetRepo.GetAll();
@@ -42,11 +44,11 @@ namespace P3Backend.Controllers
         /// </summary>
         /// <param name="id">Id of the wanted PresetSurvey</param>
         /// <returns>PresetSurvey</returns>
-        //TODO authorization admin & change manager
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<PresetSurvey> GetPresetSurvey(int id)
         {
             PresetSurvey ps = _presetRepo.GetBy(id);
@@ -64,11 +66,11 @@ namespace P3Backend.Controllers
         /// </summary>
         /// <param name="theme">Theme of PresetSurvey</param>
         /// <returns>IEnumerable of PresetSurvey</returns>
-        //TODO authorization admin & change manager
         [HttpGet("GetPresetSurveyBy/{theme}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "ChangeManagerAccess")]
         public IEnumerable<PresetSurvey> GetPresetSurveyBy(string theme)
         {
             return _presetRepo.GetBy(theme);
@@ -79,10 +81,10 @@ namespace P3Backend.Controllers
         /// </summary>
         /// <param name="id">Id of PresetSurvey</param>
         /// <returns></returns>
-        //TODO authorization admin only
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Authorize(Policy = "AdminAccess")]
         public IActionResult DeletePresetSurvey(int id)
         {
             PresetSurvey ps = _presetRepo.GetBy(id);
@@ -104,10 +106,10 @@ namespace P3Backend.Controllers
         /// <param name="dto">DTO for making the PresetSurvey</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        //TODO authorization admin only
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [Authorize(Policy = "AdminAccess")]
         public IActionResult PostPresetSurvey(PresetSurveyDTO dto)
         {
             Question question = null;
@@ -151,6 +153,7 @@ namespace P3Backend.Controllers
         [HttpPost("PostAnswerToPresetQuestion/{questionId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [Authorize(Policy = "AdminAccess")]
         public IActionResult PostAnswerToPresetQuestion(int questionId, List<string> possibleAnswers)
         {
             Question question = _presetRepo.GetQuestion(questionId);
