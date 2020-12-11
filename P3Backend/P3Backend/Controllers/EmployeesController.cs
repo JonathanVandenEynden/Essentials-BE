@@ -8,123 +8,130 @@ using P3Backend.Model.RepoInterfaces;
 using P3Backend.Model.Users;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace P3Backend.Controllers {
-    [Route("api/[controller]")]
-    [ApiController]
-    [Produces("application/json")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class EmployeesController : ControllerBase {
-        private readonly IEmployeeRepository _employeeRepo;
-        private readonly IOrganizationRepository _organizationRepo;
+	[Route("api/[controller]")]
+	[ApiController]
+	[Produces("application/json")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	public class EmployeesController : ControllerBase {
+		private readonly IEmployeeRepository _employeeRepo;
+		private readonly IOrganizationRepository _organizationRepo;
 
-        public EmployeesController(IEmployeeRepository employeeRepository,
-            IOrganizationRepository organizationRepo) {
-            _employeeRepo = employeeRepository;
-            _organizationRepo = organizationRepo;
-        }
+		public EmployeesController(IEmployeeRepository employeeRepository,
+			IOrganizationRepository organizationRepo) {
+			_employeeRepo = employeeRepository;
+			_organizationRepo = organizationRepo;
+		}
 
-        /// <summary>
-        /// Get all employees of an organization
-        /// </summary>
-        /// <returns></returns>
-        [Route("[action]/{organizationId}")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize(Policy = "EmployeeAccess")]
-        public ActionResult<IEnumerable<Employee>> GetAllEmployeesFromOrganization(int organizationId) {
-            try {
-                return _organizationRepo.GetBy(organizationId).Employees;
-            } catch {
-                return NotFound("Organization not found");
-            }
-        }
-        /// <summary>
-        /// Get employee by a given Id
-        /// </summary>
-        /// <param name="employeeId">the id of the employee</param>
-        /// <returns>employee obj</returns>
-        [HttpGet("{employeeId}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize(Policy = "EmployeeAccess")]
-        public ActionResult<Employee> GetEmployeeById(int employeeId) {
-            Employee e = _employeeRepo.GetBy(employeeId);
+		/// <summary>
+		/// Get all employees of an organization
+		/// </summary>
+		/// <returns></returns>
+		[Route("[action]")]
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
+		public ActionResult<IEnumerable<Employee>> GetAllEmployeesFromOrganization() {
+			try {
+				Employee loggedInEmployee = _employeeRepo.GetByEmail(User.Identity.Name);
 
-            if (e == null) {
-                return NotFound("Employee not found");
-            }
+				Organization o = _organizationRepo.GetAll().FirstOrDefault(o => o.ChangeManagers.Any(cm => cm.Id == loggedInEmployee.Id) || o.Employees.Any(e => e.Id == loggedInEmployee.Id));
 
-            return e;
-        }
+				return o.Employees;
+			}
+			catch {
+				return NotFound("Organization not found");
+			}
+		}
+		/// <summary>
+		/// Get employee by a given Id
+		/// </summary>
+		/// <param name="employeeId">the id of the employee</param>
+		/// <returns>employee obj</returns>
+		[HttpGet("{employeeId}")]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
+		public ActionResult<Employee> GetEmployeeById(int employeeId) {
+			Employee e = _employeeRepo.GetBy(employeeId);
 
-        /// <summary>
-        /// Get employee by a given email
-        /// </summary>
-        /// <param name="email">the email of the employee</param>
-        /// <returns>employee obj</returns>
-        [HttpGet("[action]/{email}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize(Policy = "EmployeeAccess")]
-        public ActionResult<Employee> GetEmployeeByEmail(string email) {
-            Employee e = _employeeRepo.GetByEmail(email);
+			if (e == null) {
+				return NotFound("Employee not found");
+			}
 
-            if (e == null) {
-                return NotFound("Employee not found");
-            }
+			return e;
+		}
 
-            return e;
-        }
+		/// <summary>
+		/// Get employee by a given email
+		/// </summary>
+		/// <param name="email">the email of the employee</param>
+		/// <returns>employee obj</returns>
+		[HttpGet("[action]/{email}")]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Policy = "EmployeeAccess")]
+		public ActionResult<Employee> GetEmployeeByEmail(string email) {
+			Employee e = _employeeRepo.GetByEmail(email);
 
-        /// <summary>
-        /// Create a new employee
-        /// </summary>
-        /// <param name="organizationId">id of the organization</param>
-        /// <param name="dto">Information of the employee</param>
-        /// <returns></returns>
-        [HttpPost("{organizationId}")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [Authorize(Policy = "ChangeManagerAccess")]
-        public IActionResult PostEmployee(int organizationId, EmployeeDTO dto) {
-            try {
-                Organization o = _organizationRepo.GetBy(organizationId);
+			if (e == null) {
+				return NotFound("Employee not found");
+			}
 
-                if (o == null) {
-                    return NotFound("Organization not found");
-                }
+			return e;
+		}
 
-                Employee newE = new Employee(dto.FirstName, dto.LastName, dto.Email);
+		/// <summary>
+		/// Create a new employee
+		/// </summary>
+		/// <param name="organizationId">id of the organization</param>
+		/// <param name="dto">Information of the employee</param>
+		/// <returns></returns>
+		[HttpPost("{organizationId}")]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[Authorize(Policy = "ChangeManagerAccess")]
+		public IActionResult PostEmployee(int organizationId, EmployeeDTO dto) {
+			try {
+				Organization o = _organizationRepo.GetBy(organizationId);
 
-                o.Employees.Add(newE);
+				if (o == null) {
+					return NotFound("Organization not found");
+				}
 
-                _employeeRepo.SaveChanges();
+				Employee newE = new Employee(dto.FirstName, dto.LastName, dto.Email);
 
-                return CreatedAtAction(nameof(GetEmployeeById), new { employeeId = newE.Id }, newE);
-            } catch (Exception e) {
-                return BadRequest(e.Message);
-            }
-        }
+				o.Employees.Add(newE);
 
-        /// <summary>
-        /// Delete an employee
-        /// </summary>
-        /// <param name="employeeId"></param>
-        /// <returns></returns>
-        [HttpDelete("{employeeId}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [Authorize(Policy = "ChangeManagerAccess")]
-        public IActionResult DeleteEmployee(int employeeId) {
-            Employee e = _employeeRepo.GetBy(employeeId);
+				_employeeRepo.SaveChanges();
 
-            if (e == null) {
-                return NotFound("Employee not found");
-            }
+				return CreatedAtAction(nameof(GetEmployeeById), new { employeeId = newE.Id }, newE);
+			}
+			catch (Exception e) {
+				return BadRequest(e.Message);
+			}
+		}
 
-            _employeeRepo.Delete(e);
-            _employeeRepo.SaveChanges();
+		/// <summary>
+		/// Delete an employee
+		/// </summary>
+		/// <param name="employeeId"></param>
+		/// <returns></returns>
+		[HttpDelete("{employeeId}")]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[Authorize(Policy = "ChangeManagerAccess")]
+		public IActionResult DeleteEmployee(int employeeId) {
+			Employee e = _employeeRepo.GetBy(employeeId);
 
-            return NoContent();
-        }
-    }
+			if (e == null) {
+				return NotFound("Employee not found");
+			}
+
+			_employeeRepo.Delete(e);
+			_employeeRepo.SaveChanges();
+
+			return NoContent();
+		}
+	}
 }
