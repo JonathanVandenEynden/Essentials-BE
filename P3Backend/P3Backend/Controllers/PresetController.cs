@@ -133,12 +133,41 @@ namespace P3Backend.Controllers
                 throw new Exception();
             }
 
-            PresetSurvey ps = new PresetSurvey(dto.Theme, question);
+            PresetSurvey ps = new PresetSurvey(dto.Theme);
+            ps.PresetQuestions.Add(question);
 
             _presetRepo.Add(ps);
             _presetRepo.SaveChanges();
 
             return CreatedAtAction(nameof(GetPresetSurvey), new {id = ps.Id}, ps);
+        }
+
+        /// <summary>
+        /// Posts a list of possible answers to a multiple choice question
+        /// </summary>
+        /// <param name="questionId">Question where answers should be added</param>
+        /// <param name="possibleAnswers">The list of possible answers</param>
+        /// <returns></returns>
+        [HttpPost("PostAnswerToPresetQuestion/{questionId}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public IActionResult PostAnswerToPresetQuestion(int questionId, List<string> possibleAnswers)
+        {
+            Question question = _presetRepo.GetQuestion(questionId);
+
+            if (question == null)
+            {
+                return NotFound("There was no question for the given questionId");
+            }
+
+            if (question.Type == QuestionType.MULTIPLECHOICE)
+            {
+                ((MultipleChoiceQuestion)question).AddPossibleAnswers(possibleAnswers, true);
+            }
+
+            _presetRepo.UpdateQuestions(question);
+            _presetRepo.SaveChanges();
+            return NoContent();
         }
     }
 }

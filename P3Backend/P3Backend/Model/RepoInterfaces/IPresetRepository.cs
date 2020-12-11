@@ -11,6 +11,8 @@ namespace P3Backend.Model.RepoInterfaces
 
         PresetSurvey GetBy(int id);
 
+        Question GetQuestion(int id);
+
         IEnumerable<PresetSurvey> GetBy(string theme);
 
         void Add(PresetSurvey ps);
@@ -20,5 +22,6 @@ namespace P3Backend.Model.RepoInterfaces
         void Delete(PresetSurvey ps);
 
         void SaveChanges();
+        void UpdateQuestions(Question q);
     }
 }

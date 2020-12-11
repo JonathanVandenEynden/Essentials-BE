@@ -12,26 +12,33 @@ namespace P3Backend.Data.Repositories
     {
         private readonly ApplicationDbContext _context;
         private readonly DbSet<PresetSurvey> _presetSurveys;
-
+        private readonly DbSet<Question> _questions;
+        
         public PresetRepository(ApplicationDbContext context)
         {
             _context = context;
             _presetSurveys = _context.PresetSurveys;
+            _questions = _context.Questions;
         }
 
         public IEnumerable<PresetSurvey> GetAll()
         {
-            return _presetSurveys.Include(ps => ps.PresetQuestion);
+            return _presetSurveys.Include(ps => ps.PresetQuestions);
         }
 
         public PresetSurvey GetBy(int id)
         {
-            return _presetSurveys.Include(ps => ps.PresetQuestion).SingleOrDefault(ps => id == ps.Id);
+            return _presetSurveys.Include(ps => ps.PresetQuestions).SingleOrDefault(ps => id == ps.Id);
+        }
+
+        public Question GetQuestion(int id)
+        {
+            return _questions.FirstOrDefault(q => q.Id == id);
         }
 
         public IEnumerable<PresetSurvey> GetBy(string theme)
         {
-            return _presetSurveys.Where(ps => String.Equals(theme, ps.Theme)).Include(ps => ps.PresetQuestion);
+            return _presetSurveys.Where(ps => String.Equals(theme, ps.Theme)).Include(ps => ps.PresetQuestions);
         }
 
         public void Add(PresetSurvey ps)
@@ -51,6 +58,12 @@ namespace P3Backend.Data.Repositories
 
         public void SaveChanges()
         {
+            _context.SaveChanges();
+        }
+
+        public void UpdateQuestions(Question q)
+        {
+            _questions.Update(q);
             _context.SaveChanges();
         }
     }

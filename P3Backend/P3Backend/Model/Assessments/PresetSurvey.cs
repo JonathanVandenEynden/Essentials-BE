@@ -7,29 +7,18 @@ namespace P3Backend.Model
     {
         public int Id { get; set; }
         public string Theme { get; set; }
-        public Question PresetQuestion { get; set; }
+        public List<Question> PresetQuestions { get; set; }
 
         public PresetSurvey()
         {
             //EF
         }
 
-        public PresetSurvey(string theme, Question presetQuestion)
+        public PresetSurvey(string theme)
         {
             Theme = theme;
-            PresetQuestion = presetQuestion;
+            PresetQuestions = new List<Question>();
         }
 
-        // public void addQuestionsToTheme(string theme, List<Question> q)
-        // {
-        //     if (QuestionsPerTheme.ContainsKey(theme))
-        //     {
-        //         QuestionsPerTheme[theme].AddRange(q);
-        //     }
-        //     else
-        //     {
-        //         QuestionsPerTheme.Add(theme, q);
-        //     }
-        // }
     }
 }
