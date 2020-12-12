@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
 using P3Backend.Model.RepoInterfaces;
@@ -8,6 +9,8 @@ using P3Backend.Model.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace P3Backend.Controllers {
 	[Route("api/[controller]")]
@@ -19,13 +22,16 @@ namespace P3Backend.Controllers {
 		private readonly IChangeManagerRepository _changeManagerRepo;
 		private readonly IOrganizationRepository _organizationRepo;
 		private readonly IEmployeeRepository _employeeRepo;
+		private readonly UserManager<IdentityUser> _userManager;
 
 		public ChangeManagersController(IChangeManagerRepository changeManagerRepo,
 			IOrganizationRepository organizationRepo,
-			IEmployeeRepository employeeRepo) {
+			IEmployeeRepository employeeRepo,
+			UserManager<IdentityUser> userManager) {
 			_changeManagerRepo = changeManagerRepo;
 			_organizationRepo = organizationRepo;
 			_employeeRepo = employeeRepo;
+			_userManager = userManager;
 		}
 
 		/// <summary>
@@ -94,7 +100,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[Authorize(Policy = "ChangeManagerAccess")]
-		public IActionResult UpgradeEmployeeToChangeManager(int employeeId) {
+		public async Task<ActionResult> UpgradeEmployeeToChangeManager(int employeeId) {
 			try {
 
 				Employee empl = _employeeRepo.GetBy(employeeId);
@@ -111,10 +117,17 @@ namespace P3Backend.Controllers {
 
 				ChangeManager newCm = new ChangeManager(empl);
 
+				o.Employees.Remove(empl);
+				_organizationRepo.SaveChanges();
 				_employeeRepo.Delete(empl);
 				_changeManagerRepo.Update(newCm);
 				o.ChangeManagers.Add(newCm);
 				_organizationRepo.SaveChanges();
+
+				// update claims
+				var user = await _userManager.FindByNameAsync(newCm.Email);
+				await _userManager.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, "employee"));
+				await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "changeManager"));
 
 				return NoContent();
 			}

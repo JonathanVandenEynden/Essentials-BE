@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
@@ -20,12 +21,25 @@ namespace P3Backend.Data {
 		public DataInitializer(ApplicationDbContext dbContext, UserManager<IdentityUser> userManager) {
 			_dbContext = dbContext;
 			_usermanager = userManager;
+
 		}
 
 		public async Task InitializeData() {
 			//_dbContext.Database.EnsureDeleted();
-			//if (_dbContext.Database.EnsureCreated()){
+			//if (_dbContext.Database.EnsureCreated()) {
 			if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+
+				// Trigger to edit the discriminator field when the employee is upgraded
+				_dbContext.Database.ExecuteSqlRaw(
+												"create trigger update_discriminator on dbo.Users " +
+												"for update as " +
+												"if UPDATE(OrganizationId) " +
+												"begin " +
+												"declare @id int " +
+												"select top 1 @id = u.Id from deleted u " +
+												"update dbo.Users set Discriminator = 'ChangeManager' where Id = @id " +
+												"end"
+											);
 
 				#region Admin
 				Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@essentials.com");
@@ -249,6 +263,7 @@ namespace P3Backend.Data {
 				await CreateUser(marbod.Email, "P@ssword1", "employee");
 				await CreateUser(changeManagerSuktrit.Email, "P@ssword1", "changeManager");
 				#endregion
+
 
 
 

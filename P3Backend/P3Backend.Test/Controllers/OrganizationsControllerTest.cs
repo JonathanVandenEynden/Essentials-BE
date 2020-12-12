@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using P3Backend.Controllers;
 using P3Backend.Model;
@@ -7,190 +8,208 @@ using P3Backend.Model.RepoInterfaces;
 using P3Backend.Model.Users;
 using P3Backend.Test.Data;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace P3Backend.Test.Controllers {
-    public class OrganizationsControllerTest {
+	public class OrganizationsControllerTest {
 
-        private readonly DummyData _dummyData;
+		private readonly DummyData _dummyData;
 
-        private readonly OrganizationsController _controller;
+		private readonly OrganizationsController _controller;
 
-        private readonly Mock<IOrganizationRepository> _organizationRepo;
-        private readonly Mock<IAdminRepository> _adminRepo;
-        private readonly Mock<IChangeInitiativeRepository> _changeRepo;
-        //private readonly Mock<UserManager<IdentityUser>> _userManager;
-        //private readonly Mock<ApplicationDbContext> _dbContext;
+		private readonly Mock<IOrganizationRepository> _organizationRepo;
+		private readonly Mock<IAdminRepository> _adminRepo;
+		private readonly Mock<IChangeInitiativeRepository> _changeRepo;
+		//private readonly Mock<UserManager<IdentityUser>> _userManager;
+		//private readonly Mock<ApplicationDbContext> _dbContext;
 
-        public OrganizationsControllerTest() {
-            _dummyData = new DummyData();
+		public OrganizationsControllerTest() {
+			_dummyData = new DummyData();
 
-            _organizationRepo = new Mock<IOrganizationRepository>();
-            _adminRepo = new Mock<IAdminRepository>();
-            _changeRepo = new Mock<IChangeInitiativeRepository>();
-            //_userManager = new Mock<UserManager<IdentityUser>>();
-            //_dbContext = new Mock<ApplicationDbContext>();
+			_organizationRepo = new Mock<IOrganizationRepository>();
+			_adminRepo = new Mock<IAdminRepository>();
+			_changeRepo = new Mock<IChangeInitiativeRepository>();
+			//_userManager = new Mock<UserManager<IdentityUser>>();
+			//_dbContext = new Mock<ApplicationDbContext>();
 
-            _controller = new OrganizationsController(_organizationRepo.Object, _adminRepo.Object, _changeRepo.Object, null, null);
-        }
+			_controller = new OrganizationsController(_organizationRepo.Object, _adminRepo.Object, _changeRepo.Object, null, null);
+		}
 
-        [Fact]
-        public void GetOrganizationById_ReturnsCorrectOrganization() {
-            _organizationRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.hogent);
+		[Fact]
+		public void GetOrganizationById_ReturnsCorrectOrganization() {
+			_organizationRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.hogent);
 
-            var result = _controller.GetOrganizationById(1);
+			var result = _controller.GetOrganizationById(1);
 
-            Assert.IsType<ActionResult<Organization>>(result);
+			Assert.IsType<ActionResult<Organization>>(result);
 
-            Assert.Equal(_dummyData.hogent.Name, result.Value.Name);
-        }
+			Assert.Equal(_dummyData.hogent.Name, result.Value.Name);
+		}
 
-        [Fact]
-        public void GetOrganizationById_OrganizationNonExistent_ReturnsNotFound() {
-            _organizationRepo.Setup(m => m.GetBy(1)).Returns(null as Organization);
+		[Fact]
+		public void GetOrganizationById_OrganizationNonExistent_ReturnsNotFound() {
+			_organizationRepo.Setup(m => m.GetBy(1)).Returns(null as Organization);
 
-            var result = _controller.GetOrganizationById(1);
+			var result = _controller.GetOrganizationById(1);
 
-            Assert.IsType<NotFoundObjectResult>(result.Result);
-        }
+			Assert.IsType<NotFoundObjectResult>(result.Result);
+		}
 
-        [Fact]
-        public void PostOrganization_SuccessfullPost_returnsCreated() {
-            _adminRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.admin);
+		// Unable to test due to userManager
+		//[Fact]
+		//public void PostOrganization_SuccessfullPost_returnsCreated() {
+		//	_dummyData.admin.Id = 1;
+		//	var fakeIdentity = new GenericIdentity("email");
+		//	var fakePrincipal = new GenericPrincipal(fakeIdentity, null);
 
-            OrganizationDTO newDTO = new OrganizationDTO() {
-                Name = "Nieuwe organisatie",
-                EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
-                    new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                    new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                    new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                }
-            };
+		//	_controller.ControllerContext = new ControllerContext() {
+		//		HttpContext = new DefaultHttpContext() { User = fakePrincipal }
+		//	};
 
-            // TODO user definieren
-            var result = _controller.PostOrganization(newDTO);
+		//	_adminRepo.Setup(m => m.GetByEmail("email")).Returns(_dummyData.admin);
 
-            Assert.IsType<Task<IActionResult>>(result);
-            Assert.IsType<NoContentResult>(result.Result);
+		//	OrganizationDTO newDTO = new OrganizationDTO() {
+		//		Name = "Nieuwe organisatie",
+		//		EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
+		//			new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+		//			new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+		//			new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+		//		}
+		//	};
 
-            // Not able to check further, result has no value to test
+		//	// TODO user definieren
+		//	var result = _controller.PostOrganization(newDTO);
 
-        }
+		//	Assert.IsType<Task<IActionResult>>(result);
+		//	Assert.IsType<NoContentResult>(result.Result);
 
-        [Fact]
-        public void PostOrganization_AdminNonExistent_returnsNotFound() {
-            _adminRepo.Setup(m => m.GetBy(1)).Returns(null as Admin);
+		//	// Not able to check further, result has no value to test
 
-            OrganizationDTO newDTO = new OrganizationDTO() {
-                Name = "Nieuwe organisatie",
-                EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
-                    new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                    new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                    new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                }
-            };
+		//}
 
-            // TODO user definieren
-            var result = _controller.PostOrganization(newDTO);
+		[Fact]
+		public void PostOrganization_AdminNonExistent_returnsNotFound() {
+			_dummyData.marbod.Id = 1;
+			var fakeIdentity = new GenericIdentity("email");
+			var fakePrincipal = new GenericPrincipal(fakeIdentity, null);
 
-            Assert.IsType<Task<IActionResult>>(result);
+			_controller.ControllerContext = new ControllerContext() {
+				HttpContext = new DefaultHttpContext() { User = fakePrincipal }
+			};
 
-            Assert.IsType<NotFoundObjectResult>(result.Result);
+			_adminRepo.Setup(m => m.GetByEmail("email")).Returns(null as Admin);
+
+			OrganizationDTO newDTO = new OrganizationDTO() {
+				Name = "Nieuwe organisatie",
+				EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
+					new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+					new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+					new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+				}
+			};
+
+			// TODO user definieren
+			var result = _controller.PostOrganization(newDTO);
+
+			Assert.IsType<Task<IActionResult>>(result);
+
+			Assert.IsType<NotFoundObjectResult>(result.Result);
 
 
 
-            // Not able to check further, result has no value to test
+			// Not able to check further, result has no value to test
 
-        }
+		}
 
-        // CM always the first employee in the list
-        //[Fact]
-        //public void PostOrganization_NoChangeManager_returnsBadRequest() {
-        //	_adminRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.admin);
+		// CM always the first employee in the list
+		//[Fact]
+		//public void PostOrganization_NoChangeManager_returnsBadRequest() {
+		//	_adminRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.admin);
 
-        //	OrganizationDTO newDTO = new OrganizationDTO() {
-        //		Name = "Nieuwe organisatie",
-        //		EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
-        //			new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-        //			new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-        //			new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-        //		}
-        //	};
+		//	OrganizationDTO newDTO = new OrganizationDTO() {
+		//		Name = "Nieuwe organisatie",
+		//		EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
+		//			new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+		//			new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+		//			new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+		//		}
+		//	};
 
-        //	var result = _controller.PostOrganization(1, newDTO);
+		//	var result = _controller.PostOrganization(1, newDTO);
 
-        //	Assert.IsType<BadRequestObjectResult>(result);
+		//	Assert.IsType<BadRequestObjectResult>(result);
 
-        //	// Not able to check further, result has no value to test
+		//	// Not able to check further, result has no value to test
 
-        //}
+		//}
 
-        [Fact]
-        public void PostOrganization_NoEmployees_returnsBadRequest() {
-            _adminRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.admin);
+		[Fact]
+		public void PostOrganization_NoEmployees_returnsBadRequest() {
+			_adminRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.admin);
 
-            OrganizationDTO newDTO = new OrganizationDTO() {
-                Name = "Nieuwe organisatie",
-                //EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
-                //	new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                //	new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                //	new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                //}
-            };
+			OrganizationDTO newDTO = new OrganizationDTO() {
+				Name = "Nieuwe organisatie",
+				//EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
+				//	new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+				//	new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+				//	new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+				//}
+			};
 
-            // TODO user definieren
-            var result = _controller.PostOrganization(newDTO);
+			// TODO user definieren
+			var result = _controller.PostOrganization(newDTO);
 
-            Assert.IsType<Task<IActionResult>>(result);
-            Assert.IsType<BadRequestObjectResult>(result.Result);
+			Assert.IsType<Task<IActionResult>>(result);
+			Assert.IsType<BadRequestObjectResult>(result.Result);
 
-            // Not able to check further, result has no value to test
+			// Not able to check further, result has no value to test
 
-        }
+		}
 
-        [Fact]
-        public void PostOrganization_NoName_returnsBadRequest() {
-            _adminRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.admin);
+		[Fact]
+		public void PostOrganization_NoName_returnsBadRequest() {
+			_adminRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.admin);
 
-            OrganizationDTO newDTO = new OrganizationDTO() {
-                //Name = "Nieuwe organisatie",
-                EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
-                    new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                    new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                    new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
-                }
-            };
+			OrganizationDTO newDTO = new OrganizationDTO() {
+				//Name = "Nieuwe organisatie",
+				EmployeeRecordDTOs = new List<EmployeeRecordDTO>() {
+					new EmployeeRecordDTO(){Name="Employee1 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+					new EmployeeRecordDTO(){Name="Employee2 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+					new EmployeeRecordDTO(){Name="Employee3 Nieuwe", Country = "", Department = "", Factory= "", Office="", Team=""},
+				}
+			};
 
-            // TODO user definieren
-            var result = _controller.PostOrganization(newDTO);
+			// TODO user definieren
+			var result = _controller.PostOrganization(newDTO);
 
-            Assert.IsType<Task<IActionResult>>(result);
-            Assert.IsType<BadRequestObjectResult>(result.Result);
+			Assert.IsType<Task<IActionResult>>(result);
+			Assert.IsType<BadRequestObjectResult>(result.Result);
 
-            // Not able to check further, result has no value to test
+			// Not able to check further, result has no value to test
 
-        }
+		}
 
-        [Fact]
-        public void Delete_SuccessfullDelete_ReturnsNoContent() {
-            _organizationRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.hogent);
+		[Fact]
+		public void Delete_SuccessfullDelete_ReturnsNoContent() {
+			_organizationRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.hogent);
 
-            var result = _controller.Delete(1);
+			var result = _controller.Delete(1);
 
-            Assert.IsType<NoContentResult>(result);
+			Assert.IsType<NoContentResult>(result);
 
-        }
+		}
 
-        [Fact]
-        public void Delete_OrganizationNonExistent_ReturnsNotFound() {
-            _organizationRepo.Setup(m => m.GetBy(1)).Returns(null as Organization);
+		[Fact]
+		public void Delete_OrganizationNonExistent_ReturnsNotFound() {
+			_organizationRepo.Setup(m => m.GetBy(1)).Returns(null as Organization);
 
-            var result = _controller.Delete(1);
+			var result = _controller.Delete(1);
 
-            Assert.IsType<NotFoundObjectResult>(result);
+			Assert.IsType<NotFoundObjectResult>(result);
 
-        }
+		}
 
-    }
+	}
 }
