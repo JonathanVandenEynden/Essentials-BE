@@ -78,7 +78,6 @@ namespace P3Backend.Controllers {
                 if (rmi.Assessment != null) {
                     _surveyRepository.Delete(rmi.Assessment as Survey);
                 }
-
                 Survey survey = new Survey(rmi);
                 rmi.Assessment = survey;
                 _roadmapItemRepository.SaveChanges();

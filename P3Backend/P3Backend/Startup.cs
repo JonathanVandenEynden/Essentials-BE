@@ -34,17 +34,18 @@ namespace P3Backend {
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
 						);
 
-			services.AddScoped<DataInitializer>();
-			services.AddScoped<IUserRepository, UserRepository>();
-			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-			services.AddScoped<IChangeManagerRepository, ChangeManagerRepository>();
-			services.AddScoped<IAdminRepository, AdminRepository>();
-			services.AddScoped<IChangeInitiativeRepository, ChangeInitiativeRepository>();
-			services.AddScoped<ISurveyRepository, SurveyRepository>();
-			services.AddScoped<IChangeGroupRepository, ChangeGroupRepository>();
-			services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-			services.AddScoped<IProjectRepository, ProjectRepository>();
-			services.AddScoped<IRoadmapItemRepository, RoadMapItemRepository>();
+            services.AddScoped<DataInitializer>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IChangeManagerRepository, ChangeManagerRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IChangeInitiativeRepository, ChangeInitiativeRepository>();
+            services.AddScoped<ISurveyRepository, SurveyRepository>();
+            services.AddScoped<IChangeGroupRepository, ChangeGroupRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IRoadmapItemRepository, RoadMapItemRepository>();
+            services.AddScoped<IPresetRepository, PresetRepository>();
 
 			services.AddControllers().AddNewtonsoftJson(options =>
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

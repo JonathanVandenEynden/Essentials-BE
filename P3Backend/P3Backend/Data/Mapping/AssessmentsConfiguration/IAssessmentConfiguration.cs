@@ -14,6 +14,7 @@ namespace P3Backend.Data.Mapping.AssesmentConfiguration {
             //builder.HasOne(a => a.RoadMapItem);
 
 
+
         }
     }
 }
