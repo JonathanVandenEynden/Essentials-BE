@@ -6,6 +6,7 @@ using P3Backend.Model;
 using P3Backend.Model.ChangeTypes;
 using P3Backend.Model.DTO_s;
 using P3Backend.Model.RepoInterfaces;
+using P3Backend.Model.TussenTabellen;
 using P3Backend.Model.Users;
 using System;
 using System.Collections.Generic;
@@ -154,7 +155,6 @@ namespace P3Backend.Controllers {
 				"technological" => new TechnologicalChangeType(),
 				_ => new OrganizationalChangeType(),
 			};
-			;
 
 			try {
 
@@ -162,8 +162,21 @@ namespace P3Backend.Controllers {
 
 				ChangeManager loggedInCm = _changeManagerRepo.GetByEmail(User.Identity.Name);
 
+				ChangeGroup newChangeGroup = new ChangeGroup(dto.ChangeGroupDto.Name);
 
-				ChangeInitiative newCi = new ChangeInitiative(dto.Name, dto.Description, dto.StartDate, dto.EndDate, sponsor, type);
+				foreach (int id in dto.ChangeGroupDto.UserIds) {
+					try {
+						Employee e = _employeeRepo.GetBy(id);
+						EmployeeChangeGroup ecg = new EmployeeChangeGroup(e, newChangeGroup);
+						e.EmployeeChangeGroups.Add(ecg);
+						newChangeGroup.EmployeeChangeGroups.Add(ecg);
+					}
+					catch {
+						continue;
+					}
+				}
+
+				ChangeInitiative newCi = new ChangeInitiative(dto.Name, dto.Description, dto.StartDate, dto.EndDate, sponsor, type, newChangeGroup);
 
 				_changeRepo.Add(newCi);
 				p.ChangeInitiatives.Add(newCi);

@@ -138,15 +138,6 @@ namespace P3Backend.Test.Data {
 			//PersonalChangeType personalChange = new PersonalChangeType();
 			//TechnologicalChangeType technologicalChange = new TechnologicalChangeType();
 			#endregion
-			#region ChangeInitiatives
-			ciNewCatering = new ChangeInitiative("New Catering", "A new catering will be added to the cafeteria on the ground floor", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, organizationalChange);
-			ciExpansion = new ChangeInitiative("Expansion German Market", "We will try to expand more on the German Market", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, economicalChange);
-			changeManagerSuktrit.CreatedChangeInitiatives.Add(ciNewCatering);
-			changeManagerSuktrit.CreatedChangeInitiatives.Add(ciExpansion);
-
-			project.ChangeInitiatives.Add(ciNewCatering);
-			project.ChangeInitiatives.Add(ciExpansion);
-			#endregion
 			#region ChangeGroups
 			ChangeGroup allEmployees = new ChangeGroup("All employees");
 			EmployeeChangeGroup ziggyAllEmployees = new EmployeeChangeGroup(ziggy, allEmployees);
@@ -160,8 +151,15 @@ namespace P3Backend.Test.Data {
 			ziggy.EmployeeChangeGroups.Add(ziggyJustBelgium);
 			justBelgium.EmployeeChangeGroups.Add(ziggyJustBelgium);
 
-			ciNewCatering.ChangeGroup = allEmployees;
-			ciExpansion.ChangeGroup = justBelgium;
+			#endregion
+			#region ChangeInitiatives
+			ciNewCatering = new ChangeInitiative("New Catering", "A new catering will be added to the cafeteria on the ground floor", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, organizationalChange, allEmployees);
+			ciExpansion = new ChangeInitiative("Expansion German Market", "We will try to expand more on the German Market", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, economicalChange, justBelgium);
+			changeManagerSuktrit.CreatedChangeInitiatives.Add(ciNewCatering);
+			changeManagerSuktrit.CreatedChangeInitiatives.Add(ciExpansion);
+
+			project.ChangeInitiatives.Add(ciNewCatering);
+			project.ChangeInitiatives.Add(ciExpansion);
 			#endregion
 			#region RoadmapItems
 			roadMapItemResto1 = new RoadMapItem("Stop contract with old catering service", DateTime.Now.AddDays(1), DateTime.Now.AddDays(1).AddHours(1)) { Done = true };

@@ -104,7 +104,7 @@ namespace P3Backend.Model {
 
         public double Progress => (Convert.ToDouble(RoadMap.Count(e => e.Done)) / RoadMap.Count()) * 100;
 
-        public ChangeInitiative(string name, string desc, DateTime start, DateTime end, Employee sponsor, IChangeType changeType) {
+        public ChangeInitiative(string name, string desc, DateTime start, DateTime end, Employee sponsor, IChangeType changeType, ChangeGroup changeGroup) {
             Name = name;
             Description = desc;
             StartDate = start;
@@ -113,8 +113,9 @@ namespace P3Backend.Model {
             ChangeType = changeType;
             ChangeGroup = new ChangeGroup("All Employees");
             RoadMap = new List<RoadMapItem>();
+            ChangeGroup = changeGroup;
             // TODO standaard voorbereiding item toevoegen aan roadmap
-            // TODO Changegroup
+            
         }
 
         protected ChangeInitiative() {

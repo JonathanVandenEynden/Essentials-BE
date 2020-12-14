@@ -117,18 +117,6 @@ namespace P3Backend.Data {
 				//TechnologicalChangeType technologicalChange = new TechnologicalChangeType();
 				#endregion
 
-				#region ChangeInitiatives
-				ChangeInitiative ciNewCatering = new ChangeInitiative("New Catering", "A new catering will be added to the cafeteria on the ground floor", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, organizationalChange);
-				ChangeInitiative ciExpansion = new ChangeInitiative("Expansion German Market", "We will try to expand more on the German Market", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, economicalChange);
-				changeManagerSuktrit.CreatedChangeInitiatives.Add(ciNewCatering);
-				changeManagerSuktrit.CreatedChangeInitiatives.Add(ciExpansion);
-
-				project.ChangeInitiatives.Add(ciNewCatering);
-				project.ChangeInitiatives.Add(ciExpansion);
-
-				_dbContext.ChangeInitiatives.Add(ciNewCatering);
-				_dbContext.ChangeInitiatives.Add(ciExpansion);
-				#endregion
 
 				#region ChangeGroups
 				ChangeGroup allEmployees = new ChangeGroup("All employees");
@@ -143,11 +131,21 @@ namespace P3Backend.Data {
 				ziggy.EmployeeChangeGroups.Add(ziggyJustBelgium);
 				justBelgium.EmployeeChangeGroups.Add(ziggyJustBelgium);
 
-				ciNewCatering.ChangeGroup = allEmployees;
-				ciExpansion.ChangeGroup = justBelgium;
-
 				_dbContext.ChangeGroups.Add(allEmployees);
 				_dbContext.ChangeGroups.Add(justBelgium);
+				#endregion
+
+				#region ChangeInitiatives
+				ChangeInitiative ciNewCatering = new ChangeInitiative("New Catering", "A new catering will be added to the cafeteria on the ground floor", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, organizationalChange, allEmployees);
+				ChangeInitiative ciExpansion = new ChangeInitiative("Expansion German Market", "We will try to expand more on the German Market", DateTime.Now.AddHours(1), DateTime.Now.AddDays(31), sponsor, economicalChange, justBelgium);
+				changeManagerSuktrit.CreatedChangeInitiatives.Add(ciNewCatering);
+				changeManagerSuktrit.CreatedChangeInitiatives.Add(ciExpansion);
+
+				project.ChangeInitiatives.Add(ciNewCatering);
+				project.ChangeInitiatives.Add(ciExpansion);
+
+				_dbContext.ChangeInitiatives.Add(ciNewCatering);
+				_dbContext.ChangeInitiatives.Add(ciExpansion);
 				#endregion
 
 				#region RoadmapItems
