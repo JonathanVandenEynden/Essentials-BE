@@ -32,7 +32,7 @@ namespace P3Backend.Data.Repositories {
 
 		public ChangeInitiative GetBy(int id) {
 			return _changeInitiatives
-				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee)
+				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee).ThenInclude(e => e.EmployeeChangeGroups)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
@@ -42,7 +42,7 @@ namespace P3Backend.Data.Repositories {
 
 		public ChangeInitiative GetByName(string name) {
 			return _changeInitiatives
-				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee)
+				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee).ThenInclude(e => e.EmployeeChangeGroups)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
@@ -51,7 +51,7 @@ namespace P3Backend.Data.Repositories {
 
 		public IEnumerable<ChangeInitiative> GetForUserId(int userId) {
 			return _changeInitiatives
-				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee)
+				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee).ThenInclude(e => e.EmployeeChangeGroups)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)

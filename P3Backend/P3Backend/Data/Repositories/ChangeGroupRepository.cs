@@ -30,19 +30,19 @@ namespace P3Backend.Data.Repositories {
 
 		public ChangeGroup GetBy(int id) {
 			return _changeGroups
-				.Include(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee)
+				.Include(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee).ThenInclude(e => e.EmployeeChangeGroups)
 				.FirstOrDefault(cg => cg.Id == id);
 		}
 
 		public ChangeGroup GetByName(string name) {
 			return _changeGroups
-				.Include(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee)
+				.Include(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee).ThenInclude(e => e.EmployeeChangeGroups)
 				.FirstOrDefault(cg => cg.Name == name);
 		}
 
 		public List<ChangeGroup> GetForUserId(int userId) {
 			return _changeGroups
-				.Include(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee)
+				.Include(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee).ThenInclude(e => e.EmployeeChangeGroups)
 				.Where(cg => cg.EmployeeChangeGroups.Any(u => u.EmployeeId == userId)).ToList();
 		}
 
