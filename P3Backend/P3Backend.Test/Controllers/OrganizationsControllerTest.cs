@@ -110,7 +110,6 @@ namespace P3Backend.Test.Controllers {
 				}
 			};
 
-			// TODO user definieren
 			var result = _controller.PostOrganization(newDTO);
 
 			Assert.IsType<Task<IActionResult>>(result);
@@ -158,7 +157,6 @@ namespace P3Backend.Test.Controllers {
 				//}
 			};
 
-			// TODO user definieren
 			var result = _controller.PostOrganization(newDTO);
 
 			Assert.IsType<Task<IActionResult>>(result);
@@ -181,7 +179,6 @@ namespace P3Backend.Test.Controllers {
 				}
 			};
 
-			// TODO user definieren
 			var result = _controller.PostOrganization(newDTO);
 
 			Assert.IsType<Task<IActionResult>>(result);
