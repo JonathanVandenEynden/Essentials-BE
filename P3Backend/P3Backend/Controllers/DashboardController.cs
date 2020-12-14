@@ -98,21 +98,15 @@ namespace P3Backend.Controllers {
             var total = surveys.Count();
             double filledIn = 0;
 
-            List<Question> questions = new List<Question>();
-
             foreach (var s in surveys) {
-                if (s != null) {
-                    questions.AddRange(s.Questions);
+                foreach (var q in s.Questions)
+                {
+                    filledIn += (q.QuestionRegistered.Keys.Count / Convert.ToDouble(ci.ChangeGroup.EmployeeChangeGroups.Count)) * 100 / total;
                 }
             }
 
-            foreach (var q in questions) {
-                if (q.QuestionRegistered.Count() != 0) {
-                    filledIn++;
-                }
-            }
 
-            return ((filledIn / total) * 100);
+            return filledIn;
         }
 
 
