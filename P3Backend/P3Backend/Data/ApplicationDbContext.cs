@@ -53,8 +53,7 @@ namespace P3Backend.Data {
 			get; set;
 		}
 
-		public DbSet<PresetSurvey> PresetSurveys
-		{
+		public DbSet<PresetSurvey> PresetSurveys {
 			get; set;
 		}
 
@@ -112,6 +111,17 @@ namespace P3Backend.Data {
 				.HasOne(eo => eo.OrganizationPart)
 				.WithMany(o => o.EmployeeOrganizationParts)
 				.HasForeignKey(eo => eo.OrganizationPartId);
+			//
+			modelBuilder.Entity<EmployeeChangeGroup>()
+				.HasKey(ecg => new { ecg.EmployeeId, ecg.ChangeGroupId });
+			modelBuilder.Entity<EmployeeChangeGroup>()
+				.HasOne(ecg => ecg.Employee)
+				.WithMany(e => e.EmployeeChangeGroups)
+				.HasForeignKey(ecg => ecg.EmployeeId);
+			modelBuilder.Entity<EmployeeChangeGroup>()
+				.HasOne(ecg => ecg.ChangeGroup)
+				.WithMany(cg => cg.EmployeeChangeGroups)
+				.HasForeignKey(ecg => ecg.ChangeGroupId);
 
 			#region configurations
 

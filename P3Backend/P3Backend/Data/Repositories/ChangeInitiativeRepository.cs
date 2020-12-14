@@ -5,34 +5,34 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace P3Backend.Data.Repositories {
-    public class ChangeInitiativeRepository : IChangeInitiativeRepository {
+	public class ChangeInitiativeRepository : IChangeInitiativeRepository {
 
-        private readonly ApplicationDbContext _context;
-        private readonly DbSet<ChangeInitiative> _changeInitiatives;
+		private readonly ApplicationDbContext _context;
+		private readonly DbSet<ChangeInitiative> _changeInitiatives;
 
-        public ChangeInitiativeRepository(ApplicationDbContext context) {
-            _context = context;
-            _changeInitiatives = _context.ChangeInitiatives;
-        }
+		public ChangeInitiativeRepository(ApplicationDbContext context) {
+			_context = context;
+			_changeInitiatives = _context.ChangeInitiatives;
+		}
 
-        public void Add(ChangeInitiative ci) {
-            _changeInitiatives.Add(ci);
-        }
+		public void Add(ChangeInitiative ci) {
+			_changeInitiatives.Add(ci);
+		}
 
-        public void Delete(ChangeInitiative ci) {
-            _changeInitiatives.Remove(ci);
-        }
+		public void Delete(ChangeInitiative ci) {
+			_changeInitiatives.Remove(ci);
+		}
 
-        public IEnumerable<ChangeInitiative> GetAll() {
-            return _changeInitiatives
-                .Include(ci => ci.ChangeGroup)
-                .Include(ci => ci.RoadMap)
-                .Include(ci => ci.ChangeSponsor);
-        }
+		public IEnumerable<ChangeInitiative> GetAll() {
+			return _changeInitiatives
+				.Include(ci => ci.ChangeGroup)
+				.Include(ci => ci.RoadMap)
+				.Include(ci => ci.ChangeSponsor);
+		}
 
 		public ChangeInitiative GetBy(int id) {
 			return _changeInitiatives
-				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.Users)
+				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
@@ -42,7 +42,7 @@ namespace P3Backend.Data.Repositories {
 
 		public ChangeInitiative GetByName(string name) {
 			return _changeInitiatives
-				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.Users)
+				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
@@ -51,19 +51,19 @@ namespace P3Backend.Data.Repositories {
 
 		public IEnumerable<ChangeInitiative> GetForUserId(int userId) {
 			return _changeInitiatives
-				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.Users)
+				.Include(ci => ci.ChangeGroup).ThenInclude(cg => cg.EmployeeChangeGroups).ThenInclude(ecg => ecg.Employee)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
-				.Where(c => c.ChangeGroup.Users.Any(u => u.Id == userId));
+				.Where(c => c.ChangeGroup.EmployeeChangeGroups.Any(u => u.EmployeeId == userId));
 		}
 
-        public void SaveChanges() {
-            _context.SaveChanges();
-        }
+		public void SaveChanges() {
+			_context.SaveChanges();
+		}
 
-        public void Update(ChangeInitiative ci) {
-            _changeInitiatives.Update(ci);
-        }
-    }
+		public void Update(ChangeInitiative ci) {
+			_changeInitiatives.Update(ci);
+		}
+	}
 }

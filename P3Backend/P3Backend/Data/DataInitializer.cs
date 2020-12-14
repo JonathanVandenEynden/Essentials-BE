@@ -132,10 +132,16 @@ namespace P3Backend.Data {
 
 				#region ChangeGroups
 				ChangeGroup allEmployees = new ChangeGroup("All employees");
-				allEmployees.Users.AddRange(new List<Employee>() { ziggy, marbod });
+				EmployeeChangeGroup ziggyAllEmployees = new EmployeeChangeGroup(ziggy, allEmployees);
+				ziggy.EmployeeChangeGroups.Add(ziggyAllEmployees);
+				EmployeeChangeGroup marbodAllEmployees = new EmployeeChangeGroup(marbod, allEmployees);
+				marbod.EmployeeChangeGroups.Add(marbodAllEmployees);
+				allEmployees.EmployeeChangeGroups.AddRange(new List<EmployeeChangeGroup>() { ziggyAllEmployees, marbodAllEmployees });
 
 				ChangeGroup justBelgium = new ChangeGroup("Just Belgium");
-				justBelgium.Users.Add(ziggy);
+				EmployeeChangeGroup ziggyJustBelgium = new EmployeeChangeGroup(ziggy, justBelgium);
+				ziggy.EmployeeChangeGroups.Add(ziggyJustBelgium);
+				justBelgium.EmployeeChangeGroups.Add(ziggyJustBelgium);
 
 				ciNewCatering.ChangeGroup = allEmployees;
 				ciExpansion.ChangeGroup = justBelgium;
