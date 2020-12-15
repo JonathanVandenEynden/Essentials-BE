@@ -150,9 +150,9 @@ namespace P3Backend.Controllers {
 
 			IChangeType type = dto.ChangeType switch
 			{
-				"personal" => new PersonalChangeType(),
-				"economical" => new EconomicalChangeType(),
-				"technological" => new TechnologicalChangeType(),
+				"Personal" => new PersonalChangeType(),
+				"Economical" => new EconomicalChangeType(),
+				"Technological" => new TechnologicalChangeType(),
 				_ => new OrganizationalChangeType(),
 			};
 
@@ -210,7 +210,7 @@ namespace P3Backend.Controllers {
 
 				_changeRepo.SaveChanges();
 
-				return CreatedAtAction(nameof(GetChangeInitiative), new { id = id }, ciToBeUpdated);
+				return CreatedAtAction(nameof(GetChangeInitiative), new { id }, ciToBeUpdated);
 			}
 			catch (Exception e) {
 				return BadRequest(e.Message);
