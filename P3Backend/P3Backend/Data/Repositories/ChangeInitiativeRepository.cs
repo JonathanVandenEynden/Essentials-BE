@@ -55,6 +55,7 @@ namespace P3Backend.Data.Repositories {
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
+				.Include(ci => ci.ChangeType)
 				.Where(c => c.ChangeGroup.EmployeeChangeGroups.Any(u => u.EmployeeId == userId));
 		}
 
