@@ -123,11 +123,17 @@ namespace P3Backend.Controllers {
 				throw new Exception();
 			}
 
+			if (_presetRepo.GetBy(dto.Theme) != null)
+			{
+				return BadRequest("A survey with this theme already exists!");
+			}
+			
+
 			PresetSurvey ps = new PresetSurvey(dto.Theme);
 			ps.PresetQuestions.Add(question);
-
-			_presetRepo.Add(ps);
-			_presetRepo.SaveChanges();
+			
+            _presetRepo.Add(ps);
+            _presetRepo.SaveChanges();
 
 			return CreatedAtAction(nameof(GetPresetSurvey), new { id = ps.Id }, ps);
 		}
