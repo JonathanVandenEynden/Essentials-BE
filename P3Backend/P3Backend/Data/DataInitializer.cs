@@ -301,7 +301,14 @@ namespace P3Backend.Data {
 
 				#endregion
 
-
+				#region deviceTokens
+				DeviceTokens tokens = new DeviceTokens();
+				await foreach (var employee in _dbContext.Users)
+				{
+					tokens.init(employee.Id.ToString());
+				}
+				_dbContext.DeviceTokens.AddRange(tokens);
+				#endregion
 
 
 

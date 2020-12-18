@@ -46,6 +46,7 @@ namespace P3Backend {
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IRoadmapItemRepository, RoadMapItemRepository>();
             services.AddScoped<IPresetRepository, PresetRepository>();
+            services.AddScoped<IDeviceTokensRepository, DeviceTokensRepository>();
 
 			services.AddControllers().AddNewtonsoftJson(options =>
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
