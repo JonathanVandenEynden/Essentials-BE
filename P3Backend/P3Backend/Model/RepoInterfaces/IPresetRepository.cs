@@ -11,6 +11,8 @@ namespace P3Backend.Model.RepoInterfaces {
 
 		Question GetQuestion(int id);
 
+		List<string> GetThemas();
+
 		PresetSurvey GetBy(string theme);
 
 		void Add(PresetSurvey ps);

@@ -69,6 +69,11 @@ namespace P3Backend.Controllers {
 			return _presetRepo.GetBy(theme);
 		}
 
+		[HttpGet("[action]")]
+		public List<string> GetAllThemas() {
+			return _presetRepo.GetThemas();
+        }
+
 		/// <summary>
 		/// Deletes PresetSurvey with given Id
 		/// </summary>

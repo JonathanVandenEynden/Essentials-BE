@@ -54,5 +54,9 @@ namespace P3Backend.Data.Repositories {
 			_questions.Update(q);
 			_context.SaveChanges();
 		}
-	}
+
+        public List<string> GetThemas() {
+			return _presetSurveys.Select(ps => ps.Theme).ToList();
+        }
+    }
 }
