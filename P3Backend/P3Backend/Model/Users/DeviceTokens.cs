@@ -26,7 +26,7 @@ namespace P3Backend.Model.Users
         public void addToken(string userid, string devicetoken)
         {
             checkToken(devicetoken);
-            if (checkUser(userid))
+            if (_tokens.ContainsKey(userid))
             {
                 _tokens[userid].Add(devicetoken);
             }
@@ -63,12 +63,9 @@ namespace P3Backend.Model.Users
         {
             foreach (var tokenstore in _tokens)
             {
-                foreach (var token in tokenstore.Value)
+                if (tokenstore.Value.Contains(devicetoken))
                 {
-                    if (token.Equals(devicetoken))
-                    {
-                        tokenstore.Value.Remove(token);
-                    }
+                    tokenstore.Value.Remove(devicetoken);
                 }
             }
         }

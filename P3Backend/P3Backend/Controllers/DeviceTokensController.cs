@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -31,7 +32,7 @@ namespace P3Backend.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[AllowAnonymous]
+		[Authorize(Policy = "ChangeManagerAccess")]
 		public IEnumerable<string> GetAll() {
 			return _deviceTokensRepository.Get().getAllTokens();
 		}
@@ -39,16 +40,17 @@ namespace P3Backend.Controllers
 		/// <summary>
 		/// Return all device tokens for certain users
 		/// </summary>
-		/// <param name="userids">List of userids</param>
+		/// <param name="userids">List of user ids seperated by ","</param>
 		/// <returns>IEnumerable of tokens (string)</returns>
 		[HttpGet("GetByIds")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[AllowAnonymous]
-		public IEnumerable<string> GetByIds(List<string> userids)
+		[Authorize(Policy = "ChangeManagerAccess")]
+		public IEnumerable<string> GetByIds(string userids)
 		{
-			return _deviceTokensRepository.Get().getTokensByIds(userids);
+			List<string> users = userids.Split(",").ToList();
+			return _deviceTokensRepository.Get().getTokensByIds(users);
 		}
 
 
@@ -61,9 +63,11 @@ namespace P3Backend.Controllers
 		[HttpPost("{userid})")]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
-		[AllowAnonymous]
+		[Authorize(Policy = "employeeAccess")]
 		public IActionResult PostPresetSurvey(string userid, string token) {
-			_deviceTokensRepository.Get().addToken(userid, token);
+			var dt = _deviceTokensRepository.Get();
+			dt.addToken(userid, token);
+			_deviceTokensRepository.Update(dt);
 			_deviceTokensRepository.SaveChanges();
 			return NoContent();
 		}

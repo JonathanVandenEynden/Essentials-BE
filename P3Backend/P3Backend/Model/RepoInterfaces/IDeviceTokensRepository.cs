@@ -7,5 +7,6 @@ namespace P3Backend.Model.RepoInterfaces
     {
         DeviceTokens Get();
         void SaveChanges();
+        void Update(DeviceTokens dt);
     }
 }

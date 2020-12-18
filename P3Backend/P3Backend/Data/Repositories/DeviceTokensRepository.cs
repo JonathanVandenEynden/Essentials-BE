@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using P3Backend.Model.RepoInterfaces;
 using P3Backend.Model.Users;
@@ -18,8 +19,12 @@ namespace P3Backend.Data.Repositories
         }
         
         public DeviceTokens Get()
-        {
+        { 
             return _deviceTokens.First();
+        }
+        
+        public void Update(DeviceTokens dt) {
+            _deviceTokens.Update(dt);
         }
 
         public void SaveChanges() {

@@ -25,7 +25,7 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			_dbContext.Database.EnsureDeleted();
+			//_dbContext.Database.EnsureDeleted();
 			if (_dbContext.Database.EnsureCreated()) {
 			//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
