@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
+using P3Backend.Model.Questions;
 using P3Backend.Model.RepoInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace P3Backend.Controllers {
     [Route("api/[controller]")]
@@ -14,10 +16,12 @@ namespace P3Backend.Controllers {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SurveyController : ControllerBase {
         public readonly ISurveyRepository _surveyRepository;
+        public readonly IPresetRepository _presetRepository;
         public readonly IRoadmapItemRepository _roadmapItemRepository;
 
-        public SurveyController(ISurveyRepository surveyRepository, IRoadmapItemRepository roadMapItemRepository) {
+        public SurveyController(ISurveyRepository surveyRepository, IRoadmapItemRepository roadMapItemRepository, IPresetRepository presetRepository) {
             _surveyRepository = surveyRepository;
+            _presetRepository = presetRepository;
             _roadmapItemRepository = roadMapItemRepository;
         }
 
@@ -58,17 +62,18 @@ namespace P3Backend.Controllers {
 
 
         /// <summary>
-        /// Make an empty survey for a given roadmapItem
+        /// Make an empty survey for a given roadmapItem or convert a presetsurvey to a normal survey
         /// </summary>
         /// <param name="roadmapItemId">id of the roadmapItem</param>
+        /// <param name="thema">Optional parameter, if you need a presetsurvey</param>
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "ChangeManagerAccess")]
-        public ActionResult<Survey> PostSurvey(int roadmapItemId) {
+        public ActionResult<Survey> PostSurvey(int roadmapItemId, string? thema) {
             try {
-                RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);
+                RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);                
 
                 if (rmi == null) {
                     return NotFound("Roadmap item not found");
@@ -79,6 +84,34 @@ namespace P3Backend.Controllers {
                     _surveyRepository.Delete(rmi.Assessment as Survey);
                 }
                 Survey survey = new Survey(rmi);
+
+                if (thema != null) {
+                    PresetSurvey ps = _presetRepository.GetBy(thema);
+                    foreach(Question q in ps.PresetQuestions) {
+                        Question question = null;
+                        switch (q.Type) {
+                            case QuestionType.MULTIPLECHOICE:
+                                question = new MultipleChoiceQuestion(q.QuestionString);
+                                break;
+                            case QuestionType.RANGED:
+                                question = new RangedQuestion(q.QuestionString);
+                                break;
+                            case QuestionType.YESNO:
+                                question = new YesNoQuestion(q.QuestionString);
+                                break;
+                            case QuestionType.OPEN:
+                                question = new OpenQuestion(q.QuestionString);
+                                break;
+                        }
+                        if (question == null) {
+                            throw new Exception("Question was not defined");
+                        } else {
+                            survey.Questions.Add(question);
+                        }
+                    }                    
+                    
+                }
+
                 rmi.Assessment = survey;
                 _roadmapItemRepository.SaveChanges();
                 return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, survey);
@@ -86,6 +119,28 @@ namespace P3Backend.Controllers {
                 return BadRequest(e.Message);
             }
         }
+
+        
+
+        /*[HttpPost("[action]")]
+        public ActionResult<Survey> ConvertPresetSurveyToSurvey(string thema, int roadmapItemId) {
+            PresetSurvey ps = _presetRepository.GetBy(thema);
+            RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);
+            if (rmi == null) {
+                return NotFound("Roadmap item not found");
+            }
+
+            if (rmi.Assessment != null) {
+                _surveyRepository.Delete(rmi.Assessment as Survey);
+            }
+
+            Survey survey = new Survey(rmi);
+            survey.Questions = ps.PresetQuestions;
+            rmi.Assessment = survey;
+            _roadmapItemRepository.SaveChanges();
+            return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, survey);
+        }*/
+
         /// <summary>
         /// Get survey with a given RoadmapItemId
         /// </summary>
@@ -111,6 +166,9 @@ namespace P3Backend.Controllers {
                 return BadRequest(e.Message);
             }
         }
+
+        
+
 
         /// <summary>
         /// Delete a survey with a given roadmapItemId
@@ -138,6 +196,8 @@ namespace P3Backend.Controllers {
                 return BadRequest(e.Message);
             }
         }
+
+        
 
     }
 }

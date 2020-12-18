@@ -25,9 +25,9 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			//_dbContext.Database.EnsureDeleted();
-			//if (_dbContext.Database.EnsureCreated()) {
-			if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+			_dbContext.Database.EnsureDeleted();
+			if (_dbContext.Database.EnsureCreated()) {
+			//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				// Trigger to edit the discriminator field when the employee is upgraded
 				await _dbContext.Database.ExecuteSqlRawAsync("drop trigger if exists update_discriminator");
@@ -290,12 +290,11 @@ namespace P3Backend.Data {
 						"The change lead reports to the sponsor and/or has regular direct access",
 						"The sponsor has successfully created a burning platform around the change"};
 
-				PresetSurvey ps;
+				PresetSurvey ps = new PresetSurvey("Leadership");
 				foreach (var q in questionez) {
-					ps = new PresetSurvey("Leadership");
-					ps.PresetQuestions.Add(new RangedQuestion(q));
-					_dbContext.PresetSurveys.AddRange(ps);
+					ps.PresetQuestions.Add(new RangedQuestion(q));					
 				}
+				_dbContext.PresetSurveys.AddRange(ps);
 
 				//TODO Add other pre defined surveys from excel (chamilo
 				//Some of those surveys include multiplechoice questions, add answers!

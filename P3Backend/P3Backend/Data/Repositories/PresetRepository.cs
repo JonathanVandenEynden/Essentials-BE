@@ -30,8 +30,8 @@ namespace P3Backend.Data.Repositories {
 			return _questions.FirstOrDefault(q => q.Id == id);
 		}
 
-		public IEnumerable<PresetSurvey> GetBy(string theme) {
-			return _presetSurveys.Where(ps => String.Equals(theme, ps.Theme)).Include(ps => ps.PresetQuestions);
+		public PresetSurvey GetBy(string theme) {
+			return _presetSurveys.Include(ps => ps.PresetQuestions).SingleOrDefault(ps => String.Equals(ps.Theme, theme));			
 		}
 
 		public void Add(PresetSurvey ps) {

@@ -65,7 +65,7 @@ namespace P3Backend.Controllers {
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[Authorize(Policy = "ChangeManagerAccess")]
-		public IEnumerable<PresetSurvey> GetPresetSurveyBy(string theme) {
+		public PresetSurvey GetPresetSurveyBy(string theme) {
 			return _presetRepo.GetBy(theme);
 		}
 
