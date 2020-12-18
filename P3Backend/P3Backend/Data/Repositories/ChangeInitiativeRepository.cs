@@ -27,7 +27,8 @@ namespace P3Backend.Data.Repositories {
 			return _changeInitiatives
 				.Include(ci => ci.ChangeGroup)
 				.Include(ci => ci.RoadMap)
-				.Include(ci => ci.ChangeSponsor);
+				.Include(ci => ci.ChangeSponsor)
+				.Include(ci => ci.ChangeType);
 		}
 
 		public ChangeInitiative GetBy(int id) {
@@ -36,6 +37,7 @@ namespace P3Backend.Data.Repositories {
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
+				.Include(ci => ci.ChangeType)
 				.FirstOrDefault(ci => ci.Id == id);
 			;
 		}
@@ -46,6 +48,7 @@ namespace P3Backend.Data.Repositories {
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Questions)
 				.Include(ci => ci.RoadMap).ThenInclude(rmi => rmi.Assessment).ThenInclude(a => a.Feedback)
 				.Include(ci => ci.ChangeSponsor)
+				.Include(ci => ci.ChangeType)
 				.FirstOrDefault(ci => ci.Name == name);
 		}
 
