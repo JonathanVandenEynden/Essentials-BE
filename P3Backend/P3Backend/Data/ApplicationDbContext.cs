@@ -57,6 +57,12 @@ namespace P3Backend.Data {
 			get; set;
 		}
 
+		public DbSet<DeviceTokens> DeviceTokens
+		{
+			get;
+			set;
+		}
+
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
 		}
@@ -69,6 +75,7 @@ namespace P3Backend.Data {
 			modelBuilder.Entity<Admin>();
 			modelBuilder.Entity<ChangeManager>();
 			modelBuilder.Entity<Employee>();
+			modelBuilder.Entity<DeviceTokens>();
 
 
 			// Assesments
@@ -130,6 +137,7 @@ namespace P3Backend.Data {
 			modelBuilder.ApplyConfiguration(new AdminConfiguration());
 			modelBuilder.ApplyConfiguration(new ChangeManagerConfiguration());
 			modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+			modelBuilder.ApplyConfiguration(new DeviceTokensConfiguration());
 
 
 			// Assesments
