@@ -69,7 +69,14 @@ namespace P3Backend.Controllers {
 			return _presetRepo.GetBy(theme);
 		}
 
+		/// <summary>
+		/// Returns all themas of presetsurveys
+		/// </summary>
+		/// <returns>List of themas</returns>
 		[HttpGet("[action]")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public List<string> GetAllThemas() {
 			return _presetRepo.GetThemas();
         }

@@ -120,27 +120,6 @@ namespace P3Backend.Controllers {
             }
         }
 
-        
-
-        /*[HttpPost("[action]")]
-        public ActionResult<Survey> ConvertPresetSurveyToSurvey(string thema, int roadmapItemId) {
-            PresetSurvey ps = _presetRepository.GetBy(thema);
-            RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);
-            if (rmi == null) {
-                return NotFound("Roadmap item not found");
-            }
-
-            if (rmi.Assessment != null) {
-                _surveyRepository.Delete(rmi.Assessment as Survey);
-            }
-
-            Survey survey = new Survey(rmi);
-            survey.Questions = ps.PresetQuestions;
-            rmi.Assessment = survey;
-            _roadmapItemRepository.SaveChanges();
-            return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, survey);
-        }*/
-
         /// <summary>
         /// Get survey with a given RoadmapItemId
         /// </summary>
