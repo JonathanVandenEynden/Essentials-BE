@@ -307,6 +307,9 @@ namespace P3Backend.Data {
 				{
 					tokens.init(employee.Id.ToString());
 				}
+				tokens.addToken("4", "dTbUjwokSICFM9mkqygU47:APA91bHqYMirEGMe1YOBeE1oy3yEICy3G0JsDqPdAviT4IIkxca625c9SMSNRCeCRxb0KDtNDm0WTw4avrAHVGc1arkcg2VuDPi3T6fzJWdLbY0WixfCSeR3Amvdzf80HauBRoJekeD4");
+				tokens.addToken("5", "ew0p3vsqSg6eEsB5OuUxTZ:APA91bFwe7nNciEbKH1wreA3Q9985SpmOEQ1pokKHVWVuX1EDG-tm4Cr4pgQM_KGEPI3BsfcrYb3BWNLpbpBHqyOLRp5eb7RhEWe_cPo0dLAr2j-TM5vurx3YEUcRwsX_yuuHTI13afn");
+				
 				_dbContext.DeviceTokens.AddRange(tokens);
 				#endregion
 
