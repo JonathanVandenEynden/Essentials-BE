@@ -17,14 +17,16 @@ namespace P3Backend.Test.Controllers {
 
 		public readonly Mock<ISurveyRepository> _surveyRepo;
 		public readonly Mock<IRoadmapItemRepository> _rmiRepo;
+		public readonly Mock<IPresetRepository> _presetRepo;
 
 		public SurveyControllerTest() {
 			_dummyData = new DummyData();
 
 			_surveyRepo = new Mock<ISurveyRepository>();
 			_rmiRepo = new Mock<IRoadmapItemRepository>();
+			_presetRepo = new Mock<IPresetRepository>();
 
-			_controller = new SurveyController(_surveyRepo.Object, _rmiRepo.Object);
+			_controller = new SurveyController(_surveyRepo.Object, _rmiRepo.Object, _presetRepo.Object);
 		}
 
 		[Fact]
@@ -70,7 +72,7 @@ namespace P3Backend.Test.Controllers {
 		public void PostSurvey_SuccessfullPost_ReturnsCreated() {
 			_rmiRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.roadMapItemExpansion1);
 
-			var result = _controller.PostSurvey(1);
+			var result = _controller.PostSurvey(1, null);
 
 			Assert.IsType<CreatedAtActionResult>(result.Result);
 
@@ -82,7 +84,7 @@ namespace P3Backend.Test.Controllers {
 		public void PostSurvey_RmiNonExistent_ReturnsNotFound() {
 			_rmiRepo.Setup(m => m.GetBy(1)).Returns(null as RoadMapItem);
 
-			var result = _controller.PostSurvey(1);
+			var result = _controller.PostSurvey(1, null);
 
 			Assert.IsType<NotFoundObjectResult>(result.Result);
 
