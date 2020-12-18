@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 
 namespace P3Backend.Model.RepoInterfaces {
-    public interface IOrganizationRepository {
+	public interface IOrganizationRepository {
 
-        IEnumerable<Organization> GetAll();
+		IEnumerable<Organization> GetAll();
 
-        Organization GetBy(int id);
+		Organization GetBy(int id);
 
-        void Add(Organization o);
+		void Add(Organization o);
 
-        void Update(Organization o);
+		void Update(Organization o);
 
-        void Delete(Organization o);
+		void Delete(Organization o);
 
-        void SaveChanges();
+		void SaveChanges();
 
-        Organization GetByName(string name);
-    }
+		Organization GetByName(string name);
+	}
 }

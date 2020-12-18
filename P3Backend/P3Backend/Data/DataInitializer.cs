@@ -103,8 +103,6 @@ namespace P3Backend.Data {
 
 				#region Projects
 				Project project = new Project("Our big project");
-				//var projects = new List<Project> { project };
-				//_dbContext.Projects.AddRange(projects);
 				hogent.Portfolio.Projects.Add(project);
 
 				_dbContext.Projects.Add(project);
@@ -113,8 +111,6 @@ namespace P3Backend.Data {
 				#region OrganizationalChangeTypes
 				OrganizationalChangeType organizationalChange = new OrganizationalChangeType();
 				EconomicalChangeType economicalChange = new EconomicalChangeType();
-				//PersonalChangeType personalChange = new PersonalChangeType();
-				//TechnologicalChangeType technologicalChange = new TechnologicalChangeType();
 				#endregion
 
 
@@ -189,7 +185,7 @@ namespace P3Backend.Data {
 				#region Surveys
 
 				Survey surveyResto1 = new Survey(roadMapItemResto1);
-				surveyResto1.surveyTemplates("test");
+				surveyResto1.SurveyTemplates("test");
 				Survey surveyResto2 = new Survey(roadMapItemResto2);
 				Survey surveyResto3 = new Survey(roadMapItemResto3);
 				Survey surveyResto4 = new Survey(roadMapItemResto4);

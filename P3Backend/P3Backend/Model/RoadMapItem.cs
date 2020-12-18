@@ -9,34 +9,34 @@ namespace P3Backend.Model {
 		private DateTime _endDate;
 		private RoadmapItemPhase _phase;
 
-        public int Id { get; set; }
-        [Required]
-        public string Title {
-            get { return _title; }
-            set {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Title should not be emtpy");
-                else
-                    _title = value;
-            }
-        }
+		public int Id { get; set; }
+		[Required]
+		public string Title {
+			get { return _title; }
+			set {
+				if (string.IsNullOrWhiteSpace(value))
+					throw new ArgumentException("Title should not be emtpy");
+				else
+					_title = value;
+			}
+		}
 
-        public IAssessment Assessment { get; set; }
+		public IAssessment Assessment { get; set; }
 
-        private bool _done;
-        [Required]
-        public bool Done { get => _done ? _done : DateTime.Now > EndDate; set { _done = value; } }
+		private bool _done;
+		[Required]
+		public bool Done { get => _done ? _done : DateTime.Now > EndDate; set { _done = value; } }
 
-        [Required]
-        public DateTime StartDate {
-            get { return _startDate; }
-            set {
-                if (value < DateTime.Now)
-                    throw new ArgumentException("Start must be in the future");
-                else
-                    _startDate = value;
-            }
-        }
+		[Required]
+		public DateTime StartDate {
+			get { return _startDate; }
+			set {
+				if (value < DateTime.Now)
+					throw new ArgumentException("Start must be in the future");
+				else
+					_startDate = value;
+			}
+		}
 
 		[Required]
 		public DateTime EndDate {
@@ -48,19 +48,16 @@ namespace P3Backend.Model {
 					_endDate = value;
 			}
 		}
-		
+
 		public RoadmapItemPhase Phase {
 			get {
 				return _phase;
 			}
-			set
-			{
-				if (value != null)
-				{
+			set {
+				if (value != null) {
 					_phase = value;
 				}
-				else
-				{
+				else {
 					_phase = RoadmapItemPhase.Preparationphase;
 				}
 			}
@@ -74,9 +71,9 @@ namespace P3Backend.Model {
 			Phase = RoadmapItemPhase.Preparationphase;
 		}
 
-        protected RoadMapItem() {
-            // EF
-        }
+		protected RoadMapItem() {
+			// EF
+		}
 
 		public void Update(RoadMapItemDTO dto) {
 			Title = dto.Title;

@@ -139,14 +139,14 @@ namespace P3Backend.Test.Data {
 			//TechnologicalChangeType technologicalChange = new TechnologicalChangeType();
 			#endregion
 			#region ChangeGroups
-			ChangeGroup allEmployees = new ChangeGroup("All employees");
+			allEmployees = new ChangeGroup("All employees");
 			EmployeeChangeGroup ziggyAllEmployees = new EmployeeChangeGroup(ziggy, allEmployees);
 			ziggy.EmployeeChangeGroups.Add(ziggyAllEmployees);
 			EmployeeChangeGroup marbodAllEmployees = new EmployeeChangeGroup(marbod, allEmployees);
 			marbod.EmployeeChangeGroups.Add(marbodAllEmployees);
 			allEmployees.EmployeeChangeGroups.AddRange(new List<EmployeeChangeGroup>() { ziggyAllEmployees, marbodAllEmployees });
 
-			ChangeGroup justBelgium = new ChangeGroup("Just Belgium");
+			justBelgium = new ChangeGroup("Just Belgium");
 			EmployeeChangeGroup ziggyJustBelgium = new EmployeeChangeGroup(ziggy, justBelgium);
 			ziggy.EmployeeChangeGroups.Add(ziggyJustBelgium);
 			justBelgium.EmployeeChangeGroups.Add(ziggyJustBelgium);

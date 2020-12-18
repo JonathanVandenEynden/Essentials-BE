@@ -53,7 +53,7 @@ namespace P3Backend.Controllers {
 		}*/
 
 		/// <summary>
-		/// Get the change initiatives applicable for a user
+		/// Get the change initiatives applicable for an employee
 		/// </summary>
 		/// <returns></returns>
 		[Route("[action]")]

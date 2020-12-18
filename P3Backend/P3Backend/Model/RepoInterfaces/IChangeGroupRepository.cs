@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 
 namespace P3Backend.Model.RepoInterfaces {
-    public interface IChangeGroupRepository {
+	public interface IChangeGroupRepository {
 
-        IEnumerable<ChangeGroup> GetAll();
+		IEnumerable<ChangeGroup> GetAll();
 
-        ChangeGroup GetBy(int id);
+		ChangeGroup GetBy(int id);
 
-        void Add(ChangeGroup cg);
+		void Add(ChangeGroup cg);
 
-        void Update(ChangeGroup cg);
+		void Update(ChangeGroup cg);
 
-        void Delete(ChangeGroup cg);
+		void Delete(ChangeGroup cg);
 
-        void SaveChanges();
+		void SaveChanges();
 
-        ChangeGroup GetByName(string name);
+		ChangeGroup GetByName(string name);
 
-        List<ChangeGroup> GetForUserId(int userId);
-    }
+		List<ChangeGroup> GetForUserId(int userId);
+	}
 }

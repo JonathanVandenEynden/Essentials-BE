@@ -1,7 +1,5 @@
-namespace P3Backend.Model
-{
-    public enum RoadmapItemPhase
-    {
-        Preparationphase, Implementationphase, Valuecreationphase
-    }
+namespace P3Backend.Model {
+	public enum RoadmapItemPhase {
+		Preparationphase, Implementationphase, Valuecreationphase
+	}
 }

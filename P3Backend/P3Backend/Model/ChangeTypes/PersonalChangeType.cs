@@ -1,7 +1,7 @@
 ﻿namespace P3Backend.Model.ChangeTypes {
-    public class PersonalChangeType : IChangeType {
-        public PersonalChangeType() {
+	public class PersonalChangeType : IChangeType {
+		public PersonalChangeType() {
 
-        }
-    }
+		}
+	}
 }

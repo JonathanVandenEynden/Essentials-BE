@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 
 namespace P3Backend.Model.RepoInterfaces {
-    public interface IProjectRepository {
-        IEnumerable<Project> GetAll();
+	public interface IProjectRepository {
+		IEnumerable<Project> GetAll();
 
-        Project GetBy(int id);
+		Project GetBy(int id);
 
-        IEnumerable<Project> GetByChangeManager(ChangeManager cm);
+		IEnumerable<Project> GetByChangeManager(ChangeManager cm);
 
-        void Add(Project p);
+		void Add(Project p);
 
-        void Update(Project p);
+		void Update(Project p);
 
-        void Delete(Project p);
+		void Delete(Project p);
 
-        void SaveChanges();
+		void SaveChanges();
 
-        Project GetByName(string name);
-    }
+		Project GetByName(string name);
+	}
 }

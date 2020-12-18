@@ -92,6 +92,7 @@ namespace P3Backend.Test.Controllers {
 
 		}
 
+		/*
 		[Fact]
 		public void UpgradeEmployeeToChangeManager_SuccessfullUpgrade_returnsNoContent() {
 			_employeeRepo.Setup(m => m.GetBy(1)).Returns(_dummyData.marbod);
@@ -139,7 +140,7 @@ namespace P3Backend.Test.Controllers {
 			Assert.IsType<NotFoundObjectResult>(result);
 
 		}
-
+		*/
 
 
 
