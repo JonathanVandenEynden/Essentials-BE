@@ -71,7 +71,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "ChangeManagerAccess")]
-        public ActionResult<Survey> PostSurvey(int roadmapItemId, string? thema) {
+        public ActionResult<Survey> PostSurvey(int roadmapItemId, string thema = null) {
             try {
                 RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);                
 

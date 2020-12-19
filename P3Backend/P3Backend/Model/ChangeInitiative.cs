@@ -84,7 +84,7 @@ namespace P3Backend.Model {
 		public Employee ChangeSponsor {
 			get => _changeSponsor;
 			set {
-				if (value == null) {
+				if (value.Equals(null)) {
 					throw new ArgumentException("Change Sponsor is required and cannot be null");
 				}
 				_changeSponsor = value;
@@ -94,7 +94,7 @@ namespace P3Backend.Model {
 		public IChangeType ChangeType {
 			get => _changeType;
 			set {
-				if (value == null)
+				if (value.Equals(null))
 					throw new ArgumentException("ChangeType is required and cannot be null");
 				_changeType = value;
 			}
@@ -131,8 +131,6 @@ namespace P3Backend.Model {
 			EndDate = dto.EndDate;
 		}
 
-		public void filter(string? group = null, int? progress = null) {
-
-		}
+		
 	}
 }

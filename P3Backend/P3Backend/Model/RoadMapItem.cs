@@ -7,7 +7,6 @@ namespace P3Backend.Model {
 		private string _title;
 		private DateTime _startDate;
 		private DateTime _endDate;
-		private RoadmapItemPhase _phase;
 
 		public int Id { get; set; }
 		[Required]
@@ -49,19 +48,7 @@ namespace P3Backend.Model {
 			}
 		}
 
-		public RoadmapItemPhase Phase {
-			get {
-				return _phase;
-			}
-			set {
-				if (value != null) {
-					_phase = value;
-				}
-				else {
-					_phase = RoadmapItemPhase.Preparationphase;
-				}
-			}
-		}
+		public RoadmapItemPhase Phase { get; set; }
 
 		public RoadMapItem(string title, DateTime start, DateTime end) {
 			Title = title;

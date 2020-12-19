@@ -106,7 +106,7 @@ namespace P3Backend.Controllers {
 		[HttpPost("checkemail")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public async Task<ActionResult<bool>> checkUsername(string email) {
+		public async Task<ActionResult<bool>> CheckUsername(string email) {
 			try {
 				var user = await _userManager.FindByNameAsync(email);
 				return user == null;

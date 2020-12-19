@@ -130,12 +130,13 @@ namespace P3Backend.Controllers {
 
 		}
 
-		/// <summary>
-		/// Create new ChangeInitiative
-		/// </summary>
-		/// <param name="dto">the type-string must be "personal", "economical", "technological" or "organizational". Default organizational</param>
-		/// <returns>Created</returns>
-		[HttpPost("{projectId}")]
+        /// <summary>
+        /// Create new ChangeInitiative
+        /// </summary>
+        /// <param name="projectId">Id of the project</param>
+        /// <param name="dto">the type-string must be "personal", "economical", "technological" or "organizational". Default organizational</param>
+        /// <returns>Created</returns>
+        [HttpPost("{projectId}")]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
