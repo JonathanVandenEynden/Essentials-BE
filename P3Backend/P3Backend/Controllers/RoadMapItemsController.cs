@@ -43,7 +43,7 @@ namespace P3Backend.Controllers {
 
             if (rmi == null) {
 
-                return NotFound("Item not found");
+                return NotFound("RoadmapItem not found");
             }
 
             return rmi;
@@ -99,20 +99,17 @@ namespace P3Backend.Controllers {
             }
         }
 
+        /// <summary>
+        /// Gives a list of employees that have not filled in the survey of the roadmapItem
+        /// </summary>
+        /// <param name="roadmapItemId">Id of the roadmapItem</param>
+        /// <returns>A list of employees</returns>
         [HttpGet("[action]/{roadmapItemId}")]
         public List<Employee> GetEmployeesNotFilledInSurvey(int roadmapItemId) {
             RoadMapItem roadmapItem = _roadmapItemRepository.GetBy(roadmapItemId);
-            List<Question> questions = roadmapItem.Assessment.Questions;
-            List<ChangeInitiative> changeInitiatives = _changeInitiativeRepo.GetAll().ToList();
-            ChangeInitiative changeInitiative = changeInitiatives.Where(ci => ci.RoadMap.Contains(roadmapItem)).SingleOrDefault();
-            ChangeGroup changeGroup = changeInitiative.ChangeGroup;
-            List<Employee> employees = changeGroup.EmployeeChangeGroups.Select(ec => ec.Employee).ToList();
-            List<int> employeeIDs = changeGroup.EmployeeChangeGroups.Select(ec => ec.EmployeeId).ToList();
-
-            List<Employee> filledInEmployeeIDs = questions.Min(q => q.QuestionRegistered.Keys).Select(qr => employees.FirstOrDefault(e => e.Id == qr)).ToList();
-
-            List<Employee> result = employees.Except(filledInEmployeeIDs).ToList();
-            return result;
+            List<Employee> employees = _changeInitiativeRepo.GetAll().Where(ci => ci.RoadMap.Contains(roadmapItem)).SingleOrDefault().ChangeGroup.EmployeeChangeGroups.Select(ec => ec.Employee).ToList();
+            List<Employee> filledInEmployeeIDs = roadmapItem.Assessment.Questions.Min(q => q.QuestionRegistered.Keys).Select(qr => employees.FirstOrDefault(e => e.Id == qr)).ToList();            
+            return employees.Except(filledInEmployeeIDs).ToList(); 
         }
 
         /// <summary>
