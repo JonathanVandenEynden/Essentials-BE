@@ -29,8 +29,9 @@ namespace P3Backend.Data {
 			if (_dbContext.Database.EnsureCreated()) {
 			//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
-				// Trigger to edit the discriminator field when the employee is upgraded
-				await _dbContext.Database.ExecuteSqlRawAsync("drop trigger if exists update_discriminator");
+                #region Update Discriminator table
+                // Trigger to edit the discriminator field when the employee is upgraded
+                await _dbContext.Database.ExecuteSqlRawAsync("drop trigger if exists update_discriminator");
 				await _dbContext.Database.ExecuteSqlRawAsync(
 												"create trigger update_discriminator on dbo.Users " +
 												"for update as " +
@@ -41,9 +42,10 @@ namespace P3Backend.Data {
 												"update dbo.Users set Discriminator = 'ChangeManager' where Id = @id " +
 												"end"
 											);
+                #endregion
 
-				#region Admin
-				Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@essentials.com");
+                #region Admin
+                Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@essentials.com");
 				Admin admin2 = new Admin("Jonatan", "Vanden Eynden Van Lysebeth", "Jonathan.vandeneyndenvanlysebeth@essentials.com");
 				_dbContext.Admins.AddRange(new List<Admin>() { admin1, admin2 });
 				#endregion
@@ -63,7 +65,6 @@ namespace P3Backend.Data {
 				#region Organization
 				Organization hogent = new Organization("Hogent", new List<Employee>() { sponsor, ziggy, marbod }, changeManagerSuktrit);
 				admin1.Organizations.Add(hogent);
-
 				_dbContext.Organizations.Add(hogent);
 				#endregion
 
@@ -97,14 +98,12 @@ namespace P3Backend.Data {
 				};
 
 				hogent.OrganizationParts.AddRange(ops);
-
 				#endregion
 
 
 				#region Projects
 				Project project = new Project("Our big project");
 				hogent.Portfolio.Projects.Add(project);
-
 				_dbContext.Projects.Add(project);
 				#endregion
 
@@ -272,28 +271,30 @@ namespace P3Backend.Data {
 
                 #region List of questions
 
-                List<string> leadershipQuestions = new List<string> {"The transformation sponsor has knowledge of change management techniques and principles",
-						"The transformation sponsor actively supports and understands the change management initiatives", "The sponsor is active and visible to represent the change",
-						"The sponsor was successful in this role in previous change projects",
-						"The sponsor is a gifted speaker or is charismatic to motivate people",
-						"The sponsor can communicate the vision and strategy, including the need for change to executives and senior management",
-						"The sponsor can communicate the vision and strategy, including the need for change to employees and customers",
-						"The organization will listen to and follow the messages of this sponsor",
-						"The sponsor is empowered by the executives to deliver the change",
-						"The sponsor is an effective influencer",
-						"The sponsor is able to provide for the resources and funding for the project",
-						"The sponsor has direct control over the persons and processes impacted by the change",
-						"The sponsor has knowledge of the systems, tools and processes impacted by the change",
-						"The change is known and supported by the organization's executives",
-						"The necessary funding for the change is made available",
-						"People managers are (will be) instructed to assign the needed resources for the change",
-						"Organization's executives want to receive progress report on the change",
-						"The change project is prioritised formally",
-						"The organization has had success stories with previous change projects",
-						"Employees will be rewarded for embracing the change",
-						"People are (will be) appointed to lead the change management project",
-						"The change lead reports to the sponsor and/or has regular direct access",
-						"The sponsor has successfully created a burning platform around the change"};				
+                List<string> leadershipQuestions = new List<string> {
+					"The transformation sponsor has knowledge of change management techniques and principles",
+					"The transformation sponsor actively supports and understands the change management initiatives", "The sponsor is active and visible to represent the change",
+					"The sponsor was successful in this role in previous change projects",
+					"The sponsor is a gifted speaker or is charismatic to motivate people",
+					"The sponsor can communicate the vision and strategy, including the need for change to executives and senior management",
+					"The sponsor can communicate the vision and strategy, including the need for change to employees and customers",
+					"The organization will listen to and follow the messages of this sponsor",
+					"The sponsor is empowered by the executives to deliver the change",
+					"The sponsor is an effective influencer",
+					"The sponsor is able to provide for the resources and funding for the project",
+					"The sponsor has direct control over the persons and processes impacted by the change",
+					"The sponsor has knowledge of the systems, tools and processes impacted by the change",
+					"The change is known and supported by the organization's executives",
+					"The necessary funding for the change is made available",
+					"People managers are (will be) instructed to assign the needed resources for the change",
+					"Organization's executives want to receive progress report on the change",
+					"The change project is prioritised formally",
+					"The organization has had success stories with previous change projects",
+					"Employees will be rewarded for embracing the change",
+					"People are (will be) appointed to lead the change management project",
+					"The change lead reports to the sponsor and/or has regular direct access",
+					"The sponsor has successfully created a burning platform around the change"
+				};				
 
 				List<string> capacityAndCultureQuestions = new List<string> {
 					"People at my company know the organization’s business objectives clearly",
@@ -340,21 +341,6 @@ namespace P3Backend.Data {
 
 				_dbContext.DeviceTokens.AddRange(tokens);
 				#endregion
-
-
-
-				//#region OrganizationParts
-				//OrganizationPart organizationPart1 = new OrganizationPart("Giga Berlin", OrganizationPartType.FACTORY);
-				//#endregion
-
-				//#region ChangeManagers
-				//changeManagerSuktrit.CreatedChangeInitiatives.Add(ciNewCatering);
-				//changeManagerSuktrit.CreatedChangeInitiatives.Add(ciExpansion);
-				//changeManagerSuktrit.OrganizationParts.Add(organizationPart1);
-				//management.Users.Add(changeManagerSuktrit);
-				//_dbContext.ChangeGroups.Add(management);
-				//#endregion
-
 
 				_dbContext.SaveChanges();
 				Console.WriteLine("Database created");
