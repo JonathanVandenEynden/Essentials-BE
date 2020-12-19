@@ -25,9 +25,9 @@ namespace P3Backend.Data {
         }
 
         public async Task InitializeData() {
-            //_dbContext.Database.EnsureDeleted();
-            //if (_dbContext.Database.EnsureCreated()) {
-            if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+            _dbContext.Database.EnsureDeleted();
+            if (_dbContext.Database.EnsureCreated()) {
+            //if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
                 #region Update Discriminator table
                 // Trigger to edit the discriminator field when the employee is upgraded
@@ -344,8 +344,6 @@ namespace P3Backend.Data {
 
                 #region Fill in survey
                 roadMapItemResto4.Assessment.Questions[0].CompleteQuestion(4);
-
-
                 #endregion
 
                 _dbContext.SaveChanges();
