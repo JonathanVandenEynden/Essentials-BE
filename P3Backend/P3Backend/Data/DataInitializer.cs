@@ -25,9 +25,9 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			//_dbContext.Database.EnsureDeleted();
-			//if (_dbContext.Database.EnsureCreated()) {
-			if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+			_dbContext.Database.EnsureDeleted();
+			if (_dbContext.Database.EnsureCreated()) {
+			//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				// Trigger to edit the discriminator field when the employee is upgraded
 				await _dbContext.Database.ExecuteSqlRawAsync("drop trigger if exists update_discriminator");
@@ -265,9 +265,14 @@ namespace P3Backend.Data {
 				await CreateUser(changeManagerSuktrit.Email, "P@ssword1", "changeManager");
 				#endregion
 
-				#region predefined
+				#region Preset Surveys
 
-				string[] questionez = {"The transformation sponsor has knowledge of change management techniques and principles",
+				PresetSurvey presetLeadership = new PresetSurvey("Leadership");
+				PresetSurvey presetCapacityAndLeadership = new PresetSurvey("Capacity And Culture");
+
+                #region List of questions
+
+                List<string> leadershipQuestions = new List<string> {"The transformation sponsor has knowledge of change management techniques and principles",
 						"The transformation sponsor actively supports and understands the change management initiatives", "The sponsor is active and visible to represent the change",
 						"The sponsor was successful in this role in previous change projects",
 						"The sponsor is a gifted speaker or is charismatic to motivate people",
@@ -288,17 +293,41 @@ namespace P3Backend.Data {
 						"Employees will be rewarded for embracing the change",
 						"People are (will be) appointed to lead the change management project",
 						"The change lead reports to the sponsor and/or has regular direct access",
-						"The sponsor has successfully created a burning platform around the change"};
+						"The sponsor has successfully created a burning platform around the change"};				
 
-				PresetSurvey ps = new PresetSurvey("Leadership");
-				foreach (var q in questionez) {
-					ps.PresetQuestions.Add(new RangedQuestion(q));
-				}
-				_dbContext.PresetSurveys.AddRange(ps);
+				List<string> capacityAndCultureQuestions = new List<string> {
+					"People at my company know the organization’s business objectives clearly",
+					"People at my organization genuinely like one another",
+					"People follow clear guidelines and instructions about work",
+					"People get along very well and conflicts are rare",
+					"Poor performance is dealt with quickly and firmly in my organization.",
+					"People often socialize outside of work",
+					"People really want to beat the competition",
+					"People do favors for each other because they like one another",
+					"When opportunities for competitive advantage arise people move firmly to capitalize on them",
+					"People make friends for the sake of friendship – there is no other agenda",
+					"The strategic goals of the organization are known and shared",
+					"People often confide in one another about personal matters",
+					"People build close long - term relationships – someday they may be of benefit",
+					"The reasons for reward and punishment are clear at my organization",
+					"People know a lot about each other’s families",
+					"People in my team  are determined to beat our industry competitors",
+					"When faced with problem, people first check what friends and colleagues have already done, then attempt to solve it by themselves",
+					"Hitting targets is the single most important thing in my organization",
+					"To get something done you are allowed to work around the system",
+					"Projects that are started reach an end state within finite and defined period",
+					"When people leave, co - workers stay in contact to see how they are doing",
+					"Roles and responsibilities are formal : it is clear where one person’s job ends and another person’s begins",
+					"People protect each other at my organization",
+					"Poor performance is not tolerated at any level within this organization",
+					"In case a project cannot be completed or successfully realized, it is formally closed with lessons learnt documented and intermediate results archived"
+				};
+				#endregion				
 
-				//TODO Add other pre defined surveys from excel (chamilo
-				//Some of those surveys include multiplechoice questions, add answers!
-
+				leadershipQuestions.ForEach(question => presetLeadership.PresetQuestions.Add(new RangedQuestion(question)));
+				capacityAndCultureQuestions.ForEach(question => presetCapacityAndLeadership.PresetQuestions.Add(new RangedQuestion(question)));	
+				
+				_dbContext.PresetSurveys.AddRange(presetLeadership, presetCapacityAndLeadership);
 				#endregion
 
 				#region deviceTokens
