@@ -45,16 +45,21 @@ namespace P3Backend.Data {
                 #endregion
 
                 #region Admin
-                Admin admin1 = new Admin("Simon", "De Wilde", "simon.dewilde@essentials.com");
-                Admin admin2 = new Admin("Jonatan", "Vanden Eynden Van Lysebeth", "Jonathan.vandeneyndenvanlysebeth@essentials.com");
-                _dbContext.Admins.AddRange(new List<Admin>() { admin1, admin2 });
+                Admin simon = new Admin("Simon", "De Wilde", "simon.dewilde@essentials.com");
+                Admin jonathan = new Admin("Jonatan", "Vanden Eynden Van Lysebeth", "jonathan.vandeneyndenvanlysebeth@essentials.com");
+                _dbContext.Admins.AddRange(new List<Admin>() { simon, jonathan });
                 #endregion
 
                 #region Employees
                 Employee sponsor = new Employee("Sponser", "Sponser", "sponser@hogent.com");
                 Employee ziggy = new Employee("Ziggy", "Moens", "ziggy@hogent.com");
                 Employee marbod = new Employee("Marbod", "Naassens", "marbod@hogent.com");
-                _dbContext.Employees.AddRange(new List<Employee>() { sponsor, ziggy, marbod });
+                Employee sebastien = new Employee("Sébastien", "De Pauw", "sébastien@hogent.com");
+                Employee sven = new Employee("Sven", "Wyseur", "sven@hogent.com");
+                Employee elias = new Employee("Elias", "Ameye", "elias@hogent.com");
+                Employee lotte = new Employee("Lotte", "Van Achter", "lotte@hogent.com");
+                Employee maud = new Employee("Maud", "Dijkstra", "maud@hogent.com");
+                _dbContext.Employees.AddRange(new List<Employee>() { sponsor, ziggy, marbod, sebastien, sven, elias, lotte, maud });
                 #endregion
 
                 #region Changemananger
@@ -63,18 +68,19 @@ namespace P3Backend.Data {
                 #endregion
 
                 #region Organization
-                Organization hogent = new Organization("Hogent", new List<Employee>() { sponsor, ziggy, marbod }, changeManagerSuktrit);
-                admin1.Organizations.Add(hogent);
+                Organization hogent = new Organization("Hogent", new List<Employee>() { sponsor, ziggy, marbod, sebastien, sven, elias, lotte, maud }, changeManagerSuktrit);
+                simon.Organizations.Add(hogent);
                 _dbContext.Organizations.Add(hogent);
                 #endregion
 
                 #region OrganizationalParts
                 OrganizationPart jellyTeam = new OrganizationPart("Jelly Team", OrganizationPartType.TEAM);
-                OrganizationPart belgium = new OrganizationPart("belgium", OrganizationPartType.COUNTRY);
+                OrganizationPart belgium = new OrganizationPart("Belgium", OrganizationPartType.COUNTRY);
                 OrganizationPart netherlands = new OrganizationPart("The Netherlands", OrganizationPartType.COUNTRY);
                 OrganizationPart officeBE = new OrganizationPart("Belgian Office", OrganizationPartType.OFFICE);
                 OrganizationPart officeNL = new OrganizationPart("Dutch Office", OrganizationPartType.OFFICE);
-                OrganizationPart departmentHR = new OrganizationPart("HR", OrganizationPartType.DEPARTMENT);
+                OrganizationPart departmentHR = new OrganizationPart("Human Resources", OrganizationPartType.DEPARTMENT);
+                OrganizationPart softwareTeam = new OrganizationPart("Software Development Team", OrganizationPartType.TEAM);
 
                 changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, departmentHR));
                 changeManagerSuktrit.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(changeManagerSuktrit, belgium));
@@ -88,13 +94,35 @@ namespace P3Backend.Data {
                 marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, jellyTeam));
                 marbod.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(marbod, officeNL));
 
+                sebastien.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(sebastien, belgium));
+                sebastien.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(sebastien, jellyTeam));
+                sebastien.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(sebastien, departmentHR));
+
+                elias.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(elias, netherlands));
+                elias.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(elias, officeBE));
+                elias.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(elias, softwareTeam));
+
+                sven.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(sven, officeBE));
+                sven.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(sven, softwareTeam));
+                sven.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(sven, belgium));
+
+                lotte.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(lotte, officeNL));
+                lotte.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(lotte, netherlands));
+                lotte.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(lotte, departmentHR));
+
+                maud.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(maud, jellyTeam));
+                maud.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(maud, softwareTeam));
+                maud.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(maud, officeNL));
+                maud.EmployeeOrganizationParts.Add(new EmployeeOrganizationPart(maud, netherlands));
+
                 IList<OrganizationPart> ops = new List<OrganizationPart>() {
                     jellyTeam,
                     belgium,
                     netherlands,
                     officeBE,
                     officeNL,
-                    departmentHR
+                    departmentHR,
+                    softwareTeam
                 };
 
                 hogent.OrganizationParts.AddRange(ops);
@@ -207,7 +235,7 @@ namespace P3Backend.Data {
                 roadMapItemResto3.Assessment = surveyResto3;
                 roadMapItemResto4.Assessment = surveyResto4;
 
-                /////////////
+
                 Survey surveyExpansion1 = new Survey(roadMapItemExpansion1);
                 Survey surveyExpansion2 = new Survey(roadMapItemExpansion2);
                 Survey surveyExpansion3 = new Survey(roadMapItemExpansion3);
@@ -256,11 +284,16 @@ namespace P3Backend.Data {
                 #endregion
 
                 #region Create Identity users
-                await CreateUser(admin1.Email, "P@ssword1", "admin");
-                await CreateUser(admin2.Email, "P@ssword1", "admin");
+                await CreateUser(simon.Email, "P@ssword1", "admin");
+                await CreateUser(jonathan.Email, "P@ssword1", "admin");
                 await CreateUser(sponsor.Email, "P@ssword1", "employee");
                 await CreateUser(ziggy.Email, "P@ssword1", "employee");
                 await CreateUser(marbod.Email, "P@ssword1", "employee");
+                await CreateUser(sebastien.Email, "P@ssword1", "employee");
+                await CreateUser(sven.Email, "P@ssword1", "employee");
+                await CreateUser(elias.Email, "P@ssword1", "employee");
+                await CreateUser(lotte.Email, "P@ssword1", "employee");
+                await CreateUser(maud.Email, "P@ssword1", "employee");
                 await CreateUser(changeManagerSuktrit.Email, "P@ssword1", "changeManager");
                 #endregion
 
