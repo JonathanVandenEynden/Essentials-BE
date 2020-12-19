@@ -26,6 +26,8 @@ namespace P3Backend.Data.Repositories {
 		public IEnumerable<ChangeInitiative> GetAll() {
 			return _changeInitiatives
 				.Include(ci => ci.ChangeGroup)
+				.ThenInclude(cg => cg.EmployeeChangeGroups)
+				.ThenInclude(ec => ec.Employee)
 				.Include(ci => ci.RoadMap)
 				.Include(ci => ci.ChangeSponsor)
 				.Include(ci => ci.ChangeType);

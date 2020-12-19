@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P3Backend.Model;
 using P3Backend.Model.DTO_s;
+using P3Backend.Model.Questions;
 using P3Backend.Model.RepoInterfaces;
+using P3Backend.Model.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,8 +98,23 @@ namespace P3Backend.Controllers {
 			catch (Exception e) {
 				return BadRequest(e.Message);
 			}
-
 		}
+
+		[HttpGet("[action]/{roadmapItemId}")]
+		public List<Employee> GetEmployeesNotFilledInSurvey(int roadmapItemId) {
+			RoadMapItem roadmapItem = _roadmapItemRepository.GetBy(roadmapItemId);
+			List<Question> questions = roadmapItem.Assessment.Questions;
+			List<ChangeInitiative> changeInitiatives = _changeInitiativeRepo.GetAll().ToList();
+			ChangeInitiative changeInitiative = changeInitiatives.Where(ci => ci.RoadMap.Contains(roadmapItem)).SingleOrDefault();
+			ChangeGroup changeGroup = changeInitiative.ChangeGroup;
+			List<Employee> employees = changeGroup.EmployeeChangeGroups.Select(ec => ec.Employee).ToList();
+			List<int> employeeIDs = changeGroup.EmployeeChangeGroups.Select(ec => ec.EmployeeId).ToList();
+
+			List<Employee> filledInEmployeeIDs = questions.Min(q => q.QuestionRegistered.Keys).Select(qr => employees.FirstOrDefault(e => e.Id == qr)).ToList();
+
+			List<Employee> result = employees.Except(filledInEmployeeIDs).ToList();
+			return result;
+        }
 
 		/// <summary>
 		/// Update an existing road map item
