@@ -342,6 +342,12 @@ namespace P3Backend.Data {
 				_dbContext.DeviceTokens.AddRange(tokens);
 				#endregion
 
+				#region Fill in survey
+				roadMapItemResto4.Assessment.Questions[0].CompleteQuestion(4);
+
+
+				#endregion
+
 				_dbContext.SaveChanges();
 				Console.WriteLine("Database created");
 			}
