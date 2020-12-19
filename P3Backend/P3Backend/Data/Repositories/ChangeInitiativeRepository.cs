@@ -39,7 +39,6 @@ namespace P3Backend.Data.Repositories {
 				.Include(ci => ci.ChangeSponsor)
 				.Include(ci => ci.ChangeType)
 				.FirstOrDefault(ci => ci.Id == id);
-			;
 		}
 
 		public ChangeInitiative GetByName(string name) {
