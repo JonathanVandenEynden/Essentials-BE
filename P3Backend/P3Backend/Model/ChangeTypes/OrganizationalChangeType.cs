@@ -1,7 +1,7 @@
 ﻿namespace P3Backend.Model.ChangeTypes {
-	public class OrganizationalChangeType : IChangeType {
-		public OrganizationalChangeType() {
+    public class OrganizationalChangeType : IChangeType {
+        public OrganizationalChangeType() {
 
-		}
-	}
+        }
+    }
 }

@@ -7,7 +7,6 @@ using P3Backend.Model.Questions;
 using P3Backend.Model.RepoInterfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace P3Backend.Controllers {
     [Route("api/[controller]")]
@@ -73,7 +72,7 @@ namespace P3Backend.Controllers {
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<Survey> PostSurvey(int roadmapItemId, string thema = null) {
             try {
-                RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);                
+                RoadMapItem rmi = _roadmapItemRepository.GetBy(roadmapItemId);
 
                 if (rmi == null) {
                     return NotFound("Roadmap item not found");
@@ -87,7 +86,7 @@ namespace P3Backend.Controllers {
 
                 if (thema != null) {
                     PresetSurvey ps = _presetRepository.GetBy(thema);
-                    foreach(Question q in ps.PresetQuestions) {
+                    foreach (Question q in ps.PresetQuestions) {
                         Question question = null;
                         switch (q.Type) {
                             case QuestionType.MULTIPLECHOICE:
@@ -108,8 +107,8 @@ namespace P3Backend.Controllers {
                         } else {
                             survey.Questions.Add(question);
                         }
-                    }                    
-                    
+                    }
+
                 }
 
                 rmi.Assessment = survey;
@@ -146,7 +145,7 @@ namespace P3Backend.Controllers {
             }
         }
 
-        
+
 
 
         /// <summary>
@@ -176,7 +175,7 @@ namespace P3Backend.Controllers {
             }
         }
 
-        
+
 
     }
 }

@@ -9,90 +9,89 @@ using System;
 using System.Collections.Generic;
 
 namespace P3Backend.Controllers {
-	[Route("api/[controller]")]
-	[ApiController]
-	[Produces("application/json")]
-	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	public class AdminsController : ControllerBase {
+    [Route("api/[controller]")]
+    [ApiController]
+    [Produces("application/json")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public class AdminsController : ControllerBase {
 
-		private readonly IAdminRepository _adminRepo;
+        private readonly IAdminRepository _adminRepo;
 
-		public AdminsController(IAdminRepository adminRepo) {
-			_adminRepo = adminRepo;
-		}
+        public AdminsController(IAdminRepository adminRepo) {
+            _adminRepo = adminRepo;
+        }
 
-		/// <summary>
-		/// Get all admins
-		/// </summary>
-		/// <returns></returns>
-		[HttpGet]
-		[Authorize(Policy = "AdminAccess")]
-		public IEnumerable<Admin> GetAllAdmins() {
-			return _adminRepo.GetAll();
-		}
-		/// <summary>
-		/// Get admin by a given Id
-		/// </summary>
-		/// <param name="adminId">the id of the admin</param>
-		/// <returns>admin obj</returns>
-		[HttpGet("{adminId}")]
-		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[Authorize(Policy = "AdminAccess")]
-		public ActionResult<Admin> GetAdminById(int adminId) {
-			Admin a = _adminRepo.GetBy(adminId);
+        /// <summary>
+        /// Get all admins
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize(Policy = "AdminAccess")]
+        public IEnumerable<Admin> GetAllAdmins() {
+            return _adminRepo.GetAll();
+        }
+        /// <summary>
+        /// Get admin by a given Id
+        /// </summary>
+        /// <param name="adminId">the id of the admin</param>
+        /// <returns>admin obj</returns>
+        [HttpGet("{adminId}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "AdminAccess")]
+        public ActionResult<Admin> GetAdminById(int adminId) {
+            Admin a = _adminRepo.GetBy(adminId);
 
-			if (a == null) {
-				return NotFound("Admin not found");
-			}
+            if (a == null) {
+                return NotFound("Admin not found");
+            }
 
-			return a;
-		}
+            return a;
+        }
 
 
-		/// <summary>
-		/// Create a new admin
-		/// </summary>
-		/// <param name="dto"></param>
-		/// <returns></returns>
-		[HttpPost]
-		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		[Authorize(Policy = "AdminAccess")]
-		public IActionResult PostAdmin(AdminDTO dto) {
-			try {
-				Admin newA = new Admin(dto.FirstName, dto.LastName, dto.Email);
+        /// <summary>
+        /// Create a new admin
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "AdminAccess")]
+        public IActionResult PostAdmin(AdminDTO dto) {
+            try {
+                Admin newA = new Admin(dto.FirstName, dto.LastName, dto.Email);
 
-				_adminRepo.Add(newA);
+                _adminRepo.Add(newA);
 
-				_adminRepo.SaveChanges();
+                _adminRepo.SaveChanges();
 
-				return CreatedAtAction(nameof(GetAdminById), new { adminId = newA.Id }, newA);
-			}
-			catch (Exception e) {
-				return BadRequest(e.Message);
-			}
-		}
+                return CreatedAtAction(nameof(GetAdminById), new { adminId = newA.Id }, newA);
+            } catch (Exception e) {
+                return BadRequest(e.Message);
+            }
+        }
 
-		/// <summary>
-		/// Delete an admin with a specific id
-		/// </summary>
-		/// <param name="adminId"></param>
-		/// <returns></returns>
-		[HttpDelete("{adminId}")]
-		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[ProducesResponseType(StatusCodes.Status204NoContent)]
-		[Authorize(Policy = "AdminAccess")]
-		public IActionResult DeleteAdmin(int adminId) {
-			Admin a = _adminRepo.GetBy(adminId);
+        /// <summary>
+        /// Delete an admin with a specific id
+        /// </summary>
+        /// <param name="adminId"></param>
+        /// <returns></returns>
+        [HttpDelete("{adminId}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Authorize(Policy = "AdminAccess")]
+        public IActionResult DeleteAdmin(int adminId) {
+            Admin a = _adminRepo.GetBy(adminId);
 
-			if (a == null) {
-				return NotFound("Admin not found");
-			}
+            if (a == null) {
+                return NotFound("Admin not found");
+            }
 
-			_adminRepo.Delete(a);
-			_adminRepo.SaveChanges();
+            _adminRepo.Delete(a);
+            _adminRepo.SaveChanges();
 
-			return NoContent();
-		}
+            return NoContent();
+        }
 
-	}
+    }
 }

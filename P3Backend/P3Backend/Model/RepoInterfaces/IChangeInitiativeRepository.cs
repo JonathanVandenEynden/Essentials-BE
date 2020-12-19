@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
 
 namespace P3Backend.Model.RepoInterfaces {
-	public interface IChangeInitiativeRepository {
-		IEnumerable<ChangeInitiative> GetAll();
+    public interface IChangeInitiativeRepository {
+        IEnumerable<ChangeInitiative> GetAll();
 
-		ChangeInitiative GetBy(int id);
+        ChangeInitiative GetBy(int id);
 
-		void Add(ChangeInitiative ci);
+        void Add(ChangeInitiative ci);
 
-		void Update(ChangeInitiative ci);
+        void Update(ChangeInitiative ci);
 
-		void Delete(ChangeInitiative ci);
+        void Delete(ChangeInitiative ci);
 
-		void SaveChanges();
+        void SaveChanges();
 
-		ChangeInitiative GetByName(string name);
+        ChangeInitiative GetByName(string name);
 
-		IEnumerable<ChangeInitiative> GetForUserId(int userId);
+        IEnumerable<ChangeInitiative> GetForUserId(int userId);
 
 
-	}
+    }
 }

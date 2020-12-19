@@ -1,5 +1,5 @@
 ﻿namespace P3Backend.Model.DTO_s {
-	public class SurveyDTO : IAssessmentDTO {
+    public class SurveyDTO : IAssessmentDTO {
 
-	}
+    }
 }
