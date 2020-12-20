@@ -2,17 +2,13 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="P3Backend.Model.IAssessment">
     <Position X="27" Y="9.5" Width="2.25" />
-    <AssociationLine Name="Feedback" Type="P3Backend.Model.Questions.RangedQuestion" FixedToPoint="true">
-      <Path>
-        <Point X="28.188" Y="11.44" />
-        <Point X="28.188" Y="14.75" />
-      </Path>
+    <AssociationLine Name="Feedback" Type="P3Backend.Model.Questions.RangedQuestion">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.075" Y="0.091" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAiAAAAAAAAAAAAAAACAACgAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAiAAAAAAAAAAAAAAACAACAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Model\Assessments\IAssessment.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -170,11 +166,22 @@
     </InheritanceLine>
     <AssociationLine Name="EmployeeOrganizationParts" Type="P3Backend.Model.TussenTabellen.EmployeeOrganizationPart" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="13.062" Y="7.75" />
-        <Point X="13.062" Y="2.497" />
+        <Point X="12.688" Y="7.75" />
+        <Point X="12.688" Y="5.124" />
+        <Point X="12.688" Y="5.124" />
+        <Point X="12.688" Y="2.497" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="-3.93" Y="0.079" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="EmployeeChangeGroups" Type="P3Backend.Model.TussenTabellen.EmployeeChangeGroup" FixedFromPoint="true">
+      <Path>
+        <Point X="14.438" Y="7.75" />
+        <Point X="14.438" Y="6.747" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-3.61" Y="0.088" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -183,6 +190,7 @@
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="EmployeeOrganizationParts" />
+      <Property Name="EmployeeChangeGroups" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.IUser">
@@ -213,23 +221,17 @@
         <Position X="-0.304" Y="0.058" Height="0.182" Width="1.412" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="ChangeSponsor" Type="P3Backend.Model.Users.Employee" ManuallyRouted="true" FixedFromPoint="true">
+    <AssociationLine Name="ChangeSponsor" Type="P3Backend.Model.Users.Employee" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="18.75" Y="9" />
-        <Point X="14.5" Y="9" />
+        <Point X="18.75" Y="8.625" />
+        <Point X="14.5" Y="8.665" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.039" Y="0.053" />
+        <Position X="-1.311" Y="0.108" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="ChangeType" Type="P3Backend.Model.ChangeTypes.IChangeType" FixedToPoint="true">
-      <Path>
-        <Point X="20" Y="12.564" />
-        <Point X="20" Y="14.75" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAwCIAIQAAAgIAIAACEAEAQgAAQAAAAAAAAAAECAAAA=</HashCode>
+      <HashCode>AAwCIAIQAAAgIAIAACEAAAQgAAQAAAAAAAAAAECAAAA=</HashCode>
       <FileName>Model\ChangeInitiative.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -248,10 +250,10 @@
         <Point X="4.625" Y="9.699" />
         <Point X="4.625" Y="10.074" />
         <Point X="11.417" Y="10.074" />
-        <Point X="11.417" Y="9.434" />
+        <Point X="11.417" Y="8.982" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="1.897" Y="0.412" />
+        <Position X="0.13" Y="0.776" />
       </MemberNameLabel>
     </AssociationLine>
     <AssociationLine Name="ChangeManagers" Type="P3Backend.Model.Users.ChangeManager" FixedFromPoint="true" FixedToPoint="true">
@@ -305,13 +307,8 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.Project">
-    <Position X="11.75" Y="13" Width="2" />
-    <AssociationLine Name="ChangeInitiatives" Type="P3Backend.Model.ChangeInitiative" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="13.75" Y="14.125" />
-        <Point X="19.312" Y="14.125" />
-        <Point X="19.312" Y="12.564" />
-      </Path>
+    <Position X="11.5" Y="13" Width="2" />
+    <AssociationLine Name="ChangeInitiatives" Type="P3Backend.Model.ChangeInitiative">
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
         <Position X="0.06" Y="1.25" Height="0.182" Width="2.824" />
       </MemberNameLabel>
@@ -327,7 +324,7 @@
   <Class Name="P3Backend.Model.RoadMapItem">
     <Position X="23.5" Y="8.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AARCAAAAAIAAIEIAAAEAAAAgAAAAAAACAAAAAEABBAA=</HashCode>
+      <HashCode>AARCAAAAAIAAIEIAAAEAAAAgAAAAAAAAAAAAAEABBAA=</HashCode>
       <FileName>Model\RoadMapItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -384,10 +381,10 @@
     </TypeIdentifier>
   </Class>
   <Class Name="P3Backend.Model.PresetSurvey">
-    <Position X="35.75" Y="8.5" Width="2.25" />
+    <Position X="35.25" Y="8.5" Width="2.25" />
     <AssociationLine Name="PresetQuestions" Type="P3Backend.Model.Questions.Question" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="35.75" Y="9.562" />
+        <Point X="35.25" Y="9.562" />
         <Point X="32.875" Y="9.562" />
         <Point X="32.875" Y="9.75" />
       </Path>
@@ -405,13 +402,15 @@
   </Class>
   <Class Name="P3Backend.Model.TussenTabellen.EmployeeChangeGroup">
     <Position X="13.5" Y="5" Width="3" />
-    <AssociationLine Name="Employee" Type="P3Backend.Model.Users.Employee" FixedFromPoint="true">
+    <AssociationLine Name="Employee" Type="P3Backend.Model.Users.Employee" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="13.938" Y="6.747" />
-        <Point X="13.938" Y="7.75" />
+        <Point X="13.562" Y="6.747" />
+        <Point X="13.562" Y="7.249" />
+        <Point X="13.562" Y="7.249" />
+        <Point X="13.562" Y="7.75" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.909" Y="0.047" />
+        <Position X="-0.899" Y="0.013" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -424,7 +423,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="P3Backend.Model.Users.DeviceTokens">
-    <Position X="28.75" Y="2" Width="3" />
+    <Position X="24.5" Y="3" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAiAAAAAAAAAAAAAAAACAAACAQAAAIIAAAQAAABAAA=</HashCode>
       <FileName>Model\Users\DeviceTokens.cs</FileName>
@@ -438,7 +437,7 @@
     </TypeIdentifier>
   </Enum>
   <Enum Name="P3Backend.Model.Questions.QuestionType">
-    <Position X="35.75" Y="10.75" Width="1.5" />
+    <Position X="35.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAAAAACAAAAAAAAgAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Questions\QuestionType.cs</FileName>
