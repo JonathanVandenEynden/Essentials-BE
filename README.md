@@ -15,3 +15,7 @@ Thanks to the use of Swagger Documentation. The [API](https://essentialsapi.azur
 ### User guide
 
 we also have a [quick start guide](./QuickStartGuide.pdf)
+
+### Class Diagram
+
+![Image](P3Backend/P3Backend/Data/Images/ClassDiagram.png)
