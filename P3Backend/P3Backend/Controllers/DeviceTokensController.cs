@@ -28,6 +28,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IEnumerable<string> GetAll() {
             return _deviceTokensRepository.Get().getAllTokens();
@@ -43,6 +44,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult SendNotifications(string userids, string title, string message) {
             var users = userids.Split(",").ToList();
@@ -72,6 +74,7 @@ namespace P3Backend.Controllers {
         [HttpPost("{userid}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "employeeAccess")]
         public IActionResult PostPresetSurvey(string userid, string token) {
             var dt = _deviceTokensRepository.Get();

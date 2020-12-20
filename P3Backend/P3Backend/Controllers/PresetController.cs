@@ -29,6 +29,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IEnumerable<PresetSurvey> GetAll() {
             return _presetRepo.GetAll();
@@ -43,6 +44,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<PresetSurvey> GetPresetSurvey(int id) {
             PresetSurvey ps = _presetRepo.GetBy(id);
@@ -63,6 +65,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public PresetSurvey GetPresetSurveyBy(string theme) {
             return _presetRepo.GetBy(theme);
@@ -76,6 +79,8 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Policy = "ChangeManagerAccess")]
         public List<string> GetAllThemas() {
             return _presetRepo.GetThemas();
         }
@@ -88,6 +93,7 @@ namespace P3Backend.Controllers {
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "AdminAccess")]
         public IActionResult DeletePresetSurvey(int id) {
             PresetSurvey ps = _presetRepo.GetBy(id);
@@ -107,10 +113,10 @@ namespace P3Backend.Controllers {
         /// </summary>
         /// <param name="dto">DTO for making the PresetSurvey</param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "AdminAccess")]
         public IActionResult PostPresetSurvey(PresetSurveyDTO dto) {
             Question question = null;
@@ -131,7 +137,7 @@ namespace P3Backend.Controllers {
             }
 
             if (question == null) {
-                throw new Exception();
+                return BadRequest("Question is not defined");
             }
 
             if (_presetRepo.GetBy(dto.Theme) != null) {
@@ -157,6 +163,7 @@ namespace P3Backend.Controllers {
         [HttpPost("PostAnswerToPresetQuestion/{questionId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "AdminAccess")]
         public IActionResult PostAnswerToPresetQuestion(int questionId, List<string> possibleAnswers) {
             Question question = _presetRepo.GetQuestion(questionId);

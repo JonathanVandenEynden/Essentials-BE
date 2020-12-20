@@ -46,6 +46,8 @@ namespace P3Backend.Controllers {
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "EmployeeAccess")]
         public ActionResult<Survey> GetSurvey(int id) {
             try {
@@ -65,10 +67,12 @@ namespace P3Backend.Controllers {
         /// </summary>
         /// <param name="roadmapItemId">id of the roadmapItem</param>
         /// <param name="thema">Optional parameter, if you need a presetsurvey</param>
-        /// <returns></returns>
+        /// <returns>Created survey</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<Survey> PostSurvey(int roadmapItemId, string thema = null) {
             try {
@@ -157,6 +161,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult DeleteSurveyByRoadmapItemId(int roadmapItemId) {
             try {
@@ -174,8 +179,5 @@ namespace P3Backend.Controllers {
                 return BadRequest(e.Message);
             }
         }
-
-
-
     }
 }

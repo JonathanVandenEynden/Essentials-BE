@@ -37,6 +37,9 @@ namespace P3Backend.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "EmployeeAccess")]
         public ActionResult<List<ChangeGroup>> GetChangeGroupForUser() {
             try {
@@ -57,6 +60,8 @@ namespace P3Backend.Controllers {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<IList<ChangeGroup>> GetAllGhangeGroupsOfOrganization(int organizationId = 1) {
 

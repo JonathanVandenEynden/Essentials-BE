@@ -33,7 +33,7 @@ namespace P3Backend.Controllers {
         /// Get a road map item with a given id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Roadmapitem</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -54,7 +54,7 @@ namespace P3Backend.Controllers {
         /// Get the RoadmapItems from a change initiative
         /// </summary>
         /// <param name="changeInitiativeId"></param>
-        /// <returns></returns>
+        /// <returns>List of roadmapitems</returns>
         [Route("[action]/{changeInitiativeId}")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -74,7 +74,7 @@ namespace P3Backend.Controllers {
         /// </summary>
         /// <param name="changeInitiativeId"></param>
         /// <param name="dto"></param>
-        /// <returns></returns>
+        /// <returns>Created roadmapitem</returns>
         [HttpPost("{changeInitiativeId}")]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult PostRoadMapItem(int changeInitiativeId, RoadMapItemDTO dto) {
@@ -103,7 +103,7 @@ namespace P3Backend.Controllers {
         /// Gives a list of employees that have not filled in the survey of the roadmapItem
         /// </summary>
         /// <param name="roadmapItemId">Id of the roadmapItem</param>
-        /// <returns>A list of employees</returns>
+        /// <returns>List of employees</returns>
         [HttpGet("[action]/{roadmapItemId}")]
         public List<Employee> GetEmployeesNotFilledInSurvey(int roadmapItemId) {
             RoadMapItem roadmapItem = _roadmapItemRepository.GetBy(roadmapItemId);
@@ -117,7 +117,7 @@ namespace P3Backend.Controllers {
         /// </summary>
         /// <param name="roadmapItemId"></param>
         /// <param name="dto"></param>
-        /// <returns></returns>
+        /// <returns>NoContent</returns>
         [HttpPut("{roadmapItemId}")]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult PutRoadMapItem(int roadmapItemId, RoadMapItemDTO dto) {
@@ -143,7 +143,7 @@ namespace P3Backend.Controllers {
         /// Delete a road map item with a given id
         /// </summary>
         /// <param name="roadmapItemId"></param>
-        /// <returns></returns>
+        /// <returns>NoContent</returns>
         [HttpDelete("{roadmapItemId}")]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult DeleteRoadMapItem(int roadmapItemId) {

@@ -32,6 +32,8 @@ namespace P3Backend.Controllers {
         [Route("[action]/{organizationId}")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<IEnumerable<Project>> GetProjectsForOrganization(int organizationId) {
             Organization o = _organizationRepo.GetBy(organizationId);
@@ -48,7 +50,9 @@ namespace P3Backend.Controllers {
         /// <param name="projectId"></param>
         /// <returns></returns>
         [HttpGet("{projectId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<Project> GetProjectById(int projectId) {
             Project p = _projectRepo.GetBy(projectId);
@@ -68,6 +72,7 @@ namespace P3Backend.Controllers {
         [HttpPost("{organizationId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult PostProjectToOrganization(int organizationId, ProjectDTO dto) {
 
