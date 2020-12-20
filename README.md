@@ -12,3 +12,6 @@ For data persistence, currently there is a connection with a Microsoft SQLServer
 
 Thanks to the use of Swagger Documentation. The [API](https://essentialsapi.azurewebsites.net/swagger/index.html) is automatically documented in an clear way.
 
+### User guide
+
+we also have a [quick start guide](./QuickStartGuide.pdf)
