@@ -57,8 +57,6 @@ namespace P3Backend {
             services.AddCors(options => {
                 options.AddPolicy(name: EssentialsAllowOrigin,
                                   builder => {
-                                      //builder.AllowAnyOrigin();
-
                                       builder.WithOrigins("https://essentialstoolkit.netlify.app",
                                                             "https://essentials-angular.azurewebsites.net")
                                             .AllowAnyHeader()
@@ -110,14 +108,7 @@ namespace P3Backend {
                     Description = "Copy 'Bearer' + valid JWT token into field"
                 }));
                 c.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
-            });
-
-            //services.AddOpenApiDocument(c => { 
-            //	c.DocumentName = "apidocs"; 
-            //	c.Title = "EssentialsToolkit"; 
-            //	c.Version = "v1"; 
-            //	c.Description = "The essentialsToolkitAPI documentation"; 
-            //});
+            });            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

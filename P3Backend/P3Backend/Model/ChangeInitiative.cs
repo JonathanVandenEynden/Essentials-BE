@@ -111,7 +111,6 @@ namespace P3Backend.Model {
             ChangeGroup = new ChangeGroup("All Employees");
             RoadMap = new List<RoadMapItem>();
             ChangeGroup = changeGroup;
-            // TODO standaard voorbereiding item toevoegen aan roadmap
 
         }
 

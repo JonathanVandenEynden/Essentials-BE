@@ -23,16 +23,7 @@ namespace P3Backend.Model {
 
         protected IAssessment() {
             //EF
-        }
-
-        public void SurveyTemplates(string type) {
-            /*type = "personal";
-            if (type.Equals("personal")) {
-				Question q1 = new MultipleChoiceQuestion("How is your mood about this change initiative?");				
-				((MultipleChoiceQuestion)q1).AddPossibleAnswers(new List<string> { "Good", "Okay", "Bad" });
-				Questions.Add(q1);
-			}*/
-        }
+        }       
 
     }
 }

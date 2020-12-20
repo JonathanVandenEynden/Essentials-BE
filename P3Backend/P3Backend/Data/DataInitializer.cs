@@ -262,7 +262,6 @@ namespace P3Backend.Data {
 				#region Surveys
 
 				Survey surveyResto1 = new Survey(roadMapItemResto1);
-				surveyResto1.SurveyTemplates("test");
 				Survey surveyResto2 = new Survey(roadMapItemResto2);
 				Survey surveyResto3 = new Survey(roadMapItemResto3);
 				Survey surveyResto4 = new Survey(roadMapItemResto4);

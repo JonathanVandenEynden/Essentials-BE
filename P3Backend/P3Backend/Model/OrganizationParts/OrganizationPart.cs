@@ -22,14 +22,7 @@ namespace P3Backend.Model.OrganizationParts {
         public OrganizationPartType Type {
             get => _type;
             set {
-                _type = value;
-                //! Check redundant because the value must be an OrganizationPartType eitherway
-                //if (Enum.GetValues(typeof(OrganizationPartType)).HasProperty(value.ToString())) {
-                //	_type = value;
-                //}
-                //else {
-                //	throw new InvalidOperationException("Value is not part of the enum");
-                //}
+                _type = value;                
             }
         }
 
