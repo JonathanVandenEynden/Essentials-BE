@@ -193,35 +193,29 @@ namespace P3Backend.Data {
 
 				#region ChangeGroups
 				ChangeGroup allEmployees = new ChangeGroup("All employees");
+
 				EmployeeChangeGroup ziggyAllEmployees = new EmployeeChangeGroup(ziggy, allEmployees);
 				ziggy.EmployeeChangeGroups.Add(ziggyAllEmployees);
-				allEmployees.EmployeeChangeGroups.Add(ziggyAllEmployees);
 
 				EmployeeChangeGroup marbodAllEmployees = new EmployeeChangeGroup(marbod, allEmployees);
 				marbod.EmployeeChangeGroups.Add(marbodAllEmployees);
-				allEmployees.EmployeeChangeGroups.Add(marbodAllEmployees);
 
 				EmployeeChangeGroup sebastienAllEmployees = new EmployeeChangeGroup(sebastien, allEmployees);
 				sebastien.EmployeeChangeGroups.Add(sebastienAllEmployees);
-				allEmployees.EmployeeChangeGroups.Add(sebastienAllEmployees);
 
 				EmployeeChangeGroup svenAllEmployees = new EmployeeChangeGroup(sven, allEmployees);
 				sven.EmployeeChangeGroups.Add(svenAllEmployees);
-				allEmployees.EmployeeChangeGroups.Add(svenAllEmployees);
 
 				EmployeeChangeGroup eliasAllEmployees = new EmployeeChangeGroup(elias, allEmployees);
 				elias.EmployeeChangeGroups.Add(eliasAllEmployees);
-				allEmployees.EmployeeChangeGroups.Add(eliasAllEmployees);
 
 				EmployeeChangeGroup lotteAllEmployees = new EmployeeChangeGroup(lotte, allEmployees);
 				lotte.EmployeeChangeGroups.Add(lotteAllEmployees);
-				allEmployees.EmployeeChangeGroups.Add(lotteAllEmployees);
 
 				EmployeeChangeGroup maudAllEmployees = new EmployeeChangeGroup(maud, allEmployees);
 				maud.EmployeeChangeGroups.Add(maudAllEmployees);
-				allEmployees.EmployeeChangeGroups.Add(maudAllEmployees);
 
-				/*allEmployees.EmployeeChangeGroups.AddRange(new List<EmployeeChangeGroup>() { 
+				allEmployees.EmployeeChangeGroups.AddRange(new List<EmployeeChangeGroup>() { 
 					ziggyAllEmployees,
 					marbodAllEmployees, 
 					sebastienAllEmployees,
@@ -229,29 +223,53 @@ namespace P3Backend.Data {
 					eliasAllEmployees,
 					lotteAllEmployees,
 					maudAllEmployees
-				});*/
+				});
 
 				ChangeGroup justBelgium = new ChangeGroup("Just Belgium");
+
 				EmployeeChangeGroup ziggyJustBelgium = new EmployeeChangeGroup(ziggy, justBelgium);
 				ziggy.EmployeeChangeGroups.Add(ziggyJustBelgium);
-				justBelgium.EmployeeChangeGroups.Add(ziggyJustBelgium);
 
 				EmployeeChangeGroup sebastienJustBelgium = new EmployeeChangeGroup(sebastien, justBelgium);
 				sebastien.EmployeeChangeGroups.Add(sebastienJustBelgium);
-				justBelgium.EmployeeChangeGroups.Add(sebastienJustBelgium);
 
 				EmployeeChangeGroup svenJustBelgium = new EmployeeChangeGroup(sven, justBelgium);
 				sven.EmployeeChangeGroups.Add(svenJustBelgium);
-				justBelgium.EmployeeChangeGroups.Add(svenJustBelgium);
 
 				EmployeeChangeGroup eliasJustBelgium = new EmployeeChangeGroup(elias, justBelgium);
 				elias.EmployeeChangeGroups.Add(eliasJustBelgium);
-				justBelgium.EmployeeChangeGroups.Add(eliasJustBelgium);
 
-				
+				justBelgium.EmployeeChangeGroups.AddRange(new List<EmployeeChangeGroup>() {
+					ziggyJustBelgium,
+					sebastienJustBelgium,
+					svenJustBelgium,
+					eliasJustBelgium
+				});
+
+				ChangeGroup justNetherlands = new ChangeGroup("Just Netherlands");
+
+				EmployeeChangeGroup marbodJustNetherlands = new EmployeeChangeGroup(ziggy, justNetherlands);
+				marbod.EmployeeChangeGroups.Add(marbodJustNetherlands);
+
+				EmployeeChangeGroup eliasJustNetherlands = new EmployeeChangeGroup(elias, justNetherlands);
+				elias.EmployeeChangeGroups.Add(eliasJustNetherlands);
+
+				EmployeeChangeGroup lotteJustNetherlands = new EmployeeChangeGroup(lotte, justNetherlands);
+				lotte.EmployeeChangeGroups.Add(lotteJustNetherlands);
+
+				EmployeeChangeGroup maudJustNetherlands = new EmployeeChangeGroup(maud, justNetherlands);
+				maud.EmployeeChangeGroups.Add(maudJustNetherlands);
+
+				justNetherlands.EmployeeChangeGroups.AddRange(new List<EmployeeChangeGroup>() {
+					marbodJustNetherlands,
+					eliasJustNetherlands,
+					lotteJustNetherlands,
+					maudJustNetherlands
+				});
 
 				_dbContext.ChangeGroups.Add(allEmployees);
 				_dbContext.ChangeGroups.Add(justBelgium);
+				_dbContext.ChangeGroups.Add(justNetherlands);
 				#endregion
 
 				#region ChangeInitiatives
