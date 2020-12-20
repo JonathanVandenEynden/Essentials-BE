@@ -117,7 +117,7 @@ namespace P3Backend.Data {
                 .HasOne(eo => eo.OrganizationPart)
                 .WithMany(o => o.EmployeeOrganizationParts)
                 .HasForeignKey(eo => eo.OrganizationPartId);
-            //
+            
             modelBuilder.Entity<EmployeeChangeGroup>()
                 .HasKey(ecg => new { ecg.EmployeeId, ecg.ChangeGroupId });
             modelBuilder.Entity<EmployeeChangeGroup>()
