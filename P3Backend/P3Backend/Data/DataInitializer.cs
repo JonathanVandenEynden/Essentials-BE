@@ -25,9 +25,9 @@ namespace P3Backend.Data {
 		}
 
 		public async Task InitializeData() {
-			//_dbContext.Database.EnsureDeleted();
-			//if (_dbContext.Database.EnsureCreated()) {
-			if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
+			_dbContext.Database.EnsureDeleted();
+			if (_dbContext.Database.EnsureCreated()) {
+			//if (!_dbContext.Admins.Any()) { // DEZE LIJN UIT COMMENTAAR EN 2 ERBOVEN IN COMMENTAAR VOOR DEPLOYEN
 
 				#region Update Discriminator table
 				// Trigger to edit the discriminator field when the employee is upgraded
@@ -54,12 +54,12 @@ namespace P3Backend.Data {
 				Employee sponsor = new Employee("Sponser", "Sponser", "sponser@hogent.com");
 				Employee ziggy = new Employee("Ziggy", "Moens", "ziggy@hogent.com");
 				Employee marbod = new Employee("Marbod", "Naassens", "marbod@hogent.com");
-				//Employee sebastien = new Employee("Sébastien", "De Pauw", "sébastien@hogent.com");
-				//Employee sven = new Employee("Sven", "Wyseur", "sven@hogent.com");
-				//Employee elias = new Employee("Elias", "Ameye", "elias@hogent.com");
-				//Employee lotte = new Employee("Lotte", "Van Achter", "lotte@hogent.com");
-				//Employee maud = new Employee("Maud", "Dijkstra", "maud@hogent.com");
-				_dbContext.Employees.AddRange(new List<Employee>() { sponsor, ziggy, marbod });
+				Employee sebastien = new Employee("Sébastien", "De Pauw", "sebastien@hogent.com");
+				Employee sven = new Employee("Sven", "Wyseur", "sven@hogent.com");
+				Employee elias = new Employee("Elias", "Ameye", "elias@hogent.com");
+				Employee lotte = new Employee("Lotte", "Van Achter", "lotte@hogent.com");
+				Employee maud = new Employee("Maud", "Dijkstra", "maud@hogent.com");
+				_dbContext.Employees.AddRange(new List<Employee>() { sponsor, ziggy, marbod, sebastien, sven, elias, lotte, maud });
 				#endregion
 
 				#region Changemananger
@@ -80,7 +80,7 @@ namespace P3Backend.Data {
 				OrganizationPart officeBE = new OrganizationPart("Belgian Office", OrganizationPartType.OFFICE);
 				OrganizationPart officeNL = new OrganizationPart("Dutch Office", OrganizationPartType.OFFICE);
 				OrganizationPart departmentHR = new OrganizationPart("Human Resources", OrganizationPartType.DEPARTMENT);
-				//OrganizationPart softwareTeam = new OrganizationPart("Software Development Team", OrganizationPartType.TEAM);
+				OrganizationPart softwareTeam = new OrganizationPart("Software Development Team", OrganizationPartType.TEAM);
 
 				var cmshr = new EmployeeOrganizationPart(changeManagerSuktrit, departmentHR);
 				changeManagerSuktrit.EmployeeOrganizationParts.Add(cmshr);
@@ -112,66 +112,67 @@ namespace P3Backend.Data {
 				marbod.EmployeeOrganizationParts.Add(moffnl);
 				officeNL.EmployeeOrganizationParts.Add(moffnl);
 
-				//var sb = new EmployeeOrganizationPart(sebastien, belgium);
-				//sebastien.EmployeeOrganizationParts.Add(sb);
-				//belgium.EmployeeOrganizationParts.Add(sb);
-				//var sj = new EmployeeOrganizationPart(sebastien, jellyTeam);
-				//sebastien.EmployeeOrganizationParts.Add(sj);
-				//jellyTeam.EmployeeOrganizationParts.Add(sj);
-				//var shr = new EmployeeOrganizationPart(sebastien, departmentHR);
-				//sebastien.EmployeeOrganizationParts.Add(shr);
-				//departmentHR.EmployeeOrganizationParts.Add(shr);
+                var sb = new EmployeeOrganizationPart(sebastien, belgium);
+                sebastien.EmployeeOrganizationParts.Add(sb);
+                belgium.EmployeeOrganizationParts.Add(sb);
+                var sj = new EmployeeOrganizationPart(sebastien, jellyTeam);
+                sebastien.EmployeeOrganizationParts.Add(sj);
+                jellyTeam.EmployeeOrganizationParts.Add(sj);
+                var shr = new EmployeeOrganizationPart(sebastien, departmentHR);
+                sebastien.EmployeeOrganizationParts.Add(shr);
+                departmentHR.EmployeeOrganizationParts.Add(shr);
 
-				//var enl = new EmployeeOrganizationPart(elias, netherlands);
-				//elias.EmployeeOrganizationParts.Add(enl);
-				//netherlands.EmployeeOrganizationParts.Add(enl);
-				//var eoffbe = new EmployeeOrganizationPart(elias, officeBE);
-				//elias.EmployeeOrganizationParts.Add(eoffbe);
-				//officeBE.EmployeeOrganizationParts.Add(eoffbe);
-				//var est = new EmployeeOrganizationPart(elias, softwareTeam);
-				//elias.EmployeeOrganizationParts.Add(est);
-				//softwareTeam.EmployeeOrganizationParts.Add(est);
+                var enl = new EmployeeOrganizationPart(elias, netherlands);
+                elias.EmployeeOrganizationParts.Add(enl);
+                netherlands.EmployeeOrganizationParts.Add(enl);
+                var eoffbe = new EmployeeOrganizationPart(elias, officeBE);
+                elias.EmployeeOrganizationParts.Add(eoffbe);
+                officeBE.EmployeeOrganizationParts.Add(eoffbe);
+                var est = new EmployeeOrganizationPart(elias, softwareTeam);
+                elias.EmployeeOrganizationParts.Add(est);
+                softwareTeam.EmployeeOrganizationParts.Add(est);
 
-				//var soffbe = new EmployeeOrganizationPart(sven, officeBE);
-				//sven.EmployeeOrganizationParts.Add(soffbe);
-				//officeBE.EmployeeOrganizationParts.Add(soffbe);
-				//var sst = new EmployeeOrganizationPart(sven, softwareTeam);
-				//sven.EmployeeOrganizationParts.Add(sst);
-				//softwareTeam.EmployeeOrganizationParts.Add(sst);
-				//var sbe = new EmployeeOrganizationPart(sven, belgium);
-				//sven.EmployeeOrganizationParts.Add(sbe);
-				//belgium.EmployeeOrganizationParts.Add(sbe);
+                var soffbe = new EmployeeOrganizationPart(sven, officeBE);
+                sven.EmployeeOrganizationParts.Add(soffbe);
+                officeBE.EmployeeOrganizationParts.Add(soffbe);
+                var sst = new EmployeeOrganizationPart(sven, softwareTeam);
+                sven.EmployeeOrganizationParts.Add(sst);
+                softwareTeam.EmployeeOrganizationParts.Add(sst);
+                var sbe = new EmployeeOrganizationPart(sven, belgium);
+                sven.EmployeeOrganizationParts.Add(sbe);
+                belgium.EmployeeOrganizationParts.Add(sbe);
 
-				//var loffnl = new EmployeeOrganizationPart(lotte, officeNL);
-				//lotte.EmployeeOrganizationParts.Add(loffnl);
-				//officeNL.EmployeeOrganizationParts.Add(loffnl);
-				//var fnl = new EmployeeOrganizationPart(lotte, netherlands);
-				//lotte.EmployeeOrganizationParts.Add(fnl);
-				//netherlands.EmployeeOrganizationParts.Add(fnl);
-				//var lhr = new EmployeeOrganizationPart(lotte, departmentHR);
-				//lotte.EmployeeOrganizationParts.Add(lhr);
-				//departmentHR.EmployeeOrganizationParts.Add(lhr);
+                var loffnl = new EmployeeOrganizationPart(lotte, officeNL);
+                lotte.EmployeeOrganizationParts.Add(loffnl);
+                officeNL.EmployeeOrganizationParts.Add(loffnl);
+                var fnl = new EmployeeOrganizationPart(lotte, netherlands);
+                lotte.EmployeeOrganizationParts.Add(fnl);
+                netherlands.EmployeeOrganizationParts.Add(fnl);
+                var lhr = new EmployeeOrganizationPart(lotte, departmentHR);
+                lotte.EmployeeOrganizationParts.Add(lhr);
+                departmentHR.EmployeeOrganizationParts.Add(lhr);
 
-				//var mjt = new EmployeeOrganizationPart(maud, jellyTeam);
-				//maud.EmployeeOrganizationParts.Add(mjt);
-				//jellyTeam.EmployeeOrganizationParts.Add(mjt);
-				//var mst = new EmployeeOrganizationPart(maud, softwareTeam);
-				//maud.EmployeeOrganizationParts.Add(mst);
-				//softwareTeam.EmployeeOrganizationParts.Add(mst);
-				//var moffnl1 = new EmployeeOrganizationPart(maud, officeNL);
-				//maud.EmployeeOrganizationParts.Add(moffnl1);
-				//officeNL.EmployeeOrganizationParts.Add(moffnl1);
-				//var mnl = new EmployeeOrganizationPart(maud, netherlands);
-				//maud.EmployeeOrganizationParts.Add(mnl);
-				//netherlands.EmployeeOrganizationParts.Add(mnl);
+                var mjt = new EmployeeOrganizationPart(maud, jellyTeam);
+                maud.EmployeeOrganizationParts.Add(mjt);
+                jellyTeam.EmployeeOrganizationParts.Add(mjt);
+                var mst = new EmployeeOrganizationPart(maud, softwareTeam);
+                maud.EmployeeOrganizationParts.Add(mst);
+                softwareTeam.EmployeeOrganizationParts.Add(mst);
+                var moffnl1 = new EmployeeOrganizationPart(maud, officeNL);
+                maud.EmployeeOrganizationParts.Add(moffnl1);
+                officeNL.EmployeeOrganizationParts.Add(moffnl1);
+                var mnl = new EmployeeOrganizationPart(maud, netherlands);
+                maud.EmployeeOrganizationParts.Add(mnl);
+                netherlands.EmployeeOrganizationParts.Add(mnl);
 
-				IList<OrganizationPart> ops = new List<OrganizationPart>() {
+                IList<OrganizationPart> ops = new List<OrganizationPart>() {
 					jellyTeam,
 					belgium,
 					netherlands,
 					officeBE,
 					officeNL,
-					departmentHR
+					departmentHR,
+					softwareTeam
 				};
 
 				hogent.OrganizationParts.AddRange(ops);
@@ -338,7 +339,12 @@ namespace P3Backend.Data {
 				await CreateUser(sponsor.Email, "P@ssword1", "employee");
 				await CreateUser(ziggy.Email, "P@ssword1", "employee");
 				await CreateUser(marbod.Email, "P@ssword1", "employee");
-				await CreateUser(changeManagerSuktrit.Email, "P@ssword1", "changeManager");
+				await CreateUser(sebastien.Email, "P@ssword1", "employee");
+				await CreateUser(sven.Email, "P@ssword1", "employee");
+				await CreateUser(elias.Email, "P@ssword1", "employee");
+				await CreateUser(lotte.Email, "P@ssword1", "employee");
+				await CreateUser(maud.Email, "P@ssword1", "employee");
+				await CreateUser(changeManagerSuktrit.Email, "P@ssword1", "changeManager");		
 				#endregion
 
 				#region Preset Surveys
