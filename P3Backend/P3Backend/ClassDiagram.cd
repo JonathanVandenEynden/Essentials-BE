@@ -1,158 +1,305 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="P3Backend.Model.Admin" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="14.75" Y="9.25" Width="1.5" />
+  <Class Name="P3Backend.Model.IAssessment">
+    <Position X="27" Y="9.5" Width="2.25" />
+    <AssociationLine Name="Feedback" Type="P3Backend.Model.Questions.RangedQuestion">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.075" Y="0.091" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
-      <FileName>Model\Admin.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="1.3" Collapsed="true" />
-  </Class>
-  <Class Name="P3Backend.Model.ChangeGroup">
-    <Position X="18.5" Y="1.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
-      <FileName>Model\ChangeGroup.cs</FileName>
+      <HashCode>AAAiAAAAAAAAAAAAAAACAACAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Assessments\IAssessment.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="changeInitiative" />
+      <Property Name="Feedback" />
+      <Property Name="RoadMapItem" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="Users" />
+      <Property Name="Questions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Survey">
+    <Position X="27.25" Y="7.5" Width="2" />
+    <InheritanceLine Type="P3Backend.Model.IAssessment" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="28.125" Y="9.5" />
+        <Point X="28.125" Y="8.857" />
+        <Point X="28.125" Y="8.857" />
+        <Point X="28.125" Y="8.733" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Assessments\Survey.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.ChangeTypes.EconomicalChangeType">
+    <Position X="15.25" Y="17" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ChangeTypes\EconomicalChangeType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.ChangeTypes.IChangeType">
+    <Position X="19.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ChangeTypes\IChangeType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.ChangeTypes.OrganizationalChangeType">
+    <Position X="23" Y="17" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ChangeTypes\OrganizationalChangeType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.ChangeTypes.PersonalChangeType">
+    <Position X="17.75" Y="17" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ChangeTypes\PersonalChangeType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.ChangeTypes.TechnologicalChangeType">
+    <Position X="20.25" Y="17" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ChangeTypes\TechnologicalChangeType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.OrganizationParts.OrganizationPart">
+    <Position X="3.25" Y="0.5" Width="2.5" />
+    <AssociationLine Name="EmployeeOrganizationParts" Type="P3Backend.Model.TussenTabellen.EmployeeOrganizationPart">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.148" Y="0.084" Height="0.182" Width="4" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAAAAAAQAAAAAAAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Model\OrganizationParts\OrganizationPart.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="EmployeeOrganizationParts" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Questions.Question">
+    <Position X="32" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAAAACAAAAAAAAAAAAAAAAAAAAAABAQAAAAABAAA=</HashCode>
+      <FileName>Model\Questions\Question.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Questions.OpenQuestion">
+    <Position X="33" Y="14.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Questions\OpenQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.Users.Admin">
+    <Position X="7.25" Y="8" Width="2" />
+    <InheritanceLine Type="P3Backend.Model.IUser" FixedFromPoint="true">
+      <Path>
+        <Point X="9.625" Y="6.661" />
+        <Point X="9.625" Y="7.625" />
+        <Point X="8.25" Y="7.625" />
+        <Point X="8.25" Y="8" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="Organizations" Type="P3Backend.Model.Organization" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.25" Y="8.562" />
+        <Point X="6.125" Y="8.562" />
+        <Point X="6.125" Y="8.562" />
+        <Point X="5" Y="8.562" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.038" Y="0.102" Height="0.182" Width="2.499" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Users\Admin.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Organizations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Users.ChangeManager">
+    <Position X="11.25" Y="11" Width="2.5" />
+    <AssociationLine Name="CreatedChangeInitiatives" Type="P3Backend.Model.ChangeInitiative" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="13.75" Y="11.375" />
+        <Point X="14.125" Y="11.375" />
+        <Point X="14.125" Y="11.375" />
+        <Point X="18.75" Y="11.375" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.095" Y="-0.311" Height="0.182" Width="3.115" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Users\ChangeManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CreatedChangeInitiatives" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Users.Employee">
+    <Position X="10.5" Y="7.75" Width="4" />
+    <InheritanceLine Type="P3Backend.Model.IUser" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.625" Y="6.661" />
+        <Point X="9.625" Y="7.625" />
+        <Point X="10.812" Y="7.625" />
+        <Point X="10.812" Y="7.75" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="EmployeeOrganizationParts" Type="P3Backend.Model.TussenTabellen.EmployeeOrganizationPart" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.688" Y="7.75" />
+        <Point X="12.688" Y="5.124" />
+        <Point X="12.688" Y="5.124" />
+        <Point X="12.688" Y="2.497" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-3.93" Y="0.079" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="EmployeeChangeGroups" Type="P3Backend.Model.TussenTabellen.EmployeeChangeGroup" FixedFromPoint="true">
+      <Path>
+        <Point X="14.438" Y="7.75" />
+        <Point X="14.438" Y="6.747" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-3.61" Y="0.088" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Users\Employee.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="EmployeeOrganizationParts" />
+      <Property Name="EmployeeChangeGroups" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.IUser">
+    <Position X="8.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAECAEAAACAAAAAAAAEAAAAAAAAAAgAAAAAAAAAAAAk=</HashCode>
+      <FileName>Model\Users\IUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.ChangeGroup">
+    <Position X="20" Y="5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ChangeGroup.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="EmployeeChangeGroups" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.ChangeInitiative">
-    <Position X="11.75" Y="8.75" Width="1.5" />
+    <Position X="18.75" Y="8.25" Width="2.5" />
+    <AssociationLine Name="ChangeGroup" Type="P3Backend.Model.ChangeGroup" FixedFromPoint="true">
+      <Path>
+        <Point X="20.562" Y="8.25" />
+        <Point X="20.562" Y="6.747" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.304" Y="0.058" Height="0.182" Width="1.412" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ChangeSponsor" Type="P3Backend.Model.Users.Employee" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="18.75" Y="8.625" />
+        <Point X="14.5" Y="8.665" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.311" Y="0.108" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>QFACAAAAAAAgAAAAAAAAAAAhAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAwCIAIQAAAgIAIAACEAAAQgAAQAAAAAAAAAAECAAAA=</HashCode>
       <FileName>Model\ChangeInitiative.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="changeManager" />
-      <Property Name="changeSponsor" />
-      <Property Name="changeType" />
+      <Property Name="ChangeGroup" />
+      <Property Name="ChangeSponsor" />
+      <Property Name="ChangeType" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="RoadMap" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="P3Backend.Model.ChangeManager" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18.25" Y="9.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
-      <FileName>Model\ChangeManager.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="P3Backend.Model.ChoiceQuestion">
-    <Position X="6.5" Y="9.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Model\ChoiceQuestion.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.ClosedQuestion">
-    <Position X="6.5" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Model\ClosedQuestion.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.Country">
-    <Position X="2" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Country.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.Department">
-    <Position X="4.25" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Department.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.EconomicalChangeType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="12.5" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\EconomicalChangeType.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="P3Backend.Model.Employee" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="16.5" Y="9.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
-      <FileName>Model\Employee.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="P3Backend.Model.Factory">
-    <Position X="11" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Factory.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.MultipleChoice">
-    <Position X="4.25" Y="9.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Model\MultipleChoice.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.Office">
-    <Position X="8.75" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Office.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.OpenQuestion">
-    <Position X="2" Y="9.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAgAAAAA=</HashCode>
-      <FileName>Model\OpenQuestion.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="P3Backend.Model.Organization">
-    <Position X="8.5" Y="0.5" Width="1.5" />
+    <Position X="2.75" Y="7.5" Width="2.25" />
+    <AssociationLine Name="Employees" Type="P3Backend.Model.Users.Employee" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.625" Y="9.699" />
+        <Point X="4.625" Y="10.074" />
+        <Point X="11.417" Y="10.074" />
+        <Point X="11.417" Y="8.982" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.13" Y="0.776" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ChangeManagers" Type="P3Backend.Model.Users.ChangeManager" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.062" Y="9.699" />
+        <Point X="4.062" Y="11.219" />
+        <Point X="11.25" Y="11.219" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.207" Y="-0.354" Height="0.182" Width="2.822" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="OrganizationParts" Type="P3Backend.Model.OrganizationParts.OrganizationPart" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.5" Y="7.5" />
+        <Point X="4.5" Y="7.125" />
+        <Point X="4.5" Y="7.125" />
+        <Point X="4.5" Y="2.891" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-2.821" Y="0.108" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Portfolio" Type="P3Backend.Model.Portfolio" FixedToPoint="true">
+      <Path>
+        <Point X="3.625" Y="9.699" />
+        <Point X="3.625" Y="13.25" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIACIAAAAAAAAAAAAAAAAAQACAAAACAAAAAAAEAAAAA=</HashCode>
       <FileName>Model\Organization.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Portfolio" />
+    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
+      <Property Name="Employees" />
+      <Property Name="ChangeManagers" />
       <Property Name="OrganizationParts" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="P3Backend.Model.OrganizationalChangeType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="16" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\OrganizationalChangeType.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="P3Backend.Model.OrganizationPart">
-    <Position X="6.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
-      <FileName>Model\OrganizationPart.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.PersonalChangeType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="14.25" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\PersonalChangeType.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
   <Class Name="P3Backend.Model.Portfolio">
-    <Position X="11.5" Y="0.5" Width="1.5" />
+    <Position X="3.25" Y="13.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
       <FileName>Model\Portfolio.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -160,96 +307,141 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="P3Backend.Model.Project">
-    <Position X="17" Y="3.25" Width="1.5" />
+    <Position X="11.5" Y="13" Width="2" />
+    <AssociationLine Name="ChangeInitiatives" Type="P3Backend.Model.ChangeInitiative">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.06" Y="1.25" Height="0.182" Width="2.824" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACIAAAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Project.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="ChangeInitiatives" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="P3Backend.Model.Question">
-    <Position X="3.5" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Question.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="P3Backend.Model.RoadMapItem">
-    <Position X="18.75" Y="3.5" Width="1.5" />
+    <Position X="23.5" Y="8.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAg=</HashCode>
+      <HashCode>AARCAAAAAIAAIEIAAAEAAAAgAAAAAAAAAAAAAEABBAA=</HashCode>
       <FileName>Model\RoadMapItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Assesment" />
+      <Property Name="Assessment" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="P3Backend.Model.Survey" BaseTypeListCollapsed="true">
-    <Position X="14" Y="5.5" Width="1.5" />
+  <Class Name="P3Backend.Model.TussenTabellen.EmployeeOrganizationPart">
+    <Position X="11.25" Y="0.75" Width="3" />
+    <AssociationLine Name="Employee" Type="P3Backend.Model.Users.Employee" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.188" Y="2.497" />
+        <Point X="12.188" Y="7.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.06" Y="0.037" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Survey.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Questions" />
-    </ShowAsCollectionAssociation>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="P3Backend.Model.Team">
-    <Position X="6.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Team.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="P3Backend.Model.TechnologicalChangeType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="17.75" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\TechnologicalChangeType.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="P3Backend.Model.YesNoQuestion">
-    <Position X="8.75" Y="9.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Model\YesNoQuestion.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Interface Name="P3Backend.Model.IAssesment">
-    <Position X="14" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Model\IAssesment.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="P3Backend.Model.IChangeType">
-    <Position X="14.5" Y="10.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\IChangeType.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="P3Backend.Model.IUser">
-    <Position X="16.5" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAEAAAAAAAAAAIABAIAAAkAIAAAAAEAAAAAAAAAg=</HashCode>
-      <FileName>Model\IUser.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAJAAAAACAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Model\TussenTabellen\EmployeeOrganizationPart.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Department" />
-      <Property Name="Country" />
-      <Property Name="Factory" />
-      <Property Name="Office" />
-      <Property Name="Team" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="changeInitiatives" />
+      <Property Name="Employee" />
       <Property Name="OrganizationPart" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Questions.MultipleChoiceQuestion">
+    <Position X="36.25" Y="14.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Model\Questions\MultipleChoiceQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.Questions.RangedQuestion">
+    <Position X="26.5" Y="14.75" Width="3" />
+    <InheritanceLine Type="P3Backend.Model.Questions.Question" FixedToPoint="true">
+      <Path>
+        <Point X="32.75" Y="12.334" />
+        <Point X="32.75" Y="14.375" />
+        <Point X="28.875" Y="14.375" />
+        <Point X="28.875" Y="14.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Model\Questions\RangedQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.Questions.YesNoQuestion">
+    <Position X="29.75" Y="14.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Questions\YesNoQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Backend.Model.PresetSurvey">
+    <Position X="35.25" Y="8.5" Width="2.25" />
+    <AssociationLine Name="PresetQuestions" Type="P3Backend.Model.Questions.Question" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="35.25" Y="9.562" />
+        <Point X="32.875" Y="9.562" />
+        <Point X="32.875" Y="9.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-2.077" Y="0.315" Height="0.182" Width="2.172" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Model\Assessments\PresetSurvey.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="PresetQuestions" />
     </ShowAsCollectionAssociation>
-  </Interface>
+  </Class>
+  <Class Name="P3Backend.Model.TussenTabellen.EmployeeChangeGroup">
+    <Position X="13.5" Y="5" Width="3" />
+    <AssociationLine Name="Employee" Type="P3Backend.Model.Users.Employee" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="13.562" Y="6.747" />
+        <Point X="13.562" Y="7.249" />
+        <Point X="13.562" Y="7.249" />
+        <Point X="13.562" Y="7.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.899" Y="0.013" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQACAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Model\TussenTabellen\EmployeeChangeGroup.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Employee" />
+      <Property Name="ChangeGroup" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="P3Backend.Model.Users.DeviceTokens">
+    <Position X="24.5" Y="3" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAAAAAAAAAAAAAAACAAACAQAAAIIAAAQAAABAAA=</HashCode>
+      <FileName>Model\Users\DeviceTokens.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="P3Backend.Model.OrganizationParts.OrganizationPartType">
+    <Position X="0.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIgAAAAAAAACAAAAAQAAAQAAAAAAA=</HashCode>
+      <FileName>Model\OrganizationParts\OrganizationPartType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="P3Backend.Model.Questions.QuestionType">
+    <Position X="35.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAACAAAAAAAAgAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Questions\QuestionType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

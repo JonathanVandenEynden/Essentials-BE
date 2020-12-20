@@ -1,15 +1,24 @@
-﻿using System;
+﻿using P3Backend.Model.TussenTabellen;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace P3Backend.Model {
-	public class ChangeGroup {
+    public class ChangeGroup {
+        public int Id { get; set; }
 
-		public List<IUser> Users { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public List<EmployeeChangeGroup> EmployeeChangeGroups { get; set; }
 
-		public ChangeInitiative changeInitiative { get; set; }
 
+        public ChangeGroup(string name) {
+            Name = name;
 
-	}
+            EmployeeChangeGroups = new List<EmployeeChangeGroup>();
+        }
+
+        protected ChangeGroup() {
+            // EF
+        }
+    }
 }
