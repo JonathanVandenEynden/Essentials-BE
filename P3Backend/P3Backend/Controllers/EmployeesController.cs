@@ -32,6 +32,8 @@ namespace P3Backend.Controllers {
         [Route("[action]")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "EmployeeAccess")]
         public ActionResult<IEnumerable<Employee>> GetAllEmployeesFromOrganization() {
             try {
@@ -48,9 +50,10 @@ namespace P3Backend.Controllers {
         /// Get employee by a given Id
         /// </summary>
         /// <param name="employeeId">the id of the employee</param>
-        /// <returns>employee obj</returns>
+        /// <returns>An employee</returns>
         [HttpGet("{employeeId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "EmployeeAccess")]
         public ActionResult<Employee> GetEmployeeById(int employeeId) {
             Employee e = _employeeRepo.GetBy(employeeId);
@@ -69,6 +72,7 @@ namespace P3Backend.Controllers {
         /// <returns>employee obj</returns>
         [HttpGet("[action]/{email}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "EmployeeAccess")]
         public ActionResult<Employee> GetEmployeeByEmail(string email) {
             Employee e = _employeeRepo.GetByEmail(email);
@@ -89,6 +93,7 @@ namespace P3Backend.Controllers {
         [HttpPost("{organizationId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult PostEmployee(int organizationId, EmployeeDTO dto) {
             try {
@@ -118,6 +123,7 @@ namespace P3Backend.Controllers {
         [HttpDelete("{employeeId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult DeleteEmployee(int employeeId) {
             Employee e = _employeeRepo.GetBy(employeeId);

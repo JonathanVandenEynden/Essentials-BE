@@ -27,6 +27,8 @@ namespace P3Backend.Controllers {
         /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "AdminAccess")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IEnumerable<Admin> GetAllAdmins() {
             return _adminRepo.GetAll();
         }
@@ -36,7 +38,9 @@ namespace P3Backend.Controllers {
         /// <param name="adminId">the id of the admin</param>
         /// <returns>admin obj</returns>
         [HttpGet("{adminId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "AdminAccess")]
         public ActionResult<Admin> GetAdminById(int adminId) {
             Admin a = _adminRepo.GetBy(adminId);
@@ -56,6 +60,8 @@ namespace P3Backend.Controllers {
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "AdminAccess")]
         public IActionResult PostAdmin(AdminDTO dto) {
             try {
@@ -79,6 +85,7 @@ namespace P3Backend.Controllers {
         [HttpDelete("{adminId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "AdminAccess")]
         public IActionResult DeleteAdmin(int adminId) {
             Admin a = _adminRepo.GetBy(adminId);

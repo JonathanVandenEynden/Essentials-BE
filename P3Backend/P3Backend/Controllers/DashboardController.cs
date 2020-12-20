@@ -42,6 +42,7 @@ namespace P3Backend.Controllers {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<IEnumerable<Project>> GetProjectsChangeManager() {
             try {
@@ -63,6 +64,9 @@ namespace P3Backend.Controllers {
         [Route("[action]")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager() {
             try {
                 ChangeManager loggedInCm = _changeManagerRepository.GetByEmail(User.Identity.Name);
@@ -82,6 +86,7 @@ namespace P3Backend.Controllers {
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<double> GetFilledInSurveysOfChangeInitiative(int id) {
             ChangeInitiative ci = _changeInitiativeRepository.GetBy(id);
@@ -118,6 +123,7 @@ namespace P3Backend.Controllers {
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<Dictionary<int, int>> GetMoodFromChangeInitiative(int id) {
             ChangeInitiative ci = _changeInitiativeRepository.GetBy(id);

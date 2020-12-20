@@ -29,10 +29,11 @@ namespace P3Backend.Controllers {
         /// Gives back all the questions and possible answers for a specific survey, given its Id
         /// </summary>
         /// <param name="surveyId">The Id of the survey</param>
-        /// <returns>A list with questions and possible answers</returns>
+        /// <returns>List with questions and possible answers</returns>
         [HttpGet("{surveyId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "EmployeeAccess")]
         public ActionResult<IEnumerable<Question>> GetQuestionsFromSurvey(int surveyId) {
             Survey survey = _surveyRepository.GetBy(surveyId);
@@ -47,11 +48,12 @@ namespace P3Backend.Controllers {
         /// </summary>
         /// <param name="surveyId">The Id of the survey</param>
         /// <param name="questionDTO">The questionString and type of the question</param>
-        /// <returns>The question that was created</returns>        
+        /// <returns>The question that was created</returns>
         [HttpPost("{surveyId}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<Question> PostQuestionToSurvey(int surveyId, QuestionDTO questionDTO) {
 
@@ -102,6 +104,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "EmployeeAccess")]
         public ActionResult PostAnswerToQuestion(int questionId, List<string> possibleAnswers, bool initialize = false) {
             Question question = _surveyRepository.GetQuestion(questionId);
@@ -147,6 +150,7 @@ namespace P3Backend.Controllers {
         [HttpDelete("{surveyId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult DeleteQuestions(int surveyId) {
             IAssessment survey = _surveyRepository.GetBy(surveyId);

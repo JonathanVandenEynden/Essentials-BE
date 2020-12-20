@@ -37,20 +37,7 @@ namespace P3Backend.Controllers {
             _changeManagerRepo = changeManagerRepo;
             _employeeRepo = employeeRepo;
 
-        }
-
-        ///// <summary>
-        ///// Return the change initiatives for a specific user
-        ///// </summary>
-        ///// <param name="userId"></param>
-        ///// <returns>list of changes for this user</returns>
-        /*[HttpGet]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public IEnumerable<ChangeInitiative> GetChangeInitiatives(int userId) {
-			IEnumerable<ChangeInitiative> changes = _changeRepo.GetForUserId(userId);
-
-			return changes;
-		}*/
+        }       
 
         /// <summary>
         /// Get the change initiatives applicable for an employee
@@ -59,6 +46,8 @@ namespace P3Backend.Controllers {
         [Route("[action]")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "EmployeeAccess")]
         public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForEmployee() {
 
@@ -82,6 +71,8 @@ namespace P3Backend.Controllers {
         [Route("[action]")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<IEnumerable<ChangeInitiative>> GetChangeInitiativesForChangeManager(string group = null, string progress = null) {
             try {
@@ -95,11 +86,7 @@ namespace P3Backend.Controllers {
 
                 if (!string.IsNullOrEmpty(group))
                     changes = changes.Where(r => r.ChangeGroup.Name.Equals(group));
-                if (!string.IsNullOrEmpty(progress)) {
-                    foreach (var change in changes) {
-                        Console.WriteLine(change.Progress);
-                    }
-                    Console.WriteLine(double.Parse(progress));
+                if (!string.IsNullOrEmpty(progress)) {                    
                     changes = changes.Where(r => r.Progress >= double.Parse(progress));
                 }
                 return changes.ToList();
@@ -116,6 +103,7 @@ namespace P3Backend.Controllers {
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<ChangeInitiative> GetChangeInitiative(int id) {
             ChangeInitiative ci = _changeRepo.GetBy(id);
@@ -138,6 +126,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult PostChangeInitiative(int projectId, ChangeInitiativeDTO dto) {
 
@@ -196,6 +185,9 @@ namespace P3Backend.Controllers {
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult UpdateChangeInitiative(int id, ChangeInitiativeDTO dto) {
 
@@ -221,6 +213,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public IActionResult DeleteChangeInitiative(int id) {
             try {

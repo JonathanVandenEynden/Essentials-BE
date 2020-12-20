@@ -41,6 +41,8 @@ namespace P3Backend.Controllers {
         [Route("[action]")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<IEnumerable<ChangeManager>> GetChangeManagersFromOrganization() {
             try {
@@ -60,7 +62,9 @@ namespace P3Backend.Controllers {
         /// <param name="changeManagerId"></param>
         /// <returns></returns>
         [HttpGet("{changeManagerId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]        
         [Authorize(Policy = "AdminAccess")]
         public ActionResult<ChangeManager> GetChangeManagerById(int changeManagerId) {
             ChangeManager cm = _changeManagerRepo.GetBy(changeManagerId);
@@ -78,7 +82,9 @@ namespace P3Backend.Controllers {
         /// <param name="email">the email of the changemanager</param>
         /// <returns>changemanager obj</returns>
         [HttpGet("[action]/{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "AdminAccess")]
         public ActionResult<ChangeManager> GetChangeManagerByEmail(string email) {
             ChangeManager e = _changeManagerRepo.GetByEmail(email);
@@ -98,6 +104,8 @@ namespace P3Backend.Controllers {
         [HttpPost("{employeeId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public async Task<ActionResult> UpgradeEmployeeToChangeManager(int employeeId) {
             try {

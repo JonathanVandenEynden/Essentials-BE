@@ -50,6 +50,8 @@ namespace P3Backend.Controllers {
         /// <returns></returns>
         [HttpGet("{organizationId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "ChangeManagerAccess")]
         public ActionResult<Organization> GetOrganizationById(int organizationId) {
             Organization o = _organizationRepository.GetBy(organizationId);
@@ -67,6 +69,7 @@ namespace P3Backend.Controllers {
         /// <returns></returns>
         [HttpGet("[action]")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<Organization>> GetOrganizationsForAdmin() {
             Admin loggedInAdmin = _adminRepository.GetByEmail(User.Identity.Name);
 
@@ -89,6 +92,8 @@ namespace P3Backend.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "AdminAccess")]
         public async Task<IActionResult> PostOrganization(OrganizationDTO dto) {
             try {
@@ -220,6 +225,7 @@ namespace P3Backend.Controllers {
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "AdminAccess")]
         public IActionResult Delete(int organizationId) {
             try {
